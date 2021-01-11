@@ -1,0 +1,272 @@
+---
+
+.script-git-submodule: &script-git-submodule
+  - |
+    git submodule sync --recursive
+    git submodule update --init --recursive
+
+.script-vagrant-cloud-auth-login: &script-vagrant-cloud-auth-login
+  - |
+    vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
+
+.script-bootstrap-packer: &script-bootstrap-packer
+  - |
+    curl -skL -O https://releases.hashicorp.com/packer/1.6.6/packer_1.6.6_linux_amd64.zip
+    sudo unzip -qq -o -d /usr/local/bin packer_1.6.6_linux_amd64.zip
+    rm -rf packer_1.6.6_linux_amd64.zip
+
+.script-bootstrap-vagrant: &script-bootstrap-vagrant
+  - |
+    curl -skL -O https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_x86_64.deb
+    sudo dpkg -i vagrant_2.2.14_x86_64.deb
+    rm -rf vagrant_2.2.14_*
+
+.script-bootstrap-libvirt: &script-bootstrap-libvirt
+  - |
+    sudo apt-get update
+    sudo apt-get install -y binutils bridge-utils dnsmasq-base ebtables gcc libguestfs-tools libvirt-clients libvirt-daemon-system libvirt-dev make qemu-kvm qemu-utils ruby-dev
+    vagrant plugin install vagrant-libvirt
+    sudo systemctl start libvirtd
+
+.script-bootstrap-virtualbox: &script-bootstrap-virtualbox
+  - |
+    curl -skL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add -
+    sudo add-apt-repository -y "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
+    sudo apt-get update
+    sudo apt-get install -y virtualbox-6.1
+    sudo systemctl start vboxdrv.service
+
+.script-bootstrap-ansible: &script-bootstrap-ansible
+  - |
+    sudo apt-get update
+    sudo apt-get -y install ca-certificates curl gcc iproute2 pwgen python3 python3-dev sudo
+    curl -skL https://bootstrap.pypa.io/get-pip.py | sudo -H python3 - --prefix=/usr/local
+    sudo -H pip3 install --prefix=/usr/local --upgrade --requirement requirements.txt
+
+.script-linters: &script-linters
+  - |
+    yamllint .
+    ansible-lint
+    flake8
+
+.script-packer-build: &script-packer-build
+  - |
+    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    packer build packer.json
+
+.script-vagrant-cloud-provider-upload: &script-vagrant-cloud-provider-upload
+  - |
+    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    export _ORG=$CI_PROJECT_NAMESPACE
+    export _BOX=$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION
+    export _PROVIDER=$_PACKER_BUILDER_PROVIDER
+    if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+      export _VERSION=$CI_COMMIT_TAG
+    elif [[ -n "$CI_COMMIT_BRANCH" ]] && [[ "$CI_COMMIT_BRANCH" =~ master ]]; then
+      export _VERSION=$(date +%Y%m%d).0.0
+    else
+      exit 0
+    fi
+    curl -skL \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+      --data "{ \"box\": { \"username\": \"$_ORG\", \"name\": \"$_BOX\", \"is_private\": false } }" \
+      https://app.vagrantup.com/api/v1/boxes | jq .
+    curl -skL \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+      --data "{ \"version\": { \"version\": \"$_VERSION\" } }" \
+      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/versions | jq .
+    curl -skL \
+      --request DELETE \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER | jq .
+    curl -skL \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+      --data "{ \"provider\": { \"name\": \"$_PROVIDER\" } }" \
+      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/providers | jq .
+    _UPLOAD_PATH=$(curl -skL \
+      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER/upload | jq -r .upload_path)
+    curl -skL \
+      --request PUT \
+      --header "Connection: keep-alive" \
+      --upload-file output-vagrant/package.box \
+      $_UPLOAD_PATH | jq .
+    curl -skL \
+      --request PUT \
+      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/release | jq .
+
+.job-packer-build: &job-packer-build
+  script:
+    - *script-bootstrap-packer
+    - *script-bootstrap-vagrant
+    - *script-bootstrap-libvirt
+    - *script-bootstrap-virtualbox
+    - *script-bootstrap-ansible
+    - *script-linters
+    - *script-packer-build
+
+.job-vagrant-cloud-provider-upload: &job-vagrant-cloud-provider-upload
+  script:
+    - *script-bootstrap-vagrant
+    - *script-vagrant-cloud-provider-upload
+
+default:
+  retry: 2
+  before_script:
+    - *script-git-submodule
+    - *script-vagrant-cloud-auth-login
+
+build:libvirt-20.10:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-20.10"
+    paths:
+      - packer/*/output-vagrant/*.box
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "20.10"
+
+deploy:libvirt-20.10:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-20.10"
+    paths:
+      - packer/*/output-vagrant/*.box
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "20.10"
+  needs:
+    - build:libvirt-20.10
+
+build:libvirt-20.04:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-20.04"
+    paths:
+      - packer/*/output-vagrant/*.box
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "20.04"
+
+deploy:libvirt-20.04:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-20.04"
+    paths:
+      - packer/*/output-vagrant/*.box
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "20.04"
+  needs:
+    - build:libvirt-20.04
+
+build:libvirt-18.04:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-18.04"
+    paths:
+      - packer/*/output-vagrant/*.box
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "18.04"
+
+deploy:libvirt-18.04:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-18.04"
+    paths:
+      - packer/*/output-vagrant/*.box
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "18.04"
+  needs:
+    - build:libvirt-18.04
+
+build:virtualbox-20.10:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-20.10"
+    paths:
+      - packer/*/output-vagrant/*.box
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "20.10"
+
+deploy:virtualbox-20.10:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-20.10"
+    paths:
+      - packer/*/output-vagrant/*.box
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "20.10"
+  needs:
+    - build:virtualbox-20.10
+
+build:virtualbox-20.04:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-20.04"
+    paths:
+      - packer/*/output-vagrant/*.box
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "20.04"
+
+deploy:virtualbox-20.04:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-20.04"
+    paths:
+      - packer/*/output-vagrant/*.box
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "20.04"
+  needs:
+    - build:virtualbox-20.04
+
+build:virtualbox-18.04:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-18.04"
+    paths:
+      - packer/*/output-vagrant/*.box
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "18.04"
+
+deploy:virtualbox-18.04:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-18.04"
+    paths:
+      - packer/*/output-vagrant/*.box
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "18.04"
+  needs:
+    - build:virtualbox-18.04

@@ -1,0 +1,88 @@
+---
+
+# (c) Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- hosts: all
+  remote_user: root
+  become: true
+  gather_facts: false
+  tasks:
+    - name: reboot
+      reboot:
+        reboot_timeout: 300
+
+    - name: rm -rf /root/.ansible/tmp/*
+      raw: |
+        set -eu
+        rm -rf /root/.ansible/tmp/*
+        rm -rf /root/.cache/*
+        rm -rf /tmp/*
+      changed_when: false
+      ignore_errors: true
+
+    - name: redhat | subscription-manager unregister
+      raw: |
+        set -eu
+        subscription-manager unregister
+      changed_when: false
+      ignore_errors: true
+
+    - name: debian | apt-get -y clean
+      raw: |
+        set -eu
+        apt-get -y autoremove
+        apt-get -y autoclean
+        apt-get -y clean
+        rm -rf /var/lib/apt/lists/*
+      changed_when: false
+      ignore_errors: true
+
+    - name: redhat | yum clean all
+      raw: |
+        set -eu
+        yum clean all
+        rm -rf /var/cache/yum/*
+      changed_when: false
+      ignore_errors: true
+
+    - name: suse | zypper clean --all
+      raw: |
+        set -eu
+        zypper clean --all
+        rm -rf /var/cache/zypper/*
+      changed_when: false
+      ignore_errors: true
+
+    - name: truncate --size 0 /etc/machine-id
+      raw: |
+        set -eu
+        truncate --size 0 /etc/machine-id
+        ln -fs /etc/machine-id /var/lib/dbus/machine-id
+      changed_when: false
+      ignore_errors: true
+
+    - name: rm -rf /etc/ssh/ssh_host_*
+      raw: |
+        set -eu
+        rm -rf /etc/ssh/ssh_host_*
+      changed_when: false
+      ignore_errors: true
+
+    - name: rm -rf /var/lib/systemd/random-seed
+      raw: |
+        set -eu
+        rm -rf /var/lib/systemd/random-seed
+      changed_when: false
+      ignore_errors: true
