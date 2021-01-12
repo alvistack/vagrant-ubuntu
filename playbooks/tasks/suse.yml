@@ -13,3 +13,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+- name: update /etc/default/grub
+  ini_file:
+    path: "/etc/default/grub"
+    section: ""
+    option: "{{ item.option }}"
+    value: "\"{{ item.value }}\""
+    mode: "0644"
+    no_extra_spaces: true
+    state: "present"
+  loop:
+    - { option: "GRUB_CMDLINE_LINUX", value: "net.ifnames=0 biosdevname=0" }
+    - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0" }
+
+- name: grub2-mkconfig -o /boot/grub2/grub
+  command: grub2-mkconfig -o /boot/grub2/grub
+  changed_when: false
+  ignore_errors: true
+
+- name: dracut -f
+  command: dracut -f
+  changed_when: false
+  ignore_errors: true
