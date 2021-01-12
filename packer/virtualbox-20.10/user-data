@@ -38,6 +38,7 @@ autoinstall:
       - openssh-server
       - python3
       - python3-dev
+      - standard^
       - sudo
   early-commands:
       - systemctl stop ssh.service
