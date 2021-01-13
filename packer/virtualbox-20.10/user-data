@@ -18,8 +18,20 @@ autoinstall:
           - arches: [default]
             uri: http://security.ubuntu.com/ubuntu/
   storage:
-      layout:
-          name: direct
+      swap:
+          size: 0
+      config:
+          - { type: disk, id: disk-vda, path: /dev/vda, ptable: gpt, wipe: superblock-recursive, grub_device: true }
+          - { type: partition, id: partition-0, number: 1, device: disk-vda, size: 1M, wipe: superblock, flag: bios_grub }
+          - { type: partition, id: partition-1, number: 2, device: disk-vda, size: 512M, wipe: superblock, flag: boot }
+          - { type: partition, id: partition-2, number: 3, device: disk-vda, size: 4G, wipe: superblock, flag: swap }
+          - { type: partition, id: partition-3, number: 4, device: disk-vda, size: -1, wipe: superblock }
+          - { type: format, id: format-0, volume: partition-1, fstype: ext4 }
+          - { type: format, id: format-1, volume: partition-2, fstype: swap }
+          - { type: format, id: format-2, volume: partition-3, fstype: ext4 }
+          - { type: mount, id: mount-0, device: format-0, path: /boot }
+          - { type: mount, id: mount-1, device: format-1, path: none }
+          - { type: mount, id: mount-2, device: format-2, path: / }
   identity:
       username: root
       hostname: ubuntu.localdomain
