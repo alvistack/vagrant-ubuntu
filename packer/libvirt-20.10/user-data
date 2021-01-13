@@ -21,7 +21,7 @@ autoinstall:
       swap:
           size: 0
       config:
-          - { type: disk, id: disk-0, match: {}, ptable: gpt, wipe: superblock-recursive, grub_device: true }
+          - { type: disk, id: disk-0, ptable: gpt, wipe: superblock-recursive, grub_device: true }
           - { type: partition, id: partition-0, number: 1, device: disk-0, size: 1M, wipe: superblock, flag: bios_grub }
           - { type: partition, id: partition-1, number: 2, device: disk-0, size: 512M, wipe: superblock, flag: boot }
           - { type: partition, id: partition-2, number: 3, device: disk-0, size: 4G, wipe: superblock, flag: swap }
