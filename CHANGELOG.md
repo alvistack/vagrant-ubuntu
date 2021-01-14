@@ -4,10 +4,14 @@
 
 ### Major Changes
 
-## 20210102.1.0 - 2021-01-02
+## 20210114.1.0 - 2021-01-14
 
 ### Major Changes
 
-  - Ubuntu 15.2 based
-  - Base box running by [Vagrant Libvirt Provider](https://github.com/vagrant-libvirt/vagrant-libvirt)
-  - Provision by [Ansible](https://www.ansible.com/) and [Molecule Vagrant Plugin](https://github.com/ansible-community/molecule-vagrant)
+  - Packaging by [Packer](https://www.packer.io/)
+  - Minimal base box as [Vagrant recommendation](https://www.vagrantup.com/docs/boxes/base)
+  - Support [Vagrant synced folder with rsync](https://www.vagrantup.com/docs/synced-folders/rsync)
+  - Support [Vagrant provisioner with Ansible](https://www.vagrantup.com/docs/provisioning/ansible)
+  - Standardize disk partition with GPT
+  - Standardize file system mount with UUID
+  - Standardize network interface with `eth0`
