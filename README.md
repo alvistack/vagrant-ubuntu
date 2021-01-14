@@ -1,78 +1,61 @@
 # Vagrant Box Packaging for Ubuntu
 
-[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/vagrant-ubuntu/master)](https://gitlab.com/alvistack/vagrant-ubuntu/-/pipelines)
+[![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/vagrant-ubuntu/master)](https://gitlab.com/alvistack/vagrant-ubuntu/-/pipelines)
 [![GitHub release](https://img.shields.io/github/release/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/blob/master/LICENSE)
-[![Vagrant Box download](https://img.shields.io/vagrant/pulls/alvistack/ubuntu.svg)](https://hub.vagrant.com/r/alvistack/ubuntu/)
+[![Vagrant Box download](https://img.shields.io/badge/dynamic/json?label=alvistack%2Fubuntu-20.04&query=%24.boxes%5B%3A1%5D.downloads&url=https%3A%2F%2Fapp.vagrantup.com%2Fapi%2Fv1%2Fsearch%3Fq%3Dalvistack%2Fubuntu-20.04)](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.04)
 
-GitLab is a complete DevOps platform, delivered as a single application. This makes GitLab unique and makes Concurrent DevOps possible, unlocking your organization from the constraints of a pieced together toolchain. Join us for a live Q\&A to learn how GitLab can give you unmatched visibility and higher levels of efficiency in a single application across the DevOps lifecycle.
+Ubuntu is a Debian-based Linux operating system that runs from the desktop to the cloud, to all your internet connected things. It is the world's most popular operating system across public clouds and OpenStack clouds. It is the number one platform for containers; from Docker to Kubernetes to LXD, Ubuntu can run your containers at scale. Fast, secure and simple, Ubuntu powers millions of PCs worldwide.
 
-Learn more about GitLab: <https://about.gitlab.com/>
+Learn more about Ubuntu: <https://ubuntu.com/>
 
 ## Supported Boxes and Respective Packer Template Links
 
-  - [`alvistack/ubuntu-13.7`](https://app.vagrantup.com/alvistack/boxes/ubuntu-13.7)
-      - [`libvirt`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-13.7/packer.json)
-      - [`virtualbox`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-13.7/packer.json)
-  - [`alvistack/ubuntu-13.6`](https://app.vagrantup.com/alvistack/boxes/ubuntu-13.6)
-      - [`libvirt`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-13.6/packer.json)
-      - [`virtualbox`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-13.6/packer.json)
+  - [`alvistack/ubuntu-20.10`](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.10)
+      - [`packer/libvirt-20.10/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-20.10/packer.json)
+      - [`packer/virtualbox-20.10/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-20.10/packer.json)
+  - [`alvistack/ubuntu-20.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.04)
+      - [`packer/libvirt-20.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-20.04/packer.json)
+      - [`packer/virtualbox-20.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-20.04/packer.json)
+  - [`alvistack/ubuntu-18.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-18.04)
+      - [`packer/libvirt-18.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-18.04/packer.json)
+      - [`packer/virtualbox-18.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-18.04/packer.json)
 
 ## Overview
 
-This Docker container makes it easy to get an instance of Ubuntu up and running.
-
-Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
-
-  - Packaging by Packer Docker builder and Ansible provisioner in single layer
-  - Handle `ENTRYPOINT` with [catatonit](https://github.com/Ubuntu/catatonit)
+  - Packaging with [Packer](https://www.packer.io/)
+  - Minimal [Vagrant base box implementation](https://www.vagrantup.com/docs/boxes/base)
+  - Support [Vagrant synced folder with rsync](https://www.vagrantup.com/docs/synced-folders/rsync)
+  - Support [Vagrant provisioner with Ansible](https://www.vagrantup.com/docs/provisioning/ansible)
+  - Standardize disk partition with GPT
+  - Standardize file system mount with UUID
+  - Standardize network interface with `eth0`
 
 ### Quick Start
 
-For the `VOLUME` directory that is used to store the repository data (amongst other things) we recommend mounting a host directory as a [data volume](https://docs.docker.com/engine/tutorials/dockervolumes/#/data-volumes), or via a named volume if using a docker version \>= 1.9.
+Once you have [Vagrant](https://www.vagrantup.com/docs/installation) and [VirtaulBox](https://www.virtualbox.org/) installed, run the following commands under your [project directory](https://learn.hashicorp.com/tutorials/vagrant/getting-started-project-setup?in=vagrant/getting-started):
 
-Start Ubuntu:
-
-    # Pull latest image
-    docker pull alvistack/ubuntu
+    # Initialize Vagrant
+    vagrant init alvistack/ubuntu-20.04
     
-    # Run as detach
-    docker run \
-        -itd \
-        --name ubuntu \
-        --volume /etc/ubuntu:/etc/ubuntu \
-        --volume /var/run/docker.sock:/var/run/docker.sock \
-        alvistack/ubuntu
-
-**Success**. Ubuntu is now available.
-
-## Upgrade
-
-To upgrade to a more recent version of Ubuntu you can simply stop the Ubuntu
-container and start a new one based on a more recent image:
-
-    docker stop ubuntu
-    docker rm ubuntu
-    docker run ... (see above)
-
-As your data is stored in the data volume directory on the host, it will still
-be available after the upgrade.
-
-Note: Please make sure that you don't accidentally remove the ubuntu container and its volumes using the -v option.
-
-## Backup
-
-For evaluations you can use the built-in database that will store its files in the Ubuntu home directory. In that case it is sufficient to create a backup archive of the directory on the host that is used as a volume (`/var/opt/gitlab` in the example above).
+    # Start the virtual machine
+    vagrant up
+    
+    # SSH into this machine
+    vagrant ssh
+    
+    # Terminate the virtual machine
+    vagrant destroy --force
 
 ## Versioning
 
-### `alvistack/ubuntu:latest`
+### `alvistack/ubuntu-20.04:YYYYMMDD.Y.Z`
 
-The `latest` tag matches the most recent [GitHub Release](https://github.com/alvistack/vagrant-ubuntu/releases) of this repository. Thus using `alvistack/ubuntu:latest` or `alvistack/ubuntu` will ensure you are running the most up to date stable version of this image.
+Release tags could be find from [GitHub Release](https://github.com/alvistack/vagrant-ubuntu/releases) of this repository. Thus using these tags will ensure you are running the most up to date stable version of this image.
 
-### `alvistack/ubuntu:<version>`
+### `alvistack/ubuntu-20.04:YYYYMMDD.0.0`
 
-The version tags are rolling release rebuild by [Travis](https://travis-ci.com/alvistack/vagrant-ubuntu) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
+Version tags ended with `.0.0` are rolling release rebuild by [GitLab pipeline](https://gitlab.com/alvistack/vagrant-ubuntu/-/pipelines) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
 
 ## License
 
