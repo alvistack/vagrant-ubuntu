@@ -12,14 +12,14 @@ Learn more about Ubuntu: <https://ubuntu.com/>
 ## Supported Boxes and Respective Packer Template Links
 
   - [`alvistack/ubuntu-20.10`](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.10)
-      - [`libvirt`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-20.10/packer.json)
-      - [`virtualbox`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-20.10/packer.json)
+      - [`packer/libvirt-20.10/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-20.10/packer.json)
+      - [`packer/virtualbox-20.10/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-20.10/packer.json)
   - [`alvistack/ubuntu-20.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.04)
-      - [`libvirt`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-20.04/packer.json)
-      - [`virtualbox`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-20.04/packer.json)
+      - [`packer/libvirt-20.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-20.04/packer.json)
+      - [`packer/virtualbox-20.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-20.04/packer.json)
   - [`alvistack/ubuntu-18.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-18.04)
-      - [`libvirt`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-18.04/packer.json)
-      - [`virtualbox`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-18.04/packer.json)
+      - [`packer/libvirt-18.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-18.04/packer.json)
+      - [`packer/virtualbox-18.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-18.04/packer.json)
 
 ## Overview
 
@@ -51,11 +51,11 @@ Once you have [Vagrant](https://www.vagrantup.com/docs/installation) and [Virtau
 
 ### `alvistack/ubuntu-20.10:YYYYMMDD.Y.Z`
 
-Recent tags could be find from [GitHub Release](https://github.com/alvistack/vagrant-ubuntu/releases) of this repository. Thus using `alvistack/ubuntu-20.10` will ensure you are running the most up to date stable version of this image.
+Release tags could be find from [GitHub Release](https://github.com/alvistack/vagrant-ubuntu/releases) of this repository. Thus using these tags will ensure you are running the most up to date stable version of this image.
 
 ### `alvistack/ubuntu-20.10:YYYYMMDD.0.0`
 
-The version tags are rolling release rebuild by [GitLab pipeline](https://gitlab.com/alvistack/vagrant-ubuntu/-/pipelines) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
+Version tags ended with `.0.0` are rolling release rebuild by [GitLab pipeline](https://gitlab.com/alvistack/vagrant-ubuntu/-/pipelines) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
 
 ## License
 
