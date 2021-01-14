@@ -9,7 +9,7 @@
 ### Major Changes
 
   - Packaging with [Packer](https://www.packer.io/)
-  - Minimal [vagrant base box implementation](https://www.vagrantup.com/docs/boxes/base)
+  - Minimal [Vagrant base box implementation](https://www.vagrantup.com/docs/boxes/base)
   - Support [Vagrant synced folder with rsync](https://www.vagrantup.com/docs/synced-folders/rsync)
   - Support [Vagrant provisioner with Ansible](https://www.vagrantup.com/docs/provisioning/ansible)
   - Standardize disk partition with GPT
