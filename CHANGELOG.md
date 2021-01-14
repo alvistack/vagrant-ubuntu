@@ -6,8 +6,6 @@
 
 ## 20210114.1.0 - 2021-01-14
 
-### Major Changes
-
   - Packaging with [Packer](https://www.packer.io/)
   - Minimal [Vagrant base box implementation](https://www.vagrantup.com/docs/boxes/base)
   - Support [Vagrant synced folder with rsync](https://www.vagrantup.com/docs/synced-folders/rsync)
