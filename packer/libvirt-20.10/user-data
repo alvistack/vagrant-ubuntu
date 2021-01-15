@@ -52,6 +52,7 @@ autoinstall:
       - rsync
       - standard^
       - sudo
+      - qemu-guest-agent
   early-commands:
       - systemctl stop ssh.service
   late-commands:
