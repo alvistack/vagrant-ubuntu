@@ -52,7 +52,6 @@ autoinstall:
       - rsync
       - standard^
       - sudo
-      - virtualbox-guest-utils
   early-commands:
       - systemctl stop ssh.service
   late-commands:

@@ -82,6 +82,14 @@
   ],
   "provisioners": [
     {
+      "inline": [
+        "set -eu",
+        "sudo apt-get update",
+        "sudo apt-get install -y qemu-guest-agent"
+      ],
+      "type": "shell"
+    },
+    {
       "galaxy_file": "./ansible-galaxy-requirements.yml",
       "inventory_directory": "./",
       "playbook_file": "./packer.yml",
