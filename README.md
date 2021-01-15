@@ -25,6 +25,8 @@ Learn more about Ubuntu: <https://ubuntu.com/>
 
   - Packaging with [Packer](https://www.packer.io/)
   - Minimal [Vagrant base box implementation](https://www.vagrantup.com/docs/boxes/base)
+  - Support [QEMU Guest Agent](https://wiki.qemu.org/Features/GuestAgent)
+  - Support [VirtualBox Guest Additions](https://www.virtualbox.org/manual/ch04.html)
   - Support [Vagrant synced folder with rsync](https://www.vagrantup.com/docs/synced-folders/rsync)
   - Support [Vagrant provisioner with Ansible](https://www.vagrantup.com/docs/provisioning/ansible)
   - Standardize disk partition with GPT

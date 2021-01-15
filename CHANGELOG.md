@@ -4,6 +4,13 @@
 
 ### Major Changes
 
+## 20210116.1.0 - 2021-01-16
+
+### Major Changes
+
+  - Support [QEMU Guest Agent](https://wiki.qemu.org/Features/GuestAgent)
+  - Support [VirtualBox Guest Additions](https://www.virtualbox.org/manual/ch04.html)
+
 ## 20210114.1.0 - 2021-01-14
 
   - Packaging with [Packer](https://www.packer.io/)

@@ -1,0 +1,74 @@
+---
+
+# (c) Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- name: groupadd
+  group:
+    name: "vagrant"
+    gid: "1000"
+    state: "present"
+
+- name: useradd
+  user:
+    name: "vagrant"
+    uid: "1000"
+    group: "vagrant"
+    home: "/home/vagrant"
+    shell: "/bin/bash"
+    create_home: false
+    state: "present"
+
+- name: passwd
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password | password_hash('sha512') }}"
+    state: "present"
+  loop:
+    - { name: "root", password: "vagrant" }
+    - { name: "vagrant", password: "vagrant" }
+
+- name: prepare directories
+  file:
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0755') }}"
+    state: "{{ item.state | default('directory') }}"
+  loop:
+    - { dest: "/etc/sudoers.d" }
+    - { dest: "/home/vagrant", owner: "vagrant", group: "vagrant" }
+    - { dest: "/home/vagrant/.ssh", owner: "vagrant", group: "vagrant", mode: "0700" }
+
+- name: copy templates
+  template:
+    dest: "{{ item.dest }}"
+    src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+  loop:
+    - { dest: "/etc/sudoers.d/vagrant", mode: "0440" }
+    - { dest: "/home/vagrant/.ssh/authorized_keys", owner: "vagrant", group: "vagrant", mode: "0600" }
+
+- name: prepare files
+  file:
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+    state: "{{ item.state | default('file') }}"
+  loop:
+    - { dest: "/etc/sudoers.d/vagrant", mode: "0440" }
+    - { dest: "/home/vagrant/.ssh/authorized_keys", owner: "vagrant", group: "vagrant", mode: "0600" }

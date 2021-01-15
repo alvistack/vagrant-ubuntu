@@ -14,9 +14,6 @@ autoinstall:
       primary:
           - arches: [default]
             uri: http://archive.ubuntu.com/ubuntu/
-      security:
-          - arches: [default]
-            uri: http://security.ubuntu.com/ubuntu/
   storage:
       swap:
           size: 0
@@ -47,7 +44,10 @@ autoinstall:
       - curl
       - gcc
       - iproute2
+      - linux-generic
+      - make
       - openssh-server
+      - perl
       - python3
       - rsync
       - standard^

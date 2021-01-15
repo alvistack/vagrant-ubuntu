@@ -13,3 +13,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+_yum:
+  - { state: "latest", name: "ca-certificates" }
+  - { state: "latest", name: "curl" }
+  - { state: "latest", name: "gcc" }
+  - { state: "latest", name: "iproute" }
+  - { state: "latest", name: "kernel" }
+  - { state: "latest", name: "kernel-devel" }
+  - { state: "latest", name: "make" }
+  - { state: "latest", name: "openssh-server" }
+  - { state: "latest", name: "perl" }
+  - { state: "latest", name: "python3" }
+  - { state: "latest", name: "python3-devel" }
+  - { state: "latest", name: "rsync" }
+  - { state: "latest", name: "sudo" }

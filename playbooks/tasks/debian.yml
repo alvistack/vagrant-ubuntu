@@ -14,6 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: apt-get install
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ _apt }}"
+  register: result
+  until: result is succeeded
+
 - name: update /etc/default/grub
   ini_file:
     path: "/etc/default/grub"
@@ -66,3 +74,25 @@
     state: "{{ item.state | default('file') }}"
   loop:
     - { dest: "/lib/systemd/system/ssh.service" }
+
+- name: apt-get install qemu-guest-agent
+  apt:
+    name: "qemu-guest-agent"
+    state: "latest"
+  when:
+    - ansible_virtualization_type | lower == 'kvm'
+  register: result
+  until: result is succeeded
+
+- name: sh VBoxLinuxAdditions.run
+  shell: |
+    set -euo pipefail
+    export TMP_DIR="$(mktemp -d)"
+    mount -o loop /home/vagrant/VBoxGuestAdditions.iso $TMP_DIR
+    sh $TMP_DIR/VBoxLinuxAdditions.run || echo $?
+    umount $TMP_DIR
+    rm -rf $TMP_DIR /home/vagrant/VBoxGuestAdditions.iso
+  args:
+    executable: "/bin/bash"
+  when:
+    - ansible_virtualization_type | lower == 'virtualbox'
