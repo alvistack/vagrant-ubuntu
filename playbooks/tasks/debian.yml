@@ -14,6 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: apt-get install
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ _apt }}"
+  register: result
+  until: result is succeeded
+
 - name: update /etc/default/grub
   ini_file:
     path: "/etc/default/grub"
@@ -73,6 +81,8 @@
     state: "latest"
   when:
     - ansible_virtualization_type | lower == 'kvm'
+  register: result
+  until: result is succeeded
 
 - name: sh VBoxLinuxAdditions.run
   shell: |
