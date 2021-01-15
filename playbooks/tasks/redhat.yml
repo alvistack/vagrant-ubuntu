@@ -36,3 +36,23 @@
   command: dracut -f
   changed_when: false
   ignore_errors: true
+
+- name: yum install qemu-guest-agent
+  yum:
+    name: "qemu-guest-agent"
+    state: "latest"
+  when:
+    - ansible_virtualization_type | lower == 'kvm'
+
+- name: sh VBoxLinuxAdditions.run
+  shell: |
+    set -euo pipefail
+    export TMP_DIR="$(mktemp -d)"
+    mount -o loop /home/vagrant/VBoxGuestAdditions.iso $TMP_DIR
+    sh $TMP_DIR/VBoxLinuxAdditions.run || echo $?
+    umount $TMP_DIR
+    rm -rf $TMP_DIR /home/vagrant/VBoxGuestAdditions.iso
+  args:
+    executable: "/bin/bash"
+  when:
+    - ansible_virtualization_type | lower == 'virtualbox'

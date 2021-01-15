@@ -75,17 +75,6 @@
   ],
   "provisioners": [
     {
-      "inline": [
-        "set -eu",
-        "export _ISO=\"$(mktemp -d)\"",
-        "sudo mount -o loop /home/vagrant/VBoxGuestAdditions.iso $_ISO",
-        "sudo sh $_ISO/VBoxLinuxAdditions.run",
-        "sudo umount $_ISO",
-        "rm -rf $_ISO"
-      ],
-      "type": "shell"
-    },
-    {
       "galaxy_file": "./ansible-galaxy-requirements.yml",
       "inventory_directory": "./",
       "playbook_file": "./packer.yml",
