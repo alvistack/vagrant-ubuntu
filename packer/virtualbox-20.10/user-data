@@ -44,7 +44,6 @@ autoinstall:
       - curl
       - gcc
       - iproute2
-      - linux-generic
       - make
       - openssh-server
       - perl
