@@ -48,7 +48,7 @@
     state: "{{ item.state | default('directory') }}"
   loop:
     - { dest: "/etc/sudoers.d" }
-    - { dest: "/home/vagrant", owner: "vagrant", group: "vagrant" }
+    - { dest: "/home/vagrant", owner: "vagrant", group: "vagrant", mode: "0750" }
     - { dest: "/home/vagrant/.ssh", owner: "vagrant", group: "vagrant", mode: "0700" }
 
 - name: copy templates
