@@ -16,6 +16,7 @@
 
 _yum:
   - { state: "latest", name: "ca-certificates" }
+  - { state: "latest", name: "cloud-utils-growpart" }
   - { state: "latest", name: "curl" }
   - { state: "latest", name: "gcc" }
   - { state: "latest", name: "iproute" }
