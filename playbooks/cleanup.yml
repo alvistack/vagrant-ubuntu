@@ -23,10 +23,10 @@
       reboot:
         reboot_timeout: 300
 
-    - name: rm -rf /root/.ansible/tmp/*
+    - name: find /var/cache/ansible/* -type f -a -not -name '*.log' -exec rm {} \;
       raw: |
         set -eu
-        rm -rf /root/.ansible/tmp/*
+        find /var/cache/ansible/* -type f -a -not -name '*.log' -exec rm {} \;
         rm -rf /root/.cache/*
         rm -rf /tmp/*
       changed_when: false
