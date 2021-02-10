@@ -41,7 +41,9 @@ autoinstall:
       disable_root: false
   packages:
       - ca-certificates
+      - cloud-guest-utils
       - curl
+      - e2fsprogs
       - gcc
       - iproute2
       - make
