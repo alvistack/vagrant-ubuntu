@@ -47,8 +47,10 @@
 
 - name: yum install qemu-guest-agent
   yum:
-    name: "qemu-guest-agent"
-    state: "latest"
+    name: "item.name"
+    state: "item.state"
+  loop:
+    - { state: "latest", name: "qemu-guest-agent" }
   when:
     - ansible_virtualization_type | lower == 'kvm'
   register: result
