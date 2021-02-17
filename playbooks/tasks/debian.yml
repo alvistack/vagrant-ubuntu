@@ -77,8 +77,8 @@
 
 - name: apt-get install qemu-guest-agent
   apt:
-    name: "item.name"
-    state: "item.state"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
   loop:
     - { state: "latest", name: "qemu-guest-agent" }
   when:
