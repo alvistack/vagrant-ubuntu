@@ -49,8 +49,8 @@
 
 - name: zypper install qemu-guest-agent
   zypper:
-    name: "item.name"
-    state: "item.state"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
   loop:
     - { state: "latest", name: "qemu-guest-agent" }
   when:
