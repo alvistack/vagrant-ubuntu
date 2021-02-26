@@ -16,4 +16,4 @@
 
 - import_playbook: ../../playbooks/prepare.yml
 - import_playbook: ../../playbooks/converge.yml
-- import_playbook: ../../playbooks/cleanup.yml
+- import_playbook: ../../playbooks/side_effect.yml
