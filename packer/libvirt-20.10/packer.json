@@ -35,6 +35,7 @@
       "memory": 4096,
       "net_device": "virtio-net",
       "qemu_binary": "kvm",
+      "shutdown_command": "sudo shutdown -h now",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_timeout": "3600s",
