@@ -14,13 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: yum install yum-utils
-  yum:
-    name: "yum-utils"
-    state: "present"
-  changed_when: false
-  ignore_errors: true
-
 - name: yum-config-manager --enable
   command: yum-config-manager --{{ item.state }} {{ item.name }}
   loop: "{{ _yum_config_manager }}"
