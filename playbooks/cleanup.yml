@@ -57,13 +57,13 @@
         rm -rf /var/cache/zypper/*
       changed_when: false
       ignore_errors: true
-        subscription-manager remove --all
 
-        subscription-manager clean
     - name: redhat | subscription-manager unregister
       raw: |
         set -eu
+        subscription-manager remove --all
         subscription-manager unregister
+        subscription-manager clean
       changed_when: false
       ignore_errors: true
 
