@@ -15,6 +15,7 @@
 # limitations under the License.
 
 _yum_config_manager:
+  - { state: "enable", name: "rhel-7-server-rpms" }
   - { state: "enable", name: "rhel-7-server-extras-rpms" }
   - { state: "enable", name: "rhel-7-server-optional-rpms" }
 

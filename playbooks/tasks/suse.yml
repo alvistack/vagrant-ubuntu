@@ -14,6 +14,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: rm -rf /etc/zypp/repos.d/*
+  raw: |
+    set -eu
+    rm -rf /etc/zypp/repos.d/*
+  changed_when: false
+  ignore_errors: true
+
+- name: zypper addrepo
+  vars:
+    ansible_python_interpreter: "python3"
+  zypper_repository:
+    name: "{{ item.name }}"
+    repo: "{{ item.repo }}"
+    state: "{{ item.state }}"
+    disable_gpg_check: true
+    auto_import_keys: true
+    autorefresh: true
+  loop: "{{ _zypper_repository }}"
+  register: result
+  until: result is succeeded
+
 - name: zypper install
   vars:
     ansible_python_interpreter: "python3"

@@ -14,6 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+_zypper_repository:
+  - name: "repo-oss"
+    repo: "http://download.opensuse.org/distribution/leap/15.2/repo/oss/"
+    state: "present"
+  - name: "repo-non-oss"
+    repo: "http://download.opensuse.org/distribution/leap/15.2/repo/non-oss/"
+    state: "present"
+  - name: "repo-update-oss"
+    repo: "http://download.opensuse.org/update/leap/15.2/oss/"
+    state: "present"
+  - name: "repo-update-non-oss"
+    repo: "http://download.opensuse.org/update/leap/15.2/non-oss/"
+    state: "present"
+
 _zypper:
   - { state: "latest", name: "ca-certificates" }
   - { state: "latest", name: "curl" }
