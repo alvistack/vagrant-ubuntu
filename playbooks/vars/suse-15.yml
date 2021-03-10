@@ -21,10 +21,10 @@ _zypper_repository:
   - name: "repo-non-oss"
     repo: "http://download.opensuse.org/distribution/leap/15.2/repo/non-oss/"
     state: "present"
-  - name: "repo-update-oss"
+  - name: "update-oss"
     repo: "http://download.opensuse.org/update/leap/15.2/oss/"
     state: "present"
-  - name: "repo-update-non-oss"
+  - name: "update-non-oss"
     repo: "http://download.opensuse.org/update/leap/15.2/non-oss/"
     state: "present"
 
