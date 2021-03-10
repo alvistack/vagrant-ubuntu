@@ -26,7 +26,7 @@
       "disk_compression": true,
       "disk_image": false,
       "disk_interface": "virtio",
-      "disk_size": 131072,
+      "disk_size": "131072M",
       "format": "qcow2",
       "headless": true,
       "http_directory": "./",
@@ -40,7 +40,8 @@
       "ssh_port": 22,
       "ssh_timeout": "3600s",
       "ssh_username": "vagrant",
-      "type": "qemu"
+      "type": "qemu",
+      "vnc_bind_address": "0.0.0.0"
     }
   ],
   "post-processors": [

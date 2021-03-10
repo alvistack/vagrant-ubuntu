@@ -14,7 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-_yum_config_manager: []
+_yum_config_manager:
+  - { state: "enable", name: "rhel-8-for-x86_64-baseos-rpms" }
+  - { state: "enable", name: "rhel-8-for-x86_64-appstream-rpms" }
+  - { state: "enable", name: "codeready-builder-for-rhel-8-x86_64-rpms" }
 
 _yum:
   - { state: "latest", name: "ca-certificates" }
