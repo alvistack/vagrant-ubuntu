@@ -21,8 +21,11 @@ _zypper_repository:
   - name: "repo-non-oss"
     repo: "http://download.opensuse.org/tumbleweed/repo/non-oss/"
     state: "present"
-  - name: "repo-update"
+  - name: "update-oss"
     repo: "http://download.opensuse.org/update/tumbleweed/"
+    state: "present"
+  - name: "update-non-oss"
+    repo: "http://download.opensuse.org/update/tumbleweed-non-oss/"
     state: "present"
 
 _zypper:
