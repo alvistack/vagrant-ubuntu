@@ -86,38 +86,12 @@
     export _ORG=$CI_PROJECT_NAMESPACE
     export _BOX=$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION
     export _PROVIDER=$_PACKER_BUILDER_PROVIDER
-    curl -skL \
-      --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
-      --data "{ \"box\": { \"username\": \"$_ORG\", \"name\": \"$_BOX\", \"is_private\": false } }" \
-      https://app.vagrantup.com/api/v1/boxes | jq .
-    curl -skL \
-      --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
-      --data "{ \"version\": { \"version\": \"$_VERSION\" } }" \
-      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/versions | jq .
-    curl -skL \
-      --request DELETE \
-      --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
-      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER | jq .
-    curl -skL \
-      --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
-      --data "{ \"provider\": { \"name\": \"$_PROVIDER\" } }" \
-      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/providers | jq .
-    _UPLOAD_PATH=$(curl -skL \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
-      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER/upload | jq -r .upload_path)
-    curl -skL \
-      --request PUT \
-      --header "Connection: keep-alive" \
-      --upload-file output-vagrant/package.box \
-      $_UPLOAD_PATH | jq .
-    curl -skL \
-      --request PUT \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
-      https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/release | jq .
+    vagrant cloud box create --no-private $_ORG/$_BOX || echo $?
+    vagrant cloud version $_ORG/$_BOX $_VERSION || echo $?
+    vagrant cloud provider delete --force $_ORG/$_BOX $_PROVIDER $_VERSION || echo $?
+    vagrant cloud provider create $_ORG/$_BOX $_PROVIDER $_VERSION || echo $?
+    vagrant cloud provider upload --direct $_ORG/$_BOX $_PROVIDER $_VERSION output-vagrant/package.box
+    vagrant cloud version release --force $_ORG/$_BOX $_VERSION || echo $?
 
 .job-packer-build: &job-packer-build
   script:
