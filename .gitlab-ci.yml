@@ -87,10 +87,10 @@
     export _BOX=$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION
     export _PROVIDER=$_PACKER_BUILDER_PROVIDER
     vagrant cloud box create --no-private $_ORG/$_BOX || echo $?
-    vagrant cloud version $_ORG/$_BOX $_VERSION || echo $?
+    vagrant cloud version create $_ORG/$_BOX $_VERSION || echo $?
     vagrant cloud provider delete --force $_ORG/$_BOX $_PROVIDER $_VERSION || echo $?
     vagrant cloud provider create $_ORG/$_BOX $_PROVIDER $_VERSION || echo $?
-    vagrant cloud provider upload --direct $_ORG/$_BOX $_PROVIDER $_VERSION output-vagrant/package.box
+    vagrant cloud provider upload $_ORG/$_BOX $_PROVIDER $_VERSION output-vagrant/package.box
     vagrant cloud version release --force $_ORG/$_BOX $_VERSION || echo $?
 
 .job-packer-build: &job-packer-build
