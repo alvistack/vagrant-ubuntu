@@ -1,0 +1,16 @@
+[submodule "roles/locales"]
+	path = roles/locales
+	url = https://github.com/alvistack/ansible-role-locales.git
+	branch = develop
+[submodule "roles/python"]
+	path = roles/python
+	url = https://github.com/alvistack/ansible-role-python.git
+	branch = develop
+[submodule "roles/sshd"]
+	path = roles/sshd
+	url = https://github.com/alvistack/ansible-role-sshd.git
+	branch = develop
+[submodule "roles/timezone"]
+	path = roles/timezone
+	url = https://github.com/alvistack/ansible-role-timezone.git
+	branch = develop
