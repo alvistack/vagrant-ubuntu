@@ -60,36 +60,6 @@
   changed_when: false
   ignore_errors: true
 
-- name: prepare directories
-  file:
-    dest: "{{ item.dest }}"
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
-    mode: "{{ item.mode | default('0755') }}"
-    state: "{{ item.state | default('directory') }}"
-  loop:
-    - { dest: "/lib/systemd/system" }
-
-- name: copy templates
-  template:
-    dest: "{{ item.dest }}"
-    src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
-    mode: "{{ item.mode | default('0644') }}"
-  loop:
-    - { dest: "/lib/systemd/system/ssh.service" }
-
-- name: prepare files
-  file:
-    dest: "{{ item.dest }}"
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
-    mode: "{{ item.mode | default('0644') }}"
-    state: "{{ item.state | default('file') }}"
-  loop:
-    - { dest: "/lib/systemd/system/ssh.service" }
-
 - name: apt-get install qemu-guest-agent
   apt:
     name: "{{ item.name }}"

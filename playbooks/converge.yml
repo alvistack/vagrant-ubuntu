@@ -51,3 +51,19 @@
 
     - name: include default tasks
       include_tasks: "./tasks/main.yml"
+
+    - name: include role
+      include_role:
+        name: python
+
+    - name: include role
+      include_role:
+        name: locales
+
+    - name: include role
+      include_role:
+        name: timezone
+
+    - name: include role
+      include_role:
+        name: sshd
