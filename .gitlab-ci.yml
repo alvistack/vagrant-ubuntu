@@ -86,6 +86,7 @@
     export _ORG=$CI_PROJECT_NAMESPACE
     export _BOX=$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION
     export _PROVIDER=$_PACKER_BUILDER_PROVIDER
+    export _CHECKCUM=$(sha256sum output-vagrant/package.box | awk '{ print $1 }')
     curl -skL \
       --header "Content-Type: application/json" \
       --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
@@ -104,7 +105,7 @@
     curl -skL \
       --header "Content-Type: application/json" \
       --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
-      --data "{ \"provider\": { \"name\": \"$_PROVIDER\" } }" \
+      --data "{ \"provider\": { \"name\": \"$_PROVIDER\", \"checksum_type\": \"sha256\", \"checksum\": \"$_CHECKSUM\" } }" \
       https://app.vagrantup.com/api/v1/box/$_ORG/$_BOX/version/$_VERSION/providers | jq .
     _UPLOAD_PATH=$(curl -skL \
       --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
