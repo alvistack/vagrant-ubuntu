@@ -86,7 +86,7 @@
     export _ORG=$CI_PROJECT_NAMESPACE
     export _BOX=$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION
     export _PROVIDER=$_PACKER_BUILDER_PROVIDER
-    export _CHECKCUM=$(sha256sum output-vagrant/package.box | awk '{ print $1 }')
+    export _CHECKSUM=$(sha256sum output-vagrant/package.box | awk '{ print $1 }')
     curl -skL \
       --header "Content-Type: application/json" \
       --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
