@@ -22,6 +22,8 @@
     - name: reboot
       reboot:
         reboot_timeout: 300
+      register: result
+      until: result is succeeded
 
     - name: find /var/cache/ansible/* -type f -a -not -name '*.log' -exec rm {} \;
       raw: |
