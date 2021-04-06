@@ -149,7 +149,7 @@ build:libvirt-20.10:
   cache:
     key: "$CI_PIPELINE_ID-libvirt-20.10"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "20.10"
@@ -160,7 +160,7 @@ deploy:libvirt-20.10:
   cache:
     key: "$CI_PIPELINE_ID-libvirt-20.10"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
     policy: pull
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
@@ -174,7 +174,7 @@ build:libvirt-20.04:
   cache:
     key: "$CI_PIPELINE_ID-libvirt-20.04"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "20.04"
@@ -185,7 +185,7 @@ deploy:libvirt-20.04:
   cache:
     key: "$CI_PIPELINE_ID-libvirt-20.04"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
     policy: pull
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
@@ -199,7 +199,7 @@ build:libvirt-18.04:
   cache:
     key: "$CI_PIPELINE_ID-libvirt-18.04"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "18.04"
@@ -210,7 +210,7 @@ deploy:libvirt-18.04:
   cache:
     key: "$CI_PIPELINE_ID-libvirt-18.04"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
     policy: pull
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
@@ -224,7 +224,7 @@ build:virtualbox-20.10:
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-20.10"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "20.10"
@@ -235,7 +235,7 @@ deploy:virtualbox-20.10:
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-20.10"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
     policy: pull
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
@@ -249,7 +249,7 @@ build:virtualbox-20.04:
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-20.04"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "20.04"
@@ -260,7 +260,7 @@ deploy:virtualbox-20.04:
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-20.04"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
     policy: pull
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
@@ -274,7 +274,7 @@ build:virtualbox-18.04:
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-18.04"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "18.04"
@@ -285,7 +285,7 @@ deploy:virtualbox-18.04:
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-18.04"
     paths:
-      - packer/*/output-vagrant/*.box
+      - packer/*/output-vagrant
     policy: pull
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
