@@ -8,9 +8,12 @@
 .script-bootstrap-packer: &script-bootstrap-packer
   - |
     if ! [[ -x "$(command -v packer)" ]]; then
-      curl -skL -O https://releases.hashicorp.com/packer/1.7.1/packer_1.7.1_linux_amd64.zip
-      sudo unzip -qq -o -d /usr/local/bin packer_1.7.1_linux_amd64.zip
-      rm -rf packer_1.7.1_linux_amd64.zip
+      curl -skL -O https://releases.hashicorp.com/packer/1.7.2/packer_1.7.2_linux_amd64.zip
+      sudo unzip -qq -o -d /usr/local/bin packer_1.7.2_linux_amd64.zip
+      rm -rf packer_1.7.2_linux_amd64.zip
+      curl -skL -O https://github.com/alvistack/packer-plugin-docker/releases/download/v0.0.7/packer-plugin-docker_v0.0.7_x5.0_linux_amd64.zip
+      sudo unzip -qq -o -d /usr/local/bin packer-plugin-docker_v0.0.7_x5.0_linux_amd64.zip
+      rm -rf packer-plugin-docker_v0.0.7_x5.0_linux_amd64.zip
     fi
 
 .script-bootstrap-vagrant: &script-bootstrap-vagrant
