@@ -34,7 +34,9 @@
       "ssh_timeout": "3600s",
       "ssh_username": "vagrant",
       "type": "virtualbox-iso",
-      "vrdp_bind_address": "0.0.0.0"
+      "vrdp_bind_address": "0.0.0.0",
+      "vrdp_port_max": 6000,
+      "vrdp_port_min": 5900
     }
   ],
   "post-processors": [
