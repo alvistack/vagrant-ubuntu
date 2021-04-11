@@ -1,0 +1,82 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab>",
+        "c<wait10>",
+        "set gfxpayload=keep<enter><wait10>",
+        "linux /casper/vmlinuz autoinstall quiet net.ifnames=0 biosdevname=0<wait10> ",
+        "ds=\"nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/\" --- <enter><wait10>",
+        "initrd /casper/initrd<enter><wait10>",
+        "boot<enter>"
+      ],
+      "boot_wait": "10s",
+      "cpus": 2,
+      "disk_cache": "writeback",
+      "disk_compression": true,
+      "disk_image": false,
+      "disk_interface": "virtio",
+      "disk_size": "131072M",
+      "format": "qcow2",
+      "headless": true,
+      "http_directory": "./",
+      "iso_checksum": "sha256:394d4de1b19efb61bd0bd9bc3fb9d71a4d36b460e2fe1dbfd6ec040f09ed7662",
+      "iso_url": "http://releases.ubuntu.com/21.04/ubuntu-21.04-beta-live-server-amd64.iso",
+      "memory": 4096,
+      "net_device": "virtio-net",
+      "qemu_binary": "kvm",
+      "shutdown_command": "sudo shutdown -h now",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_timeout": "3600s",
+      "ssh_username": "vagrant",
+      "type": "qemu",
+      "vnc_bind_address": "0.0.0.0",
+      "vnc_port_max": 6000,
+      "vnc_port_min": 5900
+    }
+  ],
+  "post-processors": [
+    {
+      "inline": [
+        "set -eu",
+        "export _IMAGE=\"output-qemu/packer-qemu\"",
+        "sudo qemu-img convert -f qcow2 -O qcow2 \"$_IMAGE\" \"$_IMAGE.convert\"",
+        "sudo rm -rf \"$_IMAGE\"",
+        "sudo chmod a+r /boot/vmlinuz*",
+        "sudo virt-sysprep --operations defaults,-ssh-userdir,-customize -a \"$_IMAGE.convert\"",
+        "sudo virt-sparsify --in-place \"$_IMAGE.convert\"",
+        "sudo qemu-img convert -f qcow2 -O qcow2 -c \"$_IMAGE.convert\" \"$_IMAGE\"",
+        "sudo rm -rf \"$_IMAGE.convert\""
+      ],
+      "type": "shell-local"
+    },
+    {
+      "compression_level": 9,
+      "keep_input_artifact": true,
+      "output": "output-vagrant/package.box",
+      "provider_override": "libvirt",
+      "type": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "galaxy_file": "./ansible-galaxy-requirements.yml",
+      "inventory_directory": "./",
+      "playbook_file": "./packer.yml",
+      "type": "ansible",
+      "user": "vagrant"
+    }
+  ]
+}
+

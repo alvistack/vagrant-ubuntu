@@ -11,6 +11,9 @@ Learn more about Ubuntu: <https://ubuntu.com/>
 
 ## Supported Boxes and Respective Packer Template Links
 
+  - [`alvistack/ubuntu-21.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-21.04)
+      - [`packer/libvirt-21.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-21.04/packer.json)
+      - [`packer/virtualbox-21.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-21.04/packer.json)
   - [`alvistack/ubuntu-20.10`](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.10)
       - [`packer/libvirt-20.10/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-20.10/packer.json)
       - [`packer/virtualbox-20.10/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-20.10/packer.json)
