@@ -18,6 +18,7 @@ _yum_config_manager:
   - { state: "enable", name: "baseos" }
   - { state: "enable", name: "extras" }
   - { state: "enable", name: "appstream" }
+  - { state: "enable", name: "powertools" }
 
 _yum:
   - { state: "latest", name: "ca-certificates" }
