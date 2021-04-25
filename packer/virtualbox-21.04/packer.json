@@ -25,7 +25,7 @@
       "guest_os_type": "Ubuntu_64",
       "headless": true,
       "http_directory": "./",
-      "iso_checksum": "sha256:e4089c47104375b59951bad6c7b3ee5d9f6d80bfac4597e43a716bb8f5c1f3b0",
+      "iso_checksum": "e4089c47104375b59951bad6c7b3ee5d9f6d80bfac4597e43a716bb8f5c1f3b0",
       "iso_url": "http://releases.ubuntu.com/21.04/ubuntu-21.04-live-server-amd64.iso",
       "memory": 4096,
       "shutdown_command": "sudo shutdown -h now",
