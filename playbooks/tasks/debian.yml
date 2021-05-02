@@ -60,12 +60,6 @@
   changed_when: false
   ignore_errors: true
 
-- name: reboot
-  reboot:
-    reboot_timeout: 300
-  register: result
-  until: result is succeeded
-
 - name: apt-get install qemu-guest-agent
   apt:
     name: "{{ item.name }}"

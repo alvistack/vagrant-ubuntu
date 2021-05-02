@@ -51,12 +51,6 @@
   changed_when: false
   ignore_errors: true
 
-- name: reboot
-  reboot:
-    reboot_timeout: 300
-  register: result
-  until: result is succeeded
-
 - name: yum install qemu-guest-agent
   yum:
     name: "{{ item.name }}"
