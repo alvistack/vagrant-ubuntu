@@ -18,7 +18,7 @@
   command: yum-config-manager --{{ item.state }} {{ item.name }}
   loop: "{{ _yum_config_manager }}"
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: yum install
   yum:
@@ -44,12 +44,12 @@
 - name: grub2-mkconfig -o /boot/grub2/grub
   command: grub2-mkconfig -o /boot/grub2/grub
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: dracut -f
   command: dracut -f
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: yum install qemu-guest-agent
   yum:

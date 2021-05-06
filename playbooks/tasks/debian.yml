@@ -53,12 +53,12 @@
 - name: update-grub
   command: update-grub
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: update-initramfs -c -k all
   command: update-initramfs -c -k all
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: apt-get install qemu-guest-agent
   apt:

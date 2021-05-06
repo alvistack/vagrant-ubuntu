@@ -19,7 +19,7 @@
     set -eu
     rm -rf /etc/zypp/repos.d/*
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: zypper addrepo
   vars:
@@ -61,12 +61,12 @@
 - name: grub2-mkconfig -o /boot/grub2/grub
   command: grub2-mkconfig -o /boot/grub2/grub
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: dracut -f
   command: dracut -f
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: zypper install qemu-guest-agent
   zypper:
