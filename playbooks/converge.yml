@@ -22,7 +22,7 @@
       include_vars: "./vars/main.yml"
 
     - name: include release specific variables
-      include_vars: "{{ lookup('first_found', _params, errors='ignore') }}"
+      include_vars: "{{ lookup('first_found', _params) }}"
       vars:
         _params:
           files:
@@ -33,9 +33,10 @@
             - "{{ ansible_os_family | lower }}.yml"
           paths:
             - "./vars"
+          skip: true
 
     - name: include release specific tasks
-      include_tasks: "{{ lookup('first_found', _params, errors='ignore') }}"
+      include_tasks: "{{ lookup('first_found', _params) }}"
       vars:
         _params:
           files:
@@ -46,6 +47,7 @@
             - "{{ ansible_os_family | lower }}.yml"
           paths:
             - "./tasks"
+          skip: true
 
     - name: include default tasks
       include_tasks: "./tasks/main.yml"
