@@ -78,6 +78,9 @@
     },
     {
       "compression_level": 9,
+      "include": [
+        "box.xml"
+      ],
       "keep_input_artifact": true,
       "output": "output-vagrant/package.box",
       "provider_override": "libvirt",
