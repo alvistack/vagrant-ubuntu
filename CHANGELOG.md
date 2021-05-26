@@ -4,6 +4,7 @@
 
 ### Major Changes
 
+  - Upgrade minimal Ansible support to 4.0.0
   - Support Ubuntu 21.04
 
 ## 20210313.1.1 - 2021-03-13
