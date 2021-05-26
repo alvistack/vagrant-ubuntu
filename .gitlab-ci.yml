@@ -26,13 +26,13 @@
       sudo -E apt-get install -y vagrant
     fi
     sh -x -c "vagrant --version"
-      curl -skL "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xE996735927E427A733BB653E374C7797FB006459" | sudo apt-key add -
-      sudo add-apt-repository -y "deb http://ppa.launchpad.net/savoury1/virtualisation/ubuntu $(lsb_release -cs) main"
 
 .script-bootstrap-libvirt: &script-bootstrap-libvirt
   - |
     if ! [[ -x "$(command -v qemu-system-x86_64)" ]]; then
       export DEBIAN_FRONTEND=noninteractive
+      curl -skL "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xE996735927E427A733BB653E374C7797FB006459" | sudo apt-key add -
+      sudo add-apt-repository -y "deb http://ppa.launchpad.net/savoury1/virtualisation/ubuntu $(lsb_release -cs) main"
       sudo -E apt-get update
       sudo -E apt-get install -y binutils bridge-utils dnsmasq-base ebtables gcc libarchive-tools libguestfs-tools libvirt-clients libvirt-daemon-system libvirt-dev make qemu-system qemu-utils ruby-dev virt-manager
     fi
@@ -52,9 +52,9 @@
       sudo add-apt-repository -y "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
       sudo -E apt-get update
       sudo -E apt-get install -y virtualbox-6.1
-      curl -skL -O https://download.virtualbox.org/virtualbox/6.1.18/Oracle_VM_VirtualBox_Extension_Pack-6.1.18.vbox-extpack
-      echo "y" | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-6.1.18.vbox-extpack --replace
-      rm -rf Oracle_VM_VirtualBox_Extension_Pack-6.1.18.vbox-extpack
+      curl -skL -O https://download.virtualbox.org/virtualbox/6.1.22/Oracle_VM_VirtualBox_Extension_Pack-6.1.22.vbox-extpack
+      echo "y" | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-6.1.22.vbox-extpack --replace
+      rm -rf Oracle_VM_VirtualBox_Extension_Pack-6.1.22.vbox-extpack
     fi
     sudo systemctl start vboxdrv.service
     sh -x -c "vboxmanage --version"
@@ -79,7 +79,7 @@
 .script-bootstrap-ansible: &script-bootstrap-ansible
   - |
     if ! [[ -x "$(command -v ansible)" ]]; then
-      sudo -E pipx install --force --pip-args='--upgrade' --include-deps 'ansible>=2.10.3,<2.11.0'
+      sudo -E pipx install --force --pip-args='--upgrade' --include-deps 'ansible>=4.0.0,<5.0.0'
       sudo -E pipx inject --force --pip-args='--upgrade' --include-apps ansible ansible-lint
       sudo -E pipx inject --force --pip-args='--upgrade' ansible docker netaddr python-vagrant
     fi
