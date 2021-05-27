@@ -64,6 +64,10 @@
 
     - name: include role
       include_role:
+        name: ansible
+
+    - name: include role
+      include_role:
         name: locales
 
     - name: include role
