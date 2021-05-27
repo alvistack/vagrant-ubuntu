@@ -42,6 +42,7 @@ autoinstall:
   packages:
       - ca-certificates
       - cloud-guest-utils
+      - cloud-init
       - curl
       - e2fsprogs
       - gcc
