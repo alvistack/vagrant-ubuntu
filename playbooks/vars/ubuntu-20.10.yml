@@ -17,6 +17,7 @@
 _apt:
   - { state: "latest", name: "ca-certificates" }
   - { state: "latest", name: "cloud-guest-utils" }
+  - { state: "latest", name: "cloud-init" }
   - { state: "latest", name: "curl" }
   - { state: "latest", name: "gcc" }
   - { state: "latest", name: "iproute2" }

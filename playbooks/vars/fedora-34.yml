@@ -20,6 +20,7 @@ _yum_config_manager:
 
 _yum:
   - { state: "latest", name: "ca-certificates" }
+  - { state: "latest", name: "cloud-init" }
   - { state: "latest", name: "cloud-utils-growpart" }
   - { state: "latest", name: "curl" }
   - { state: "latest", name: "gcc" }
