@@ -52,9 +52,10 @@
       sudo add-apt-repository -y "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
       sudo -E apt-get update
       sudo -E apt-get install -y virtualbox-6.1
-      curl -skL -O https://download.virtualbox.org/virtualbox/6.1.22/Oracle_VM_VirtualBox_Extension_Pack-6.1.22.vbox-extpack
-      echo "y" | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-6.1.22.vbox-extpack --replace
-      rm -rf Oracle_VM_VirtualBox_Extension_Pack-6.1.22.vbox-extpack
+      export VERSION=$(VBoxManage --version | sed 's/^\([0-9]*\.[0-9]*\.[0-9]*\).*/\1/g')
+      curl -skL -O https://download.virtualbox.org/virtualbox/$VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack
+      echo "y" | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack --replace
+      rm -rf Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack
     fi
     sudo systemctl start vboxdrv.service
     sh -x -c "vboxmanage --version"
@@ -94,6 +95,7 @@
 
 .script-packer-build: &script-packer-build
   - |
+    vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     packer build packer.json
 
