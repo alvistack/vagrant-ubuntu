@@ -46,7 +46,7 @@
 
 .script-bootstrap-virtualbox: &script-bootstrap-virtualbox
   - |
-    if ! [[ -x "$(command -v vboxmanage)" ]]; then
+    if ! [[ -x "$(command -v VBoxManage)" ]]; then
       export DEBIAN_FRONTEND=noninteractive
       curl -skL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add -
       sudo add-apt-repository -y "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
@@ -54,11 +54,11 @@
       sudo -E apt-get install -y virtualbox-6.1
       export VERSION=$(VBoxManage --version | sed 's/^\([0-9]*\.[0-9]*\.[0-9]*\).*/\1/g')
       curl -skL -O https://download.virtualbox.org/virtualbox/$VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack
-      echo "y" | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack --replace
+      echo "y" | sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack --replace
       rm -rf Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack
     fi
     sudo systemctl start vboxdrv.service
-    sh -x -c "vboxmanage --version"
+    sh -x -c "VBoxManage --version"
 
 .script-bootstrap-python: &script-bootstrap-python
   - |

@@ -38,6 +38,7 @@
   loop:
     - { name: "root", password: "vagrant" }
     - { name: "vagrant", password: "vagrant" }
+  no_log: true
 
 - name: prepare directories
   file:
