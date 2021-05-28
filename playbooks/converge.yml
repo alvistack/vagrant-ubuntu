@@ -76,4 +76,8 @@
 
     - name: include role
       include_role:
+        name: kernel
+
+    - name: include role
+      include_role:
         name: sshd
