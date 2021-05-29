@@ -80,4 +80,8 @@
 
     - name: include role
       include_role:
+        name: cloud_init
+
+    - name: include role
+      include_role:
         name: sshd
