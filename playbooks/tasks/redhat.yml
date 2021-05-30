@@ -67,7 +67,7 @@
     set -euo pipefail
     export TMP_DIR="$(mktemp -d)"
     mount -o loop /home/vagrant/VBoxGuestAdditions.iso $TMP_DIR
-    echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run
+    (echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run) || echo $?
     umount $TMP_DIR
     rm -rf $TMP_DIR /home/vagrant/VBoxGuestAdditions.iso
   args:
