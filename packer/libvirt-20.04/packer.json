@@ -31,7 +31,7 @@
         "ds=nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/<wait5> ",
         "---<enter>"
       ],
-      "boot_wait": "3s",
+      "boot_wait": "5s",
       "cpus": 2,
       "disk_cache": "writeback",
       "disk_compression": true,
