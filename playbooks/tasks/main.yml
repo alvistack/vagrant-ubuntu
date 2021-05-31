@@ -14,6 +14,50 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: prepare directories
+  file:
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0755') }}"
+    state: "{{ item.state | default('directory') }}"
+  loop:
+    - { dest: "/etc/ansible" }
+    - { dest: "/etc/ansible/group_vars/all" }
+    - { dest: "/etc/ansible/playbooks" }
+    - { dest: "/etc/ansible/roles" }
+
+- name: rsync directories
+  synchronize:
+    dest: "{{ item.dest }}"
+    src: "{{ item.src }}"
+    archive: true
+    delete: true
+  loop:
+    - { dest: "/etc/ansible", src: "../inventory/default/" }
+    - { dest: "/etc/ansible/playbooks", src: "../playbooks/" }
+    - { dest: "/etc/ansible/roles", src: "../roles/" }
+
+- name: copy templates
+  template:
+    dest: "{{ item.dest }}"
+    src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+  loop:
+    - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
+
+- name: prepare files
+  file:
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+    state: "{{ item.state | default('file') }}"
+  loop:
+    - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
+
 - name: groupadd
   group:
     name: "vagrant"

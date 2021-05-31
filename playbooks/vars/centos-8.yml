@@ -35,4 +35,6 @@ _yum:
   - { state: "latest", name: "python3" }
   - { state: "latest", name: "python3-devel" }
   - { state: "latest", name: "rsync" }
+  - { state: "latest", name: "shadow-utils" }
   - { state: "latest", name: "sudo" }
+  - { state: "latest", name: "util-linux" }
