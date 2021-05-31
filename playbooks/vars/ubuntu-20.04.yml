@@ -24,8 +24,10 @@ _apt:
   - { state: "latest", name: "linux-generic" }
   - { state: "latest", name: "make" }
   - { state: "latest", name: "openssh-server" }
+  - { state: "latest", name: "passwd" }
   - { state: "latest", name: "perl" }
   - { state: "latest", name: "python3" }
   - { state: "latest", name: "python3-dev" }
   - { state: "latest", name: "rsync" }
   - { state: "latest", name: "sudo" }
+  - { state: "latest", name: "util-linux" }

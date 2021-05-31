@@ -51,6 +51,7 @@
         "sudo rm -rf \"$_IMAGE\"",
         "sudo chmod a+r /boot/vmlinuz*",
         "sudo virt-sysprep --operations defaults,-ssh-userdir,-customize -a \"$_IMAGE.convert\"",
+        "sudo virt-customize -a \"$_IMAGE.convert\" --firstboot-command \"ansible-playbook /etc/ansible/playbooks/verify.yml\"",
         "sudo virt-sparsify --in-place \"$_IMAGE.convert\"",
         "sudo qemu-img convert -f qcow2 -O vmdk \"$_IMAGE.convert\" \"$_IMAGE\"",
         "sudo rm -rf \"$_IMAGE.convert\""

@@ -38,57 +38,29 @@
             - "./vars"
           skip: true
 
-    - name: include release specific tasks
-      include_tasks: "{{ _loop_var }}"
-      loop: "{{ query('first_found', _params) }}"
-      loop_control:
-        loop_var: _loop_var
-      vars:
-        _params:
-          files:
-            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
-            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_distribution | lower }}.yml"
-            - "{{ ansible_os_family | lower }}.yml"
-          paths:
-            - "./tasks"
-          skip: true
-
-    - name: include default tasks
-      include_tasks: "./tasks/main.yml"
-
-    - name: include role
-      include_role:
-        name: python
-
-    - name: include role
-      include_role:
-        name: ansible
-
-    - name: include role
-      include_role:
-        name: locales
-
-    - name: include role
-      include_role:
-        name: timezone
-
-    - name: include role
-      include_role:
-        name: kernel
-
-    - name: include role
-      include_role:
-        name: cloud_init
-
     - name: include role
       include_role:
         name: sshd
 
-    - name: rm -rf /etc/ssh/ssh_host_*
-      raw: |
-        set -eu
-        rm -rf /etc/ssh/ssh_host_*
-      changed_when: false
-      failed_when: false
+    - name: prepare directories
+      file:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0755') }}"
+        state: "{{ item.state | default('directory') }}"
+      loop:
+        - { dest: "/root", mode: "0700" }
+        - { dest: "/root/.ssh", mode: "0700" }
+        - { dest: "/run/sshd" }
+
+    - name: touch files
+      copy:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0644') }}"
+        content: ""
+        force: false
+      loop:
+        - { dest: "/root/.ssh/authorized_keys", mode: "0600" }
