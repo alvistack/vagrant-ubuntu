@@ -85,3 +85,10 @@
     - name: include role
       include_role:
         name: sshd
+
+    - name: rm -rf /etc/ssh/ssh_host_*
+      raw: |
+        set -eu
+        rm -rf /etc/ssh/ssh_host_*
+      changed_when: false
+      failed_when: false
