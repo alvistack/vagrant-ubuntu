@@ -28,8 +28,7 @@
         "autoinstall quiet<wait5> ",
         "net.ifnames=0 biosdevname=0<wait5> ",
         "ds=nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/<wait5> ",
-        "---<wait5> ",
-        "<enter>"
+        "---<enter>"
       ],
       "boot_wait": "3s",
       "cpus": 2,
