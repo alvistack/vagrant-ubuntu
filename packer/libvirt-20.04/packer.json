@@ -13,7 +13,7 @@
         "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab><wait>",
         "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab><wait>",
         "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab><wait>",
-        "<esc><f6><esc><wait5>",
+        "<esc><wait5><f6><wait5><esc><wait5>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
@@ -29,7 +29,8 @@
         "autoinstall quiet<wait5> ",
         "net.ifnames=0 biosdevname=0<wait5> ",
         "ds=nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/<wait5> ",
-        "---<enter>"
+        "---<wait5> ",
+        "<enter>"
       ],
       "boot_wait": "3s",
       "cpus": 2,
