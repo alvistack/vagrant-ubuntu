@@ -66,8 +66,8 @@
         "sudo qemu-img convert -f qcow2 -O qcow2 \"$_IMAGE\" \"$_IMAGE.convert\"",
         "sudo rm -rf \"$_IMAGE\"",
         "sudo chmod a+r /boot/vmlinuz*",
+        "sudo virt-customize -a \"$_IMAGE.convert\" --delete \"/var/lib/systemd/random-seed\" --firstboot-command \"ansible-playbook /etc/ansible/playbooks/verify.yml\"",
         "sudo virt-sysprep --operations defaults,-ssh-userdir,-customize -a \"$_IMAGE.convert\"",
-        "sudo virt-customize -a \"$_IMAGE.convert\" --firstboot-command \"ansible-playbook /etc/ansible/playbooks/verify.yml\"",
         "sudo virt-sparsify --in-place \"$_IMAGE.convert\"",
         "sudo qemu-img convert -f qcow2 -O qcow2 -c \"$_IMAGE.convert\" \"$_IMAGE\"",
         "sudo rm -rf \"$_IMAGE.convert\""
