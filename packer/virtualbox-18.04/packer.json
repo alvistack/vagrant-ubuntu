@@ -32,8 +32,7 @@
         "debconf/frontend=noninteractive<wait5> ",
         "net.ifnames=0 biosdevname=0<wait5> ",
         "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg<wait5> ",
-        "---<wait5> ",
-        "<enter>"
+        "---<enter>"
       ],
       "boot_wait": "3s",
       "cpus": 2,
