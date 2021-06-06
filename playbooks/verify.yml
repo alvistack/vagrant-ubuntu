@@ -31,16 +31,22 @@
           files:
             - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
             - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
             - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
             - "{{ ansible_os_family | lower }}.yml"
           paths:
             - "./vars"
           skip: true
 
-    - name: include role
-      include_role:
-        name: sshd
+    - name: ssh-keygen
+      shell: |
+        set -euo pipefail
+        ssh-keygen -A
+      args:
+        executable: "/bin/bash"
+      changed_when: false
+      failed_when: false
 
     - name: prepare directories
       file:
