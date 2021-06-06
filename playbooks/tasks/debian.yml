@@ -73,7 +73,7 @@
 
 - name: sh VBoxLinuxAdditions.run
   shell: |
-    set -euo pipefail
+    set -euxo pipefail
     export TMP_DIR="$(mktemp -d)"
     mount -o loop /home/vagrant/VBoxGuestAdditions.iso $TMP_DIR
     (echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run) || echo $?

@@ -41,7 +41,7 @@
 
     - name: ssh-keygen
       shell: |
-        set -euo pipefail
+        set -euxo pipefail
         ssh-keygen -A
       args:
         executable: "/bin/bash"
