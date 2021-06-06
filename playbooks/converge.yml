@@ -31,8 +31,9 @@
           files:
             - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
             - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
             - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
             - "{{ ansible_os_family | lower }}.yml"
           paths:
             - "./vars"
@@ -48,8 +49,9 @@
           files:
             - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
             - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
             - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
             - "{{ ansible_os_family | lower }}.yml"
           paths:
             - "./tasks"
