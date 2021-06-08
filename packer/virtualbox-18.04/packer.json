@@ -43,7 +43,7 @@
       "http_directory": "./",
       "iso_checksum": "8c5fc24894394035402f66f3824beb7234b757dd2b5531379cb310cedfdf0996",
       "iso_url": "http://cdimage.ubuntu.com/ubuntu/releases/18.04.5/release/ubuntu-18.04.5-server-amd64.iso",
-      "memory": 4096,
+      "memory": 8192,
       "shutdown_command": "sudo shutdown -h now",
       "ssh_password": "vagrant",
       "ssh_port": 22,
