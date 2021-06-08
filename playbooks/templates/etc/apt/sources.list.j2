@@ -50,14 +50,28 @@ deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-securit
 # deb-src http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security universe
 deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse
 # deb-src http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse
-{% elif ansible_distribution | lower == 'debian' %}
+{% elif ansible_distribution | lower == 'debian' and ansible_distribution_release | lower == 'buster' %}
 deb http://deb.debian.org/debian/ {{ ansible_distribution_release }} main
-# deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release }} main
+# deb-src http://deb.debian.org/debian {{ ansible_distribution_release }} main
 
 deb http://security.debian.org/debian-security {{ ansible_distribution_release }}/updates main
 # deb-src http://security.debian.org/debian-security {{ ansible_distribution_release }}/updates main
 
-# {{ ansible_distribution_release }}-updates, previously known as 'volatile'
-deb http://deb.debian.org/debian/ {{ ansible_distribution_release }}-updates main
-# deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release }}-updates main
+deb http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main
+# deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main
+
+deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
+# deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
+{% elif ansible_distribution | lower == 'debian' and ansible_distribution_release | lower == 'bullseye' %}
+deb http://ftp.debian.org/debian {{ ansible_distribution_release }} main
+#deb-src http://ftp.debian.org/debian {{ ansible_distribution_release }} main
+
+deb http://security.debian.org/debian-security {{ ansible_distribution_release }}-security/updates main
+#deb-src http://security.debian.org/debian-security {{ ansible_distribution_release }}-security/updates main
+
+deb http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main
+# deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main
+
+deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
+# deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
 {%- endif %}
