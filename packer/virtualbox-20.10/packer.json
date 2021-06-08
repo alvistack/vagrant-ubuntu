@@ -30,7 +30,7 @@
       "http_directory": "./",
       "iso_checksum": "defdc1ad3af7b661fe2b4ee861fb6fdb5f52039389ef56da6efc05e6adfe3d45",
       "iso_url": "http://releases.ubuntu.com/20.10/ubuntu-20.10-live-server-amd64.iso",
-      "memory": 4096,
+      "memory": 8192,
       "shutdown_command": "sudo shutdown -h now",
       "ssh_password": "vagrant",
       "ssh_port": 22,
