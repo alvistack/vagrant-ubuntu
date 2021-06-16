@@ -4,9 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/blob/master/LICENSE)
 [![Vagrant Box download](https://img.shields.io/badge/dynamic/json?label=alvistack%2Fubuntu-20.04&query=%24.boxes%5B%3A1%5D.downloads&url=https%3A%2F%2Fapp.vagrantup.com%2Fapi%2Fv1%2Fsearch%3Fq%3Dalvistack%2Fubuntu-20.04)](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.04)
-
 Ubuntu is a Debian-based Linux operating system that runs from the desktop to the cloud, to all your internet connected things. It is the world's most popular operating system across public clouds and OpenStack clouds. It is the number one platform for containers; from Docker to Kubernetes to LXD, Ubuntu can run your containers at scale. Fast, secure and simple, Ubuntu powers millions of PCs worldwide.
-
 Learn more about Ubuntu: <https://ubuntu.com/>
 
 ## Supported Boxes and Respective Packer Template Links
@@ -39,18 +37,14 @@ Learn more about Ubuntu: <https://ubuntu.com/>
 ### Quick Start
 
 Once you have [Vagrant](https://www.vagrantup.com/docs/installation) and [VirtaulBox](https://www.virtualbox.org/) installed, run the following commands under your [project directory](https://learn.hashicorp.com/tutorials/vagrant/getting-started-project-setup?in=vagrant/getting-started):
-
-    # Initialize Vagrant
-    vagrant init alvistack/ubuntu-20.04
-    
-    # Start the virtual machine
-    vagrant up
-    
-    # SSH into this machine
-    vagrant ssh
-    
-    # Terminate the virtual machine
-    vagrant destroy --force
+\# Initialize Vagrant
+vagrant init alvistack/ubuntu-20.04
+\# Start the virtual machine
+vagrant up
+\# SSH into this machine
+vagrant ssh
+\# Terminate the virtual machine
+vagrant destroy --force
 
 ## Versioning
 
