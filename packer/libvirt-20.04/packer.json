@@ -13,7 +13,7 @@
         "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab><wait>",
         "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab><wait>",
         "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab><wait>",
-        "<f6><wait><esc><wait>",
+        "<esc><wait><f6><wait><esc><wait>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
@@ -31,7 +31,7 @@
         "ds=nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/ <wait5>",
         "---<enter>"
       ],
-      "boot_wait": "3s",
+      "boot_wait": "1s",
       "cpus": 2,
       "disk_cache": "writeback",
       "disk_compression": true,
