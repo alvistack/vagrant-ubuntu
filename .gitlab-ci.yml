@@ -268,9 +268,9 @@ deploy:libvirt-18.04:
   needs:
     - build:libvirt-18.04
 
-build:virtualbox-21.04:
+test:virtualbox-21.04:
   <<: *job-packer-build
-  stage: build
+  stage: test
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-21.04"
     paths:
@@ -291,11 +291,11 @@ deploy:virtualbox-21.04:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "21.04"
   needs:
-    - build:virtualbox-21.04
+    - test:virtualbox-21.04
 
-build:virtualbox-20.10:
+test:virtualbox-20.10:
   <<: *job-packer-build
-  stage: build
+  stage: test
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-20.10"
     paths:
@@ -316,11 +316,11 @@ deploy:virtualbox-20.10:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "20.10"
   needs:
-    - build:virtualbox-20.10
+    - test:virtualbox-20.10
 
-build:virtualbox-20.04:
+test:virtualbox-20.04:
   <<: *job-packer-build
-  stage: build
+  stage: test
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-20.04"
     paths:
@@ -341,11 +341,11 @@ deploy:virtualbox-20.04:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "20.04"
   needs:
-    - build:virtualbox-20.04
+    - test:virtualbox-20.04
 
-build:virtualbox-18.04:
+test:virtualbox-18.04:
   <<: *job-packer-build
-  stage: build
+  stage: test
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-18.04"
     paths:
@@ -366,4 +366,4 @@ deploy:virtualbox-18.04:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "18.04"
   needs:
-    - build:virtualbox-18.04
+    - test:virtualbox-18.04
