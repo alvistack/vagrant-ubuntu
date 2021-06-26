@@ -38,6 +38,7 @@
     no_extra_spaces: true
     state: "present"
   loop:
+    - { option: "GRUB_DEFAULT", value: "0" }
     - { option: "GRUB_CMDLINE_LINUX", value: "net.ifnames=0 biosdevname=0" }
     - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0" }
 
