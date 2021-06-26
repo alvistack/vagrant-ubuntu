@@ -59,8 +59,8 @@
     - { option: "GRUB_CMDLINE_LINUX", value: "net.ifnames=0 biosdevname=0" }
     - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0" }
 
-- name: grub2-mkconfig -o /boot/grub2/grub
-  command: grub2-mkconfig -o /boot/grub2/grub
+- name: grub2-mkconfig -o /boot/grub2/grub.cfg
+  command: grub2-mkconfig -o /boot/grub2/grub.cfg
   changed_when: false
   failed_when: false
 
