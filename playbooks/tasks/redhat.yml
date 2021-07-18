@@ -39,8 +39,8 @@
     state: "present"
   loop:
     - { option: "GRUB_DEFAULT", value: "0" }
-    - { option: "GRUB_CMDLINE_LINUX", value: "net.ifnames=0 biosdevname=0" }
-    - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0" }
+    - { option: "GRUB_CMDLINE_LINUX", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
+    - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
 
 - name: grub2-mkconfig -o /boot/grub2/grub.cfg
   command: grub2-mkconfig -o /boot/grub2/grub.cfg

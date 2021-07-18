@@ -75,8 +75,8 @@ autoinstall:
             ssh-keygen -A; \
             systemctl enable ssh.service; \
             sed -ie "s/^GRUB_DEFAULT=.*/GRUB_DEFAULT=\"0\"/g" /etc/default/grub; \
-            sed -ie "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"net.ifnames=0 biosdevname=0\"/g" /etc/default/grub; \
-            sed -ie "s/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"net.ifnames=0 biosdevname=0\"/g" /etc/default/grub; \
+            sed -ie "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0\"/g" /etc/default/grub; \
+            sed -ie "s/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0\"/g" /etc/default/grub; \
             update-grub; \
             update-initramfs -c -k all; \
             apt-get -y purge snapd; \
