@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-  - Upgrade minimal Ansible community package support to 4.1.0
+  - Upgrade minimal Ansible community package support to 4.2.0
 
 ## 20210602.1.1 - 2021-06-02
 
@@ -18,23 +18,31 @@
 
 ### Major Changes
 
-  - Bugfix [ansible-lint `namespace`](https://github.com/ansible-community/ansible-lint/pull/1451)
-  - Bugfix [ansible-lint `no-handler`](https://github.com/ansible-community/ansible-lint/pull/1402)
-  - Bugfix [ansible-lint `unnamed-task`](https://github.com/ansible-community/ansible-lint/pull/1413)
+  - Bugfix [ansible-lint
+    `namespace`](https://github.com/ansible-community/ansible-lint/pull/1451)
+  - Bugfix [ansible-lint
+    `no-handler`](https://github.com/ansible-community/ansible-lint/pull/1402)
+  - Bugfix [ansible-lint
+    `unnamed-task`](https://github.com/ansible-community/ansible-lint/pull/1413)
 
 ## 20210116.1.0 - 2021-01-16
 
 ### Major Changes
 
-  - Support [QEMU Guest Agent](https://wiki.qemu.org/Features/GuestAgent)
-  - Support [VirtualBox Guest Additions](https://www.virtualbox.org/manual/ch04.html)
+  - Support [QEMU Guest
+    Agent](https://wiki.qemu.org/Features/GuestAgent)
+  - Support [VirtualBox Guest
+    Additions](https://www.virtualbox.org/manual/ch04.html)
 
 ## 20210114.1.0 - 2021-01-14
 
   - Packaging with [Packer](https://www.packer.io/)
-  - Minimal [Vagrant base box implementation](https://www.vagrantup.com/docs/boxes/base)
-  - Support [Vagrant synced folder with rsync](https://www.vagrantup.com/docs/synced-folders/rsync)
-  - Support [Vagrant provisioner with Ansible](https://www.vagrantup.com/docs/provisioning/ansible)
+  - Minimal [Vagrant base box
+    implementation](https://www.vagrantup.com/docs/boxes/base)
+  - Support [Vagrant synced folder with
+    rsync](https://www.vagrantup.com/docs/synced-folders/rsync)
+  - Support [Vagrant provisioner with
+    Ansible](https://www.vagrantup.com/docs/provisioning/ansible)
   - Standardize disk partition with GPT
   - Standardize file system mount with UUID
   - Standardize network interface with `eth0`
