@@ -27,7 +27,7 @@
         "/casper/vmlinuz <wait5>",
         "initrd=/casper/initrd <wait5>",
         "autoinstall quiet fsck.mode=skip <wait5>",
-        "net.ifnames=0 biosdevname=0 <wait5>",
+        "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0 <wait5>",
         "ds=nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/ <wait5>",
         "---<enter>"
       ],
