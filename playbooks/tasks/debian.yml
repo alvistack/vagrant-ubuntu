@@ -22,6 +22,7 @@
     group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
+    - { dest: "/etc/apt/preferences.d/99-backports.pref" }
     - { dest: "/etc/apt/sources.list" }
 
 - name: apt-get update
