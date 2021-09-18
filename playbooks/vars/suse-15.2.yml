@@ -20,51 +20,61 @@ _zypper_repository:
     enabled: false
     autorefresh: true
     repo: "http://download.opensuse.org/debug/distribution/leap/$releasever/repo/non-oss/"
+    state: "present"
   - name: "repo-debug-update-non-oss"
     description: "Update Repository (Debug, Non-OSS)"
     enabled: false
     autorefresh: true
     repo: "http://download.opensuse.org/debug/update/leap/$releasever/non-oss/"
+    state: "present"
   - name: "repo-debug-update"
     description: "Update Repository (Debug)"
     enabled: false
     autorefresh: true
     repo: "http://download.opensuse.org/debug/update/leap/$releasever/oss/"
+    state: "present"
   - name: "repo-debug"
     description: "Debug Repository"
     enabled: false
     autorefresh: true
     repo: "http://download.opensuse.org/debug/distribution/leap/$releasever/repo/oss/"
+    state: "present"
   - name: "repo-non-oss"
     description: "Non-OSS Repository"
     enabled: true
     autorefresh: true
     repo: "http://download.opensuse.org/distribution/leap/$releasever/repo/non-oss/"
+    state: "present"
   - name: "repo-oss"
     description: "Main Repository"
     enabled: true
     autorefresh: true
     repo: "http://download.opensuse.org/distribution/leap/$releasever/repo/oss/"
+    state: "present"
   - name: "repo-source-non-oss"
     description: "Source Repository (Non-OSS)"
     enabled: false
     autorefresh: true
     repo: "http://download.opensuse.org/source/distribution/leap/$releasever/repo/non-oss/"
+    state: "present"
   - name: "repo-source"
     description: "Source Repository"
     enabled: false
     autorefresh: true
     repo: "http://download.opensuse.org/source/distribution/leap/$releasever/repo/oss/"
+    state: "present"
   - name: "repo-update-non-oss"
     description: "Update Repository (Non-Oss)"
     enabled: true
     autorefresh: true
     repo: "http://download.opensuse.org/update/leap/$releasever/non-oss/"
+    state: "present"
   - name: "repo-update"
     description: "Main Update Repository"
     enabled: true
     autorefresh: true
     repo: "http://download.opensuse.org/update/leap/$releasever/oss/"
+    state: "present"
 
 _zypper:
   - { state: "latest", name: "ca-certificates" }
