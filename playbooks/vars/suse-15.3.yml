@@ -15,18 +15,71 @@
 # limitations under the License.
 
 _zypper_repository:
-  - name: "repo-oss"
-    repo: "http://download.opensuse.org/distribution/leap/15.3/repo/oss"
-    state: "present"
+  - name: "repo-backports-debug-update"
+    description: "Update repository with updates for openSUSE Leap debuginfo packages from openSUSE Backports"
+    enabled: false
+    autorefresh: true
+    repo: "http://download.opensuse.org/update/leap/$releasever/backports_debug/"
+  - name: "repo-backports-update"
+    description: "Update repository of openSUSE Backports"
+    enabled: true
+    autorefresh: true
+    repo: "http://download.opensuse.org/update/leap/$releasever/backports/"
+  - name: "repo-debug-non-oss"
+    description: "Debug Repository (Non-OSS)"
+    enabled: false
+    autorefresh: true
+    repo: "http://download.opensuse.org/debug/distribution/leap/$releasever/repo/non-oss/"
+  - name: "repo-debug-update-non-oss"
+    description: "Update Repository (Debug, Non-OSS)"
+    enabled: false
+    autorefresh: true
+    repo: "http://download.opensuse.org/debug/update/leap/$releasever/non-oss/"
+  - name: "repo-debug-update"
+    description: "Update Repository (Debug)"
+    enabled: false
+    autorefresh: true
+    repo: "http://download.opensuse.org/debug/update/leap/$releasever/oss/"
+  - name: "repo-debug"
+    description: "Debug Repository"
+    enabled: false
+    autorefresh: true
+    repo: "http://download.opensuse.org/debug/distribution/leap/$releasever/repo/oss/"
   - name: "repo-non-oss"
-    repo: "http://download.opensuse.org/distribution/leap/15.3/repo/non-oss"
-    state: "present"
-  - name: "update-oss"
-    repo: "http://download.opensuse.org/update/leap/15.3/oss"
-    state: "present"
-  - name: "update-non-oss"
-    repo: "http://download.opensuse.org/update/leap/15.3/non-oss"
-    state: "present"
+    description: "Non-OSS Repository"
+    enabled: true
+    autorefresh: true
+    repo: "http://download.opensuse.org/distribution/leap/$releasever/repo/non-oss/"
+  - name: "repo-oss"
+    description: "Main Repository"
+    enabled: true
+    autorefresh: true
+    repo: "http://download.opensuse.org/distribution/leap/$releasever/repo/oss/"
+  - name: "repo-sle-debug-update"
+    description: "Update repository with debuginfo for updates from SUSE Linux Enterprise 15"
+    enabled: false
+    autorefresh: true
+    repo: "http://download.opensuse.org/debug/update/leap/$releasever/sle/"
+  - name: "repo-sle-update"
+    description: "Update repository with updates from SUSE Linux Enterprise 15"
+    enabled: true
+    autorefresh: true
+    repo: "http://download.opensuse.org/update/leap/$releasever/sle/"
+  - name: "repo-source"
+    description: "Source Repository"
+    enabled: false
+    autorefresh: true
+    repo: "http://download.opensuse.org/source/distribution/leap/$releasever/repo/oss/"
+  - name: "repo-update-non-oss"
+    description: "Update Repository (Non-Oss)"
+    enabled: true
+    autorefresh: true
+    repo: "http://download.opensuse.org/update/leap/$releasever/non-oss/"
+  - name: "repo-update"
+    description: "Main Update Repository"
+    enabled: true
+    autorefresh: true
+    repo: "http://download.opensuse.org/update/leap/$releasever/oss/"
 
 _zypper:
   - { state: "latest", name: "ca-certificates" }
