@@ -95,6 +95,7 @@
     - { dest: "/etc/sudoers.d" }
     - { dest: "/home/vagrant", owner: "vagrant", group: "vagrant", mode: "0750" }
     - { dest: "/home/vagrant/.ssh", owner: "vagrant", group: "vagrant", mode: "0700" }
+    - { dest: "/usr/local/bin" }
 
 - name: copy templates
   template:
@@ -106,6 +107,7 @@
   loop:
     - { dest: "/etc/sudoers.d/vagrant", mode: "0440" }
     - { dest: "/home/vagrant/.ssh/authorized_keys", owner: "vagrant", group: "vagrant", mode: "0600" }
+    - { dest: "/usr/local/bin/virt-sysprep-firstboot.sh", mode: "0755" }
 
 - name: prepare files
   file:
@@ -117,3 +119,4 @@
   loop:
     - { dest: "/etc/sudoers.d/vagrant", mode: "0440" }
     - { dest: "/home/vagrant/.ssh/authorized_keys", owner: "vagrant", group: "vagrant", mode: "0600" }
+    - { dest: "/usr/local/bin/virt-sysprep-firstboot.sh", mode: "0755" }
