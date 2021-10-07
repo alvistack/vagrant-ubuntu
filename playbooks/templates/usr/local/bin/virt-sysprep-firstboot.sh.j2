@@ -8,6 +8,6 @@ sleep 30
 
 _HOSTNAME="$(hostname -s)"
 
-sed -i "s/localhost/${_HOSTNAME}/g" /etc/ansible/hosts
+sed -i "s/localhost/$_HOSTNAME/g" /etc/ansible/hosts
 
 ansible-playbook /etc/ansible/playbooks/verify.yml
