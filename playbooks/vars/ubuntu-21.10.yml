@@ -14,25 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-_yum_config_manager:
-  - { state: "enable", name: "rhel-8-for-x86_64-baseos-rpms" }
-  - { state: "enable", name: "rhel-8-for-x86_64-appstream-rpms" }
-  - { state: "enable", name: "codeready-builder-for-rhel-8-x86_64-rpms" }
-
-_yum:
+_apt:
   - { state: "latest", name: "ca-certificates" }
-  - { state: "latest", name: "cloud-init" }
-  - { state: "latest", name: "cloud-utils-growpart" }
   - { state: "latest", name: "curl" }
   - { state: "latest", name: "gcc" }
-  - { state: "latest", name: "iproute" }
-  - { state: "latest", name: "kernel" }
-  - { state: "latest", name: "kernel-devel" }
+  - { state: "latest", name: "iproute2" }
   - { state: "latest", name: "make" }
-  - { state: "latest", name: "openssh-server" }
-  - { state: "latest", name: "perl" }
+  - { state: "latest", name: "passwd" }
   - { state: "latest", name: "python3" }
   - { state: "latest", name: "rsync" }
-  - { state: "latest", name: "shadow-utils" }
   - { state: "latest", name: "sudo" }
   - { state: "latest", name: "util-linux" }
