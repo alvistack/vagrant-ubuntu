@@ -167,6 +167,31 @@ default:
   before_script:
     - *script-git-submodule
 
+build:libvirt-21.10:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-21.10"
+    paths:
+      - packer/*/output-vagrant
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "21.10"
+
+deploy:libvirt-21.10:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-21.10"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "21.10"
+  needs:
+    - build:libvirt-21.10
+
 build:libvirt-21.04:
   <<: *job-packer-build
   stage: build
@@ -266,6 +291,31 @@ deploy:libvirt-18.04:
     _PACKER_BUILDER_VERSION: "18.04"
   needs:
     - build:libvirt-18.04
+
+test:virtualbox-21.10:
+  <<: *job-packer-build
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-21.10"
+    paths:
+      - packer/*/output-vagrant
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "21.10"
+
+deploy:virtualbox-21.10:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-21.10"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "21.10"
+  needs:
+    - test:virtualbox-21.10
 
 test:virtualbox-21.04:
   <<: *job-packer-build
