@@ -4,6 +4,7 @@
 
 ### Major Changes
 
+  - Support Ubuntu 21.10
   - Install dependencies with package manager
   - Upgrade minimal Ansible community package support to 4.5.0
 
