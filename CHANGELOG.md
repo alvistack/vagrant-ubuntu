@@ -4,10 +4,14 @@
 
 ### Major Changes
 
+## 20211020.1.1 - 2021-10-20
+
+### Major Changes
+
   - Remove Ubuntu 20.10 support
   - Support Ubuntu 21.10
   - Install dependencies with package manager
-  - Upgrade minimal Ansible community package support to 4.5.0
+  - Upgrade minimal Ansible community package support to 4.7.0
 
 ## 20210718.1.1 - 2021-07-18
 
