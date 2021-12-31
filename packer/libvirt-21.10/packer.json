@@ -35,7 +35,7 @@
       "http_directory": "./",
       "iso_checksum": "e84f546dfc6743f24e8b1e15db9cc2d2c698ec57d9adfb852971772d1ce692d4",
       "iso_url": "http://releases.ubuntu.com/21.10/ubuntu-21.10-live-server-amd64.iso",
-      "memory": 8192,
+      "memory": 16384,
       "net_device": "virtio-net",
       "qemu_binary": "kvm",
       "shutdown_command": "sudo shutdown -h now",
