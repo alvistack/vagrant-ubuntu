@@ -3,7 +3,7 @@
 <img src="/alvistack.svg" width="75" alt="AlviStack">
 
 [![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/vagrant-ubuntu/master)](https://gitlab.com/alvistack/vagrant-ubuntu/-/pipelines)
-[![GitHub release](https://img.shields.io/github/release/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/releases)
+[![GitHub tag](https://img.shields.io/github/tag/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/tags)
 [![GitHub license](https://img.shields.io/github/license/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/blob/master/LICENSE)
 [![Vagrant Box download](https://img.shields.io/badge/dynamic/json?label=alvistack%2Fubuntu-20.04&query=%24.boxes%5B%3A1%5D.downloads&url=https%3A%2F%2Fapp.vagrantup.com%2Fapi%2Fv1%2Fsearch%3Fq%3Dalvistack%2Fubuntu-20.04)](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.04)
 
@@ -58,7 +58,7 @@ Once you have [Vagrant](https://www.vagrantup.com/docs/installation) and [Virtau
 
 ### `YYYYMMDD.Y.Z`
 
-Release tags could be find from [GitHub Release](https://github.com/alvistack/vagrant-ubuntu/releases) of this repository. Thus using these tags will ensure you are running the most up to date stable version of this image.
+Release tags could be find from [GitHub Release](https://github.com/alvistack/vagrant-ubuntu/tags) of this repository. Thus using these tags will ensure you are running the most up to date stable version of this image.
 
 ### `YYYYMMDD.0.0`
 
