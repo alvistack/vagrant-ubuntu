@@ -74,4 +74,16 @@ deb http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main
 
 deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free
 # deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free
+{% else %}
+deb http://deb.debian.org/debian testing main contrib non-free
+# deb-src http://deb.debian.org/debian testing main contrib non-free
+
+deb http://security.debian.org/debian-security testing-security/updates main contrib non-free
+# deb-src http://security.debian.org/debian-security testing-security/updates main contrib non-free
+
+deb http://deb.debian.org/debian testing-updates main contrib non-free
+# deb-src http://deb.debian.org/debian testing-updates main contrib non-free
+
+deb http://deb.debian.org/debian testing-backports main contrib non-free
+# deb-src http://deb.debian.org/debian testing-backports main contrib non-free
 {%- endif %}
