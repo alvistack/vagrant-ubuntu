@@ -47,6 +47,7 @@
       "shutdown_command": "sudo shutdown -h now",
       "ssh_password": "vagrant",
       "ssh_port": 22,
+      "ssh_read_write_timeout": "600s",
       "ssh_timeout": "120m",
       "ssh_username": "vagrant",
       "type": "virtualbox-iso",
