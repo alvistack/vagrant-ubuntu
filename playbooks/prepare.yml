@@ -135,4 +135,6 @@
       reboot:
         reboot_timeout: 300
       register: result
+      changed_when: result is not succeeded
       until: result is succeeded
+      retries: 60
