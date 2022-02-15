@@ -47,9 +47,6 @@
       reboot:
         connect_timeout: 600
         reboot_timeout: 600
-      register: result
-      changed_when: result is not succeeded
-      until: result is succeeded
 
     - name: rm -rf /var/cache/ansible/*
       raw: |
