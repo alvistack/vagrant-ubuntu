@@ -14,6 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+_rpm_key:
+  - key: "http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7"
+    fingerprint: "91E97D7C4A5E96F17F3E888F6A2FAEA2352C64E5"
+    state: "present"
+
+_rpm_download:
+  - url: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+    dest: "/var/cache/ansible/46fa100dbf4c103e1b33f04128a837028d603939ef5d72026c4ab9dadcd55bed/epel-release-latest-7.noarch.rpm"
+    checksum: "46fa100dbf4c103e1b33f04128a837028d603939ef5d72026c4ab9dadcd55bed"
+
 _yum_config_manager:
   - { state: "enable", name: "rhel-7-server-rpms" }
   - { state: "enable", name: "rhel-7-server-extras-rpms" }

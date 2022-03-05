@@ -14,6 +14,48 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: rpm --import
+  rpm_key:
+    key: "{{ item.key }}"
+    fingerprint: "{{ item.fingerprint }}"
+    state: "{{ item.state }}"
+  loop: "{{ _rpm_key }}"
+  register: result
+  until: result is succeeded
+
+- name: download archive
+  shell: |
+    set -euxo pipefail
+    mkdir -p /var/log/ansible
+    exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-get_url.log)
+    TMP_DIR="$(mktemp -d)" \
+      && cd $TMP_DIR \
+      && mkdir -p .{{ item.dest | dirname }} \
+      && curl -skL -m 300 {{ item.url }} > .{{ item.dest }} \
+      && echo -n "{{ item.checksum }} .{{ item.dest }}" | sha256sum -c - \
+      && mkdir -p {{ item.dest | dirname }} \
+      && mv .{{ item.dest }} {{ item.dest }} \
+      && rm -rf $TMP_DIR
+  args:
+    executable: "/bin/bash"
+    creates: "/var/log/ansible/{{ item.checksum }}-get_url.log"
+  loop: "{{ _rpm_download }}"
+  register: result
+  until: result is succeeded
+
+- name: yum install
+  shell: |
+    set -euxo pipefail
+    mkdir -p /var/log/ansible
+    exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-unarchive.log)
+    yum install -y {{ item.dest }}
+  args:
+    executable: "/bin/bash"
+    creates: "/var/log/ansible/{{ item.checksum }}-unarchive.log"
+  loop: "{{ _rpm_download }}"
+  changed_when: false
+  failed_when: false
+
 - name: yum-config-manager --enable
   command: yum-config-manager --{{ item.state }} {{ item.name }}
   loop: "{{ _yum_config_manager }}"
