@@ -15,23 +15,23 @@
 # limitations under the License.
 
 - name: copy templates
-  template:
+  ansible.builtin.template:
     dest: "{{ item.dest }}"
     src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
     owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
+    ansible.builtin.group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
     - { dest: "/etc/apt/preferences.d/99-backports.pref" }
     - { dest: "/etc/apt/sources.list" }
 
 - name: apt-get update
-  apt:
+  ansible.builtin.apt:
     update_cache: true
   changed_when: false
 
 - name: apt-get install
-  apt:
+  ansible.builtin.apt:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop: "{{ _apt }}"
@@ -53,17 +53,17 @@
     - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
 
 - name: update-grub
-  command: update-grub
+  ansible.builtin.command: update-grub
   changed_when: false
   failed_when: false
 
 - name: update-initramfs -c -k all
-  command: update-initramfs -c -k all
+  ansible.builtin.command: update-initramfs -c -k all
   changed_when: false
   failed_when: false
 
 - name: apt-get install qemu-guest-agent
-  apt:
+  ansible.builtin.apt:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop:
@@ -74,7 +74,7 @@
   until: result is succeeded
 
 - name: sh VBoxLinuxAdditions.run
-  shell: |
+  ansible.builtin.shell: |
     set -euxo pipefail
     export TMP_DIR="$(mktemp -d)"
     mount -o loop /home/vagrant/VBoxGuestAdditions.iso $TMP_DIR

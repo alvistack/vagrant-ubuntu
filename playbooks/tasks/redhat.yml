@@ -15,7 +15,7 @@
 # limitations under the License.
 
 - name: rpm --import
-  rpm_key:
+  ansible.builtin.rpm_key:
     key: "{{ item.key }}"
     fingerprint: "{{ item.fingerprint }}"
     state: "{{ item.state }}"
@@ -24,7 +24,7 @@
   until: result is succeeded
 
 - name: download archive
-  shell: |
+  ansible.builtin.shell: |
     set -euxo pipefail
     mkdir -p /var/log/ansible
     exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-get_url.log)
@@ -44,7 +44,7 @@
   until: result is succeeded
 
 - name: yum install
-  shell: |
+  ansible.builtin.shell: |
     set -euxo pipefail
     mkdir -p /var/log/ansible
     exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-unarchive.log)
@@ -57,13 +57,13 @@
   failed_when: false
 
 - name: yum-config-manager --enable
-  command: yum-config-manager --{{ item.state }} {{ item.name }}
+  ansible.builtin.command: yum-config-manager --{{ item.state }} {{ item.name }}
   loop: "{{ _yum_config_manager }}"
   changed_when: false
   failed_when: false
 
 - name: yum install
-  yum:
+  ansible.builtin.yum:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop: "{{ _yum }}"
@@ -85,17 +85,17 @@
     - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
 
 - name: grub2-mkconfig -o /boot/grub2/grub.cfg
-  command: grub2-mkconfig -o /boot/grub2/grub.cfg
+  ansible.builtin.command: grub2-mkconfig -o /boot/grub2/grub.cfg
   changed_when: false
   failed_when: false
 
 - name: dracut -f
-  command: dracut -f
+  ansible.builtin.command: dracut -f
   changed_when: false
   failed_when: false
 
 - name: yum install qemu-guest-agent
-  yum:
+  ansible.builtin.yum:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop:
@@ -106,7 +106,7 @@
   until: result is succeeded
 
 - name: sh VBoxLinuxAdditions.run
-  shell: |
+  ansible.builtin.shell: |
     set -euxo pipefail
     export TMP_DIR="$(mktemp -d)"
     mount -o loop /home/vagrant/VBoxGuestAdditions.iso $TMP_DIR
