@@ -15,7 +15,7 @@
 # limitations under the License.
 
 - name: rm -rf /etc/zypp/repos.d/*
-  raw: |
+  ansible.builtin.raw: |
     set -eu
     rm -rf /etc/zypp/repos.d/*
   changed_when: false
@@ -38,7 +38,7 @@
 - name: zypper install
   vars:
     ansible_python_interpreter: "python3"
-  zypper:
+  ansible.builtin.zypper:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop: "{{ _zypper }}"
@@ -60,17 +60,17 @@
     - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
 
 - name: grub2-mkconfig -o /boot/grub2/grub.cfg
-  command: grub2-mkconfig -o /boot/grub2/grub.cfg
+  ansible.builtin.command: grub2-mkconfig -o /boot/grub2/grub.cfg
   changed_when: false
   failed_when: false
 
 - name: dracut -f
-  command: dracut -f
+  ansible.builtin.command: dracut -f
   changed_when: false
   failed_when: false
 
 - name: zypper install qemu-guest-agent
-  zypper:
+  ansible.builtin.zypper:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop:
@@ -81,7 +81,7 @@
   until: result is succeeded
 
 - name: sh VBoxLinuxAdditions.run
-  shell: |
+  ansible.builtin.shell: |
     set -euxo pipefail
     export TMP_DIR="$(mktemp -d)"
     mount -o loop /home/vagrant/VBoxGuestAdditions.iso $TMP_DIR

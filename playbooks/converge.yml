@@ -19,10 +19,10 @@
   become: true
   tasks:
     - name: include default variables
-      include_vars: "./vars/main.yml"
+      ansible.builtin.include_vars: "./vars/main.yml"
 
     - name: include release specific variables
-      include_vars: "{{ _loop_var }}"
+      ansible.builtin.include_vars: "{{ _loop_var }}"
       loop: "{{ query('first_found', _params) }}"
       loop_control:
         loop_var: _loop_var
@@ -61,35 +61,35 @@
       include_tasks: "./tasks/main.yml"
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: python
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: ansible
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: locales
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: timezone
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: kernel
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: cloud_init
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: sshd
 
     - name: rm -rf /etc/ssh/ssh_host_*
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         rm -rf /etc/ssh/ssh_host_*
       changed_when: false

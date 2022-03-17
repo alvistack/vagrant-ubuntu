@@ -19,10 +19,10 @@
   become: true
   tasks:
     - name: include default variables
-      include_vars: "./vars/main.yml"
+      ansible.builtin.include_vars: "./vars/main.yml"
 
     - name: include release specific variables
-      include_vars: "{{ _loop_var }}"
+      ansible.builtin.include_vars: "{{ _loop_var }}"
       loop: "{{ query('first_found', _params) }}"
       loop_control:
         loop_var: _loop_var
@@ -40,7 +40,7 @@
           skip: true
 
     - name: ssh-keygen
-      shell: |
+      ansible.builtin.shell: |
         set -euxo pipefail
         ssh-keygen -A
       args:
@@ -49,10 +49,10 @@
       failed_when: false
 
     - name: prepare directories
-      file:
+      ansible.builtin.file:
         dest: "{{ item.dest }}"
         owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
+        ansible.builtin.group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0755') }}"
         state: "{{ item.state | default('directory') }}"
       loop:
@@ -61,10 +61,10 @@
         - { dest: "/run/sshd" }
 
     - name: touch files
-      copy:
+      ansible.builtin.copy:
         dest: "{{ item.dest }}"
         owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
+        ansible.builtin.group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0644') }}"
         content: ""
         force: false

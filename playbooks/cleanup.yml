@@ -20,7 +20,7 @@
   gather_facts: false
   tasks:
     - name: debian | apt-get dist-upgrade
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         apt-get update
         DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
@@ -28,7 +28,7 @@
       failed_when: false
 
     - name: redhat | yum update
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         yum makecache
         yum update -y
@@ -36,7 +36,7 @@
       failed_when: false
 
     - name: suse | zypper update
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         zypper -n --gpg-auto-import-keys refresh
         zypper -n update -y
@@ -44,12 +44,12 @@
       failed_when: false
 
     - name: reboot
-      reboot:
+      ansible.builtin.reboot:
         connect_timeout: 600
         reboot_timeout: 600
 
     - name: rm -rf /var/cache/ansible/*
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         rm -rf /var/cache/ansible/*
         rm -rf /root/.cache/*
@@ -58,7 +58,7 @@
       failed_when: false
 
     - name: debian | apt-get -y clean
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         apt-get -y autoremove
         apt-get -y autoclean
@@ -68,7 +68,7 @@
       failed_when: false
 
     - name: redhat | yum clean all
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         yum clean all
         rm -rf /var/cache/yum/*
@@ -76,7 +76,7 @@
       failed_when: false
 
     - name: suse | zypper clean --all
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         zypper clean --all
         rm -rf /var/cache/zypper/*
@@ -84,7 +84,7 @@
       failed_when: false
 
     - name: redhat | subscription-manager unregister
-      raw: |
+      ansible.builtin.raw: |
         set -eu
         subscription-manager remove --all
         subscription-manager unregister
