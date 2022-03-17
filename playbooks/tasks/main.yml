@@ -18,7 +18,7 @@
   ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
-    ansible.builtin.group: "{{ item.group | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0755') }}"
     state: "{{ item.state | default('directory') }}"
   loop:
@@ -43,7 +43,7 @@
     dest: "{{ item.dest }}"
     src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
     owner: "{{ item.owner | default('root') }}"
-    ansible.builtin.group: "{{ item.group | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
     - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
@@ -52,7 +52,7 @@
   ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
-    ansible.builtin.group: "{{ item.group | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
     state: "{{ item.state | default('file') }}"
   loop:
@@ -68,9 +68,9 @@
   ansible.builtin.user:
     name: "vagrant"
     uid: "1000"
-    ansible.builtin.group: "vagrant"
+    group: "vagrant"
     home: "/home/vagrant"
-    ansible.builtin.shell: "/bin/bash"
+    shell: "/bin/bash"
     create_home: false
     state: "present"
 
@@ -88,7 +88,7 @@
   ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
-    ansible.builtin.group: "{{ item.group | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0755') }}"
     state: "{{ item.state | default('directory') }}"
   loop:
@@ -102,7 +102,7 @@
     dest: "{{ item.dest }}"
     src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
     owner: "{{ item.owner | default('root') }}"
-    ansible.builtin.group: "{{ item.group | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
     - { dest: "/etc/sudoers.d/vagrant", mode: "0440" }
@@ -113,7 +113,7 @@
   ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
-    ansible.builtin.group: "{{ item.group | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
     state: "{{ item.state | default('file') }}"
   loop:

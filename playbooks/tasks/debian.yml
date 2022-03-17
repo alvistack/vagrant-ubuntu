@@ -19,7 +19,7 @@
     dest: "{{ item.dest }}"
     src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
     owner: "{{ item.owner | default('root') }}"
-    ansible.builtin.group: "{{ item.group | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
     - { dest: "/etc/apt/preferences.d/99-backports.pref" }

@@ -52,7 +52,7 @@
       ansible.builtin.file:
         dest: "{{ item.dest }}"
         owner: "{{ item.owner | default('root') }}"
-        ansible.builtin.group: "{{ item.group | default('root') }}"
+        group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0755') }}"
         state: "{{ item.state | default('directory') }}"
       loop:
@@ -64,7 +64,7 @@
       ansible.builtin.copy:
         dest: "{{ item.dest }}"
         owner: "{{ item.owner | default('root') }}"
-        ansible.builtin.group: "{{ item.group | default('root') }}"
+        group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0644') }}"
         content: ""
         force: false
