@@ -38,6 +38,14 @@
       "ssh_timeout": "120m",
       "ssh_username": "vagrant",
       "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpu-profile",
+          "host"
+        ]
+      ],
       "vrdp_bind_address": "0.0.0.0",
       "vrdp_port_max": 6000,
       "vrdp_port_min": 5900
