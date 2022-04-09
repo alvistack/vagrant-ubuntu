@@ -1,0 +1,48 @@
+---
+
+# (c) Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+_rpm_key:
+  - key: "http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"
+    fingerprint: "FF8AD1344597106ECE813B918A3872BF3228467C"
+    state: "present"
+
+_rpm_download:
+  - url: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
+    dest: "/var/cache/ansible/d3731f75ac51d998c6c4a71871ae7b62fc6f8bbf236ba609e7d303ec8c3d1390/epel-release-latest-9.noarch.rpm"
+    checksum: "d3731f75ac51d998c6c4a71871ae7b62fc6f8bbf236ba609e7d303ec8c3d1390"
+
+_yum_config_manager:
+  - { state: "enable", name: "rhel-9-for-x86_64-baseos-beta-rpms" }
+  - { state: "enable", name: "rhel-9-for-x86_64-appstream-beta-rpms" }
+  - { state: "enable", name: "codeready-builder-beta-for-rhel-9-x86_64-rpms" }
+
+_yum:
+  - { state: "latest", name: "ca-certificates" }
+  - { state: "latest", name: "cloud-init" }
+  - { state: "latest", name: "cloud-utils-growpart" }
+  - { state: "latest", name: "curl" }
+  - { state: "latest", name: "gcc" }
+  - { state: "latest", name: "iproute" }
+  - { state: "latest", name: "kernel" }
+  - { state: "latest", name: "kernel-devel" }
+  - { state: "latest", name: "make" }
+  - { state: "latest", name: "openssh-server" }
+  - { state: "latest", name: "perl" }
+  - { state: "latest", name: "python3" }
+  - { state: "latest", name: "rsync" }
+  - { state: "latest", name: "shadow-utils" }
+  - { state: "latest", name: "sudo" }
+  - { state: "latest", name: "util-linux" }
