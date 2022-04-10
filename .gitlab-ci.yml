@@ -94,9 +94,9 @@
 
 .script-packer-build: &script-packer-build
   - |
-    vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
+    sudo -E vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
-    packer build packer.json
+    sudo -E packer build packer.json
 
 .script-vagrant-cloud-provider-upload: &script-vagrant-cloud-provider-upload
   - |
@@ -107,7 +107,7 @@
     else
       exit 0
     fi
-    vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
+    sudo -E vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _BOX="$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION"
