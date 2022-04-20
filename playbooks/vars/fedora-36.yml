@@ -21,6 +21,10 @@ _rpm_download: []
 _yum_config_manager:
   - { state: "enable", name: "fedora" }
   - { state: "enable", name: "updates" }
+  - { state: "enable", name: "fedora-modular" }
+  - { state: "enable", name: "updates-modular" }
+  - { state: "enable", name: "updates-testing" }
+  - { state: "enable", name: "updates-testing-modular" }
 
 _yum:
   - { state: "latest", name: "ca-certificates" }
