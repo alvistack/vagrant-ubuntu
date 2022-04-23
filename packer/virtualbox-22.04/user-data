@@ -80,6 +80,11 @@ autoinstall:
             sed -ie "s/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=\"net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0\"/g" /etc/default/grub; \
             update-grub; \
             update-initramfs -c -k all; \
+            mkdir -p /etc/ssh/sshd_config.d
+            echo "HostkeyAlgorithms=+ssh-rsa" >> /etc/ssh/sshd_config.d/10-vagrant-insecure-rsa-key.conf
+            echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/sshd_config.d/10-vagrant-insecure-rsa-key.conf
+            chcon system_u:object_r:etc_t:s0 /etc/ssh/sshd_config.d/10-vagrant-insecure-rsa-key.conf
+            chmod 600 /etc/ssh/sshd_config.d/10-vagrant-insecure-rsa-key.conf
             apt-get -y purge snapd; \
             exit 0 \
         '
