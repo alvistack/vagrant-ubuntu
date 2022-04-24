@@ -87,7 +87,7 @@ autoinstall:
             echo "Host *" >> /etc/ssh/ssh_config.d/10-vagrant-insecure-rsa-key.conf; \
             echo "    HostkeyAlgorithms=+ssh-rsa" >> /etc/ssh/ssh_config.d/10-vagrant-insecure-rsa-key.conf; \
             echo "    PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/ssh_config.d/10-vagrant-insecure-rsa-key.conf; \
-            chmod 600 /etc/ssh/ssh_config.d/10-vagrant-insecure-rsa-key.conf; \
+            chmod 644 /etc/ssh/ssh_config.d/10-vagrant-insecure-rsa-key.conf; \
             apt-get -y purge snapd; \
             exit 0 \
         '
