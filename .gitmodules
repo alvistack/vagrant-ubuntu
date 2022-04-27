@@ -1,28 +1,28 @@
-[submodule "roles/ansible"]
-	path = roles/ansible
+[submodule "roles/alvistack.ansible"]
+	path = roles/alvistack.ansible
 	url = https://github.com/alvistack/ansible-role-ansible.git
 	branch = develop
-[submodule "roles/cloud_init"]
-	path = roles/cloud_init
+[submodule "roles/alvistack.cloud_init"]
+	path = roles/alvistack.cloud_init
 	url = https://github.com/alvistack/ansible-role-cloud_init.git
 	branch = develop
-[submodule "roles/kernel"]
-	path = roles/kernel
+[submodule "roles/alvistack.kernel"]
+	path = roles/alvistack.kernel
 	url = https://github.com/alvistack/ansible-role-kernel.git
 	branch = develop
-[submodule "roles/locales"]
-	path = roles/locales
+[submodule "roles/alvistack.locales"]
+	path = roles/alvistack.locales
 	url = https://github.com/alvistack/ansible-role-locales.git
 	branch = develop
-[submodule "roles/python"]
-	path = roles/python
+[submodule "roles/alvistack.python"]
+	path = roles/alvistack.python
 	url = https://github.com/alvistack/ansible-role-python.git
 	branch = develop
-[submodule "roles/sshd"]
-	path = roles/sshd
+[submodule "roles/alvistack.sshd"]
+	path = roles/alvistack.sshd
 	url = https://github.com/alvistack/ansible-role-sshd.git
 	branch = develop
-[submodule "roles/timezone"]
-	path = roles/timezone
+[submodule "roles/alvistack.timezone"]
+	path = roles/alvistack.timezone
 	url = https://github.com/alvistack/ansible-role-timezone.git
 	branch = develop
