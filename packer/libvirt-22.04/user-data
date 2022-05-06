@@ -89,5 +89,9 @@ autoinstall:
             echo "    PubkeyAcceptedKeyTypes +ssh-rsa" >> /etc/ssh/ssh_config.d/10-PubkeyAcceptedKeyTypes-ssh-rsa.conf; \
             chmod 644 /etc/ssh/ssh_config.d/10-PubkeyAcceptedKeyTypes-ssh-rsa.conf; \
             apt-get -y purge snapd; \
+            systemctl disable apt-daily.service; \
+            systemctl disable apt-daily.timer; \
+            systemctl disable apt-daily-upgrade.service; \
+            systemctl disable apt-daily-upgrade.timer; \
             exit 0 \
         '
