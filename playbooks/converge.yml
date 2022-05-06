@@ -62,31 +62,31 @@
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.python
+        name: python
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.ansible
+        name: ansible
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.locales
+        name: locales
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.timezone
+        name: timezone
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.kernel
+        name: kernel
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.cloud_init
+        name: cloud_init
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.sshd
+        name: sshd
 
     - name: rm -rf /etc/ssh/ssh_host_*
       ansible.builtin.raw: |
