@@ -63,3 +63,10 @@
         subscription-manager clean
       changed_when: false
       failed_when: false
+
+    - name: rm -rf /etc/ssh/ssh_host_*
+      ansible.builtin.raw: |
+        set -eu
+        rm -rf /etc/ssh/ssh_host_*
+      changed_when: false
+      failed_when: false

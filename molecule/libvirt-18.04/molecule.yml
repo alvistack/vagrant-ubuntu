@@ -24,6 +24,8 @@ platforms:
     box: alvistack/ubuntu-18.04
     cpu: 2
     memory: 8192
+    config_options:
+      ssh.insert_key: false
     provider_raw_config_args:
       - "cpu_mode = 'host-passthrough'"
       - "disk_bus = 'virtio'"

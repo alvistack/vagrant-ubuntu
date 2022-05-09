@@ -24,6 +24,8 @@ platforms:
     box: alvistack/ubuntu-22.04
     cpu: 2
     memory: 8192
+    config_options:
+      ssh.insert_key: false
     provider_raw_config_args:
       - "customize ['modifyvm', :id, '--cpu-profile', 'host']"
       - "customize ['modifyvm', :id, '--nested-hw-virt', 'on']"
