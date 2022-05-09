@@ -31,6 +31,17 @@
     sh -x -c "ansible --version"
     sh -x -c "ansible-lint --version"
 
+.script-bootstrap-molecule: &script-bootstrap-molecule
+  - |
+    if ! [[ -x "$(command -v molecule)" ]]; then
+      export DEBIAN_FRONTEND="noninteractive"
+      echo "deb http://download.opensuse.org/repositories/home:/alvistack/xUbuntu_22.04/ /" | sudo tee /etc/apt/sources.list.d/home:alvistack.list
+      curl -fsSL https://download.opensuse.org/repositories/home:alvistack/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_alvistack.gpg > /dev/null
+      sudo -E apt-get update
+      sudo -E apt-get install -y python3-molecule python3-molecule-docker python3-molecule-vagrant
+    fi
+    sh -x -c "molecule --version"
+
 .script-bootstrap-libvirt: &script-bootstrap-libvirt
   - |
     if ! [[ -x "$(command -v qemu-system-x86_64)" ]]; then
@@ -96,6 +107,25 @@
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     sudo -E packer build packer.json
 
+.script-vagrant-box-add: &script-vagrant-box-add
+  - |
+    export VAGRANT_HOME="$CI_BUILDS_DIR"
+    export _ORG="$CI_PROJECT_NAMESPACE"
+    export _BOX="$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION"
+    export _PROVIDER="$_PACKER_BUILDER_PROVIDER"
+    sudo -E vagrant plugin install vagrant-libvirt
+    sudo -E vagrant box add \
+      --name $_ORG/$_BOX \
+      --provider $_PROVIDER \
+      $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION/output-vagrant/package.box
+
+.script-molecule-test: &script-molecule-test
+  - |
+    export VAGRANT_HOME="$CI_BUILDS_DIR"
+    export VAGRANT_EXPERIMENTAL="1"
+    export _MOLECULE_INSTANCE_NAME="$(pwgen -1AB 12)"
+    sudo -E molecule test -s $_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+
 .script-vagrant-cloud-provider-upload: &script-vagrant-cloud-provider-upload
   - |
     if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
@@ -155,6 +185,17 @@
     - *script-linters
     - *script-packer-build
 
+.job-molecule: &job-molecule
+  script:
+    - *script-bootstrap-python
+    - *script-bootstrap-ansible
+    - *script-bootstrap-molecule
+    - *script-bootstrap-libvirt
+    - *script-bootstrap-virtualbox
+    - *script-bootstrap-vagrant
+    - *script-vagrant-box-add
+    - *script-molecule-test
+
 .job-vagrant-cloud-provider-upload: &job-vagrant-cloud-provider-upload
   script:
     - *script-bootstrap-vagrant
@@ -176,6 +217,20 @@ build:libvirt-22.04:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "22.04"
 
+test:libvirt-22.04:
+  <<: *job-molecule
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-22.04"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "22.04"
+  needs:
+    - build:libvirt-22.04
+
 deploy:libvirt-22.04:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
@@ -188,7 +243,7 @@ deploy:libvirt-22.04:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "22.04"
   needs:
-    - build:libvirt-22.04
+    - test:libvirt-22.04
 
 build:libvirt-21.10:
   <<: *job-packer-build
@@ -200,6 +255,20 @@ build:libvirt-21.10:
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "21.10"
+
+test:libvirt-21.10:
+  <<: *job-molecule
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-21.10"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "21.10"
+  needs:
+    - build:libvirt-21.10
 
 deploy:libvirt-21.10:
   <<: *job-vagrant-cloud-provider-upload
@@ -213,7 +282,7 @@ deploy:libvirt-21.10:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "21.10"
   needs:
-    - build:libvirt-21.10
+    - test:libvirt-21.10
 
 build:libvirt-20.04:
   <<: *job-packer-build
@@ -225,6 +294,20 @@ build:libvirt-20.04:
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "20.04"
+
+test:libvirt-20.04:
+  <<: *job-molecule
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-20.04"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "20.04"
+  needs:
+    - build:libvirt-20.04
 
 deploy:libvirt-20.04:
   <<: *job-vagrant-cloud-provider-upload
@@ -238,7 +321,7 @@ deploy:libvirt-20.04:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "20.04"
   needs:
-    - build:libvirt-20.04
+    - test:libvirt-20.04
 
 build:libvirt-18.04:
   <<: *job-packer-build
@@ -250,6 +333,20 @@ build:libvirt-18.04:
   variables:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "18.04"
+
+test:libvirt-18.04:
+  <<: *job-molecule
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-libvirt-18.04"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "libvirt"
+    _PACKER_BUILDER_VERSION: "18.04"
+  needs:
+    - build:libvirt-18.04
 
 deploy:libvirt-18.04:
   <<: *job-vagrant-cloud-provider-upload
@@ -263,11 +360,11 @@ deploy:libvirt-18.04:
     _PACKER_BUILDER_PROVIDER: "libvirt"
     _PACKER_BUILDER_VERSION: "18.04"
   needs:
-    - build:libvirt-18.04
+    - test:libvirt-18.04
 
-test:virtualbox-22.04:
+build:virtualbox-22.04:
   <<: *job-packer-build
-  stage: test
+  stage: build
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-22.04"
     paths:
@@ -275,6 +372,20 @@ test:virtualbox-22.04:
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "22.04"
+
+test:virtualbox-22.04:
+  <<: *job-molecule
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-22.04"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "22.04"
+  needs:
+    - build:virtualbox-22.04
 
 deploy:virtualbox-22.04:
   <<: *job-vagrant-cloud-provider-upload
@@ -290,9 +401,9 @@ deploy:virtualbox-22.04:
   needs:
     - test:virtualbox-22.04
 
-test:virtualbox-21.10:
+build:virtualbox-21.10:
   <<: *job-packer-build
-  stage: test
+  stage: build
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-21.10"
     paths:
@@ -300,6 +411,20 @@ test:virtualbox-21.10:
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "21.10"
+
+test:virtualbox-21.10:
+  <<: *job-molecule
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-21.10"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "21.10"
+  needs:
+    - build:virtualbox-21.10
 
 deploy:virtualbox-21.10:
   <<: *job-vagrant-cloud-provider-upload
@@ -315,9 +440,9 @@ deploy:virtualbox-21.10:
   needs:
     - test:virtualbox-21.10
 
-test:virtualbox-20.04:
+build:virtualbox-20.04:
   <<: *job-packer-build
-  stage: test
+  stage: build
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-20.04"
     paths:
@@ -325,6 +450,20 @@ test:virtualbox-20.04:
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "20.04"
+
+test:virtualbox-20.04:
+  <<: *job-molecule
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-20.04"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "20.04"
+  needs:
+    - build:virtualbox-20.04
 
 deploy:virtualbox-20.04:
   <<: *job-vagrant-cloud-provider-upload
@@ -340,9 +479,9 @@ deploy:virtualbox-20.04:
   needs:
     - test:virtualbox-20.04
 
-test:virtualbox-18.04:
+build:virtualbox-18.04:
   <<: *job-packer-build
-  stage: test
+  stage: build
   cache:
     key: "$CI_PIPELINE_ID-virtualbox-18.04"
     paths:
@@ -350,6 +489,20 @@ test:virtualbox-18.04:
   variables:
     _PACKER_BUILDER_PROVIDER: "virtualbox"
     _PACKER_BUILDER_VERSION: "18.04"
+
+test:virtualbox-18.04:
+  <<: *job-molecule
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-virtualbox-18.04"
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "virtualbox"
+    _PACKER_BUILDER_VERSION: "18.04"
+  needs:
+    - build:virtualbox-18.04
 
 deploy:virtualbox-18.04:
   <<: *job-vagrant-cloud-provider-upload
