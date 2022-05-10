@@ -90,6 +90,15 @@
         - { name: "vagrant", password: "vagrant" }
       no_log: true
 
+    - name: authorized_key
+      ansible.posix.authorized_key:
+        name: "{{ item.name }}"
+        key: "{{ item.key }}"
+        state: "present"
+      loop:
+        - { name: "root", key: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub" }
+        - { name: "vagrant", key: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub" }
+
     - name: debian | apt-get dist-upgrade
       ansible.builtin.raw: |
         set -eu

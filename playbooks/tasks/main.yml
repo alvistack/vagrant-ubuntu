@@ -36,7 +36,6 @@
     mode: "{{ item.mode | default('0644') }}"
   loop:
     - { dest: "/etc/sudoers.d/vagrant", mode: "0440" }
-    - { dest: "/home/vagrant/.ssh/authorized_keys", owner: "vagrant", group: "vagrant", mode: "0600" }
     - { dest: "/usr/local/bin/virt-sysprep-firstboot.sh", mode: "0755" }
 
 - name: prepare files
@@ -48,5 +47,4 @@
     state: "{{ item.state | default('file') }}"
   loop:
     - { dest: "/etc/sudoers.d/vagrant", mode: "0440" }
-    - { dest: "/home/vagrant/.ssh/authorized_keys", owner: "vagrant", group: "vagrant", mode: "0600" }
     - { dest: "/usr/local/bin/virt-sysprep-firstboot.sh", mode: "0755" }
