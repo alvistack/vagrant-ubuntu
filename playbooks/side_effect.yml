@@ -92,12 +92,12 @@
 
     - name: authorized_key
       ansible.posix.authorized_key:
-        name: "{{ item.name }}"
+        user: "{{ item.user }}"
         key: "{{ item.key }}"
         state: "present"
       loop:
-        - { name: "root", key: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub" }
-        - { name: "vagrant", key: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub" }
+        - { user: "root", key: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub" }
+        - { user: "vagrant", key: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub" }
 
     - name: debian | apt-get dist-upgrade
       ansible.builtin.raw: |
