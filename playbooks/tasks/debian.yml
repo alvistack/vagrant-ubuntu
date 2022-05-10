@@ -76,12 +76,18 @@
 - name: sh VBoxLinuxAdditions.run
   ansible.builtin.shell: |
     set -euxo pipefail
-    export TMP_DIR="$(mktemp -d)"
-    mount -o loop /home/vagrant/VBoxGuestAdditions.iso $TMP_DIR
+    VERSION=$(curl -skL -m 300 http://download.virtualbox.org/virtualbox/LATEST.TXT)
+    cd /tmp
+    curl -skL -m 300 -O http://download.virtualbox.org/virtualbox/$VERSION/VBoxGuestAdditions_$VERSION.iso
+    TMP_DIR="$(mktemp -d)"
+    mount -o loop /tmp/VBoxGuestAdditions_$VERSION.iso $TMP_DIR
     (echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run) || echo $?
     umount $TMP_DIR
-    rm -rf $TMP_DIR /home/vagrant/VBoxGuestAdditions.iso
+    rm -rf $TMP_DIR /tmp/VBoxGuestAdditions_$VERSION.iso
   args:
     executable: "/bin/bash"
   when:
     - ansible_virtualization_type | lower == 'virtualbox'
+  register: result
+  until: result is succeeded
+  changed_when: result is not succeeded
