@@ -64,41 +64,6 @@
       loop:
         - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
 
-    - name: groupadd
-      ansible.builtin.group:
-        name: "vagrant"
-        gid: "1000"
-        state: "present"
-
-    - name: useradd
-      ansible.builtin.user:
-        name: "vagrant"
-        uid: "1000"
-        group: "vagrant"
-        home: "/home/vagrant"
-        shell: "/bin/bash"
-        create_home: false
-        state: "present"
-
-    - name: passwd
-      ansible.builtin.user:
-        name: "{{ item.name }}"
-        password: "{{ item.password | password_hash('sha512') }}"
-        state: "present"
-      loop:
-        - { name: "root", password: "vagrant" }
-        - { name: "vagrant", password: "vagrant" }
-      no_log: true
-
-    - name: authorized_key
-      ansible.posix.authorized_key:
-        user: "{{ item.user }}"
-        key: "{{ item.key }}"
-        state: "present"
-      loop:
-        - { user: "root", key: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub" }
-        - { user: "vagrant", key: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub" }
-
     - name: debian | apt-get dist-upgrade
       ansible.builtin.raw: |
         set -eu

@@ -14,13 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: rm -rf /etc/zypp/repos.d/*
-  ansible.builtin.raw: |
-    set -eu
-    rm -rf /etc/zypp/repos.d/*
-  changed_when: false
-  failed_when: false
-
 - name: zypper addrepo
   vars:
     ansible_python_interpreter: "python3"
