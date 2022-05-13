@@ -109,11 +109,9 @@
 
 .script-vagrant-box-add: &script-vagrant-box-add
   - |
-    export VAGRANT_HOME="$CI_BUILDS_DIR"
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _BOX="$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION"
     export _PROVIDER="$_PACKER_BUILDER_PROVIDER"
-    sudo -E vagrant plugin install vagrant-libvirt
     sudo -E vagrant box add \
       --name $_ORG/$_BOX \
       --provider $_PROVIDER \
@@ -121,7 +119,6 @@
 
 .script-molecule-test: &script-molecule-test
   - |
-    export VAGRANT_HOME="$CI_BUILDS_DIR"
     export VAGRANT_EXPERIMENTAL="1"
     export _MOLECULE_INSTANCE_NAME="$(pwgen -1AB 12)"
     sudo -E molecule test -s $_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
