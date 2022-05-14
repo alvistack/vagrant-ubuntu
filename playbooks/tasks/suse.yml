@@ -19,7 +19,6 @@
     ansible_python_interpreter: "python3"
   zypper_repository:
     name: "{{ item.name }}"
-    description: "{{ item.description }}"
     enabled: "{{ item.enabled }}"
     autorefresh: "{{ item.autorefresh }}"
     repo: "{{ item.repo }}"
