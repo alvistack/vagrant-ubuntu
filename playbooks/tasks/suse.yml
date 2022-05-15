@@ -19,10 +19,12 @@
     ansible_python_interpreter: "python3"
   zypper_repository:
     name: "{{ item.name }}"
+    description: "{{ item.description }}"
     enabled: "{{ item.enabled }}"
     autorefresh: "{{ item.autorefresh }}"
     repo: "{{ item.repo }}"
     state: "{{ item.state }}"
+    overwrite_multiple: true
   loop: "{{ _zypper_repository }}"
   register: result
   until: result is succeeded
