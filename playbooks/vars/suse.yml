@@ -16,34 +16,34 @@
 
 _zypper_repository:
   - name: "repo-debug"
+    description: "openSUSE-Tumbleweed-Debug"
     enabled: false
     autorefresh: true
     repo: "http://download.opensuse.org/debug/tumbleweed/repo/oss/"
     state: "present"
-  - name: "repo-source"
-    enabled: false
-    autorefresh: true
-    repo: "http://download.opensuse.org/source/tumbleweed/repo/oss/"
-    state: "present"
-  - name: "repo-oss"
-    enabled: true
-    autorefresh: true
-    repo: "http://download.opensuse.org/tumbleweed/repo/oss/"
-    state: "present"
   - name: "repo-non-oss"
+    description: "openSUSE-Tumbleweed-Non-Oss"
     enabled: true
     autorefresh: true
     repo: "http://download.opensuse.org/tumbleweed/repo/non-oss/"
     state: "present"
+  - name: "repo-oss"
+    description: "openSUSE-Tumbleweed-Oss"
+    enabled: true
+    autorefresh: true
+    repo: "http://download.opensuse.org/tumbleweed/repo/oss/"
+    state: "present"
+  - name: "repo-source"
+    description: "openSUSE-Tumbleweed-Source"
+    enabled: false
+    autorefresh: true
+    repo: "http://download.opensuse.org/source/tumbleweed/repo/oss/"
+    state: "present"
   - name: "repo-update"
+    description: "openSUSE-Tumbleweed-Update"
     enabled: true
     autorefresh: true
     repo: "http://download.opensuse.org/update/tumbleweed/"
-    state: "present"
-  - name: "repo-update-non-oss"
-    enabled: true
-    autorefresh: true
-    repo: "http://download.opensuse.org/update/tumbleweed-non-oss/"
     state: "present"
 
 _zypper:
