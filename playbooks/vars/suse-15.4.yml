@@ -100,6 +100,7 @@ _zypper:
   - { state: "latest", name: "curl" }
   - { state: "latest", name: "gcc" }
   - { state: "latest", name: "growpart" }
+  - { state: "latest", name: "insserv-compat" }
   - { state: "latest", name: "iproute2" }
   - { state: "latest", name: "kernel-default" }
   - { state: "latest", name: "kernel-source" }
