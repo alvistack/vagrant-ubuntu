@@ -112,6 +112,7 @@
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _BOX="$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION"
     export _PROVIDER="$_PACKER_BUILDER_PROVIDER"
+    sudo -E umount /home/vagrant/.vagrant.d/boxes
     sudo -E vagrant box add \
       --name $_ORG/$_BOX \
       --provider $_PROVIDER \
