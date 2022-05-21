@@ -18,9 +18,10 @@ namespace: alvistack
 name: vagrant-ubuntu
 description: Vagrant Box Packaging for Ubuntu
 
-version: VERSION
+version: 0.0.0
 readme: README.md
-license: Apache-2.0
+license:
+  - Apache-2.0
 
 repository: https://github.com/alvistack/vagrant-ubuntu
 documentation: https://github.com/alvistack/vagrant-ubuntu

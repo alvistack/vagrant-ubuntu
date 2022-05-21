@@ -25,9 +25,9 @@ _rpm_download:
     checksum: "d3731f75ac51d998c6c4a71871ae7b62fc6f8bbf236ba609e7d303ec8c3d1390"
 
 _yum_config_manager:
-  - { state: "enable", name: "rhel-9-for-x86_64-baseos-beta-rpms" }
-  - { state: "enable", name: "rhel-9-for-x86_64-appstream-beta-rpms" }
-  - { state: "enable", name: "codeready-builder-beta-for-rhel-9-x86_64-rpms" }
+  - { state: "enable", name: "rhel-9-for-x86_64-baseos-rpms" }
+  - { state: "enable", name: "rhel-9-for-x86_64-appstream-rpms" }
+  - { state: "enable", name: "codeready-builder-for-rhel-9-x86_64-rpms" }
 
 _yum:
   - { state: "latest", name: "ca-certificates" }
