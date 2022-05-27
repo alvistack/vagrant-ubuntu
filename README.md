@@ -5,7 +5,7 @@
 [![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/vagrant-ubuntu/master)](https://gitlab.com/alvistack/vagrant-ubuntu/-/pipelines)
 [![GitHub tag](https://img.shields.io/github/tag/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/tags)
 [![GitHub license](https://img.shields.io/github/license/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/blob/master/LICENSE)
-[![Vagrant Box download](https://img.shields.io/badge/dynamic/json?label=alvistack%2Fubuntu-20.04&query=%24.boxes%5B%3A1%5D.downloads&url=https%3A%2F%2Fapp.vagrantup.com%2Fapi%2Fv1%2Fsearch%3Fq%3Dalvistack%2Fubuntu-20.04)](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.04)
+[![Vagrant Box download](https://img.shields.io/badge/dynamic/json?label=alvistack%2Fubuntu-22.04&query=%24.boxes%5B%3A1%5D.downloads&url=https%3A%2F%2Fapp.vagrantup.com%2Fapi%2Fv1%2Fsearch%3Fq%3Dalvistack%2Fubuntu-22.04)](https://app.vagrantup.com/alvistack/boxes/ubuntu-22.04)
 
 Ubuntu is a Debian-based Linux operating system that runs from the desktop to the cloud, to all your internet connected things. It is the world's most popular operating system across public clouds and OpenStack clouds. It is the number one platform for containers; from Docker to Kubernetes to LXD, Ubuntu can run your containers at scale. Fast, secure and simple, Ubuntu powers millions of PCs worldwide.
 
@@ -43,7 +43,7 @@ Learn more about Ubuntu: <https://ubuntu.com/>
 Once you have [Vagrant](https://www.vagrantup.com/docs/installation) and [VirtaulBox](https://www.virtualbox.org/) installed, run the following commands under your [project directory](https://learn.hashicorp.com/tutorials/vagrant/getting-started-project-setup?in=vagrant/getting-started):
 
     # Initialize Vagrant
-    vagrant init alvistack/ubuntu-20.04
+    vagrant init alvistack/ubuntu-22.04
     
     # Start the virtual machine
     vagrant up
@@ -53,6 +53,15 @@ Once you have [Vagrant](https://www.vagrantup.com/docs/installation) and [Virtau
     
     # Terminate the virtual machine
     vagrant destroy --force
+
+### Molecule
+
+You could also run our [Molecule](https://molecule.readthedocs.io/en/stable/) test cases if you have [Vagrant](https://www.vagrantup.com/) and [Libvirt](https://libvirt.org/) installed, e.g.
+
+    # Run Molecule on Ubuntu 22.04
+    molecule converge -s libvirt-22.04
+
+Please refer to [.gitlab-ci.yml](.gitlab-ci.yml) for more information on running Molecule.
 
 ## Versioning
 
