@@ -14,17 +14,17 @@ Learn more about Ubuntu: <https://ubuntu.com/>
 ## Supported Boxes and Respective Packer Template Links
 
   - [`alvistack/ubuntu-22.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-22.04)
-      - [`packer/libvirt-22.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-22.04/packer.json)
-      - [`packer/virtualbox-22.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-22.04/packer.json)
+      - [`packer/ubuntu-22.04-libvirt/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-22.04-libvirt/packer.json)
+      - [`packer/ubuntu-22.04-virtualbox/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-22.04-virtualbox/packer.json)
   - [`alvistack/ubuntu-21.10`](https://app.vagrantup.com/alvistack/boxes/ubuntu-21.10)
-      - [`packer/libvirt-21.10/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-21.10/packer.json)
-      - [`packer/virtualbox-21.10/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-21.10/packer.json)
+      - [`packer/ubuntu-21.10-libvirt/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-21.10-libvirt/packer.json)
+      - [`packer/ubuntu-21.10-virtualbox/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-21.10-virtualbox/packer.json)
   - [`alvistack/ubuntu-20.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-20.04)
-      - [`packer/libvirt-20.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-20.04/packer.json)
-      - [`packer/virtualbox-20.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-20.04/packer.json)
+      - [`packer/ubuntu-20.04-libvirt/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-20.04-libvirt/packer.json)
+      - [`packer/ubuntu-20.04-virtualbox/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-20.04-virtualbox/packer.json)
   - [`alvistack/ubuntu-18.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-18.04)
-      - [`packer/libvirt-18.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/libvirt-18.04/packer.json)
-      - [`packer/virtualbox-18.04/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/virtualbox-18.04/packer.json)
+      - [`packer/ubuntu-18.04-libvirt/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-18.04-libvirt/packer.json)
+      - [`packer/ubuntu-18.04-virtualbox/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-18.04-virtualbox/packer.json)
 
 ## Overview
 
@@ -59,7 +59,7 @@ Once you have [Vagrant](https://www.vagrantup.com/docs/installation) and [Virtau
 You could also run our [Molecule](https://molecule.readthedocs.io/en/stable/) test cases if you have [Vagrant](https://www.vagrantup.com/) and [Libvirt](https://libvirt.org/) installed, e.g.
 
     # Run Molecule on Ubuntu 22.04
-    molecule converge -s libvirt-22.04
+    molecule converge -s ubuntu-22.04-libvirt
 
 Please refer to [.gitlab-ci.yml](.gitlab-ci.yml) for more information on running Molecule.
 
