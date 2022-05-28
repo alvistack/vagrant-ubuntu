@@ -104,25 +104,22 @@
 .script-packer-build: &script-packer-build
   - |
     sudo -E vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
-    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    cd $CI_PROJECT_DIR/packer/$_BOX-$_PROVIDER
     sudo -E packer build packer.json
 
 .script-vagrant-box-add: &script-vagrant-box-add
   - |
     export _ORG="$CI_PROJECT_NAMESPACE"
-    export _BOX="$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION"
-    export _PROVIDER="$_PACKER_BUILDER_PROVIDER"
     sudo -E umount /home/vagrant/.vagrant.d/boxes
     sudo -E vagrant box add \
       --name $_ORG/$_BOX \
       --provider $_PROVIDER \
-      $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION/output-vagrant/package.box
+      $CI_PROJECT_DIR/packer/$_BOX-$_PROVIDER/output-vagrant/package.box
 
 .script-molecule-test: &script-molecule-test
   - |
-    export VAGRANT_EXPERIMENTAL="1"
     export _MOLECULE_INSTANCE_NAME="$(pwgen -1AB 12)"
-    sudo -E molecule test -s $_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    sudo -E molecule test -s $_BOX-$_PROVIDER
 
 .script-vagrant-cloud-provider-upload: &script-vagrant-cloud-provider-upload
   - |
@@ -134,10 +131,8 @@
       exit 0
     fi
     sudo -E vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
-    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    cd $CI_PROJECT_DIR/packer/$_BOX-$_PROVIDER
     export _ORG="$CI_PROJECT_NAMESPACE"
-    export _BOX="$(echo $CI_PROJECT_NAME | sed "s/^vagrant-//g")-$_PACKER_BUILDER_VERSION"
-    export _PROVIDER="$_PACKER_BUILDER_PROVIDER"
     export _CHECKSUM="$(sha256sum output-vagrant/package.box | awk '{ print $1 }')"
     curl -skL \
       --header "Content-Type: application/json" \
@@ -183,7 +178,7 @@
     - *script-linters
     - *script-packer-build
 
-.job-molecule: &job-molecule
+.job-molecule-test: &job-molecule-test
   script:
     - *script-bootstrap-python
     - *script-bootstrap-ansible
@@ -200,318 +195,318 @@
     - *script-vagrant-cloud-provider-upload
 
 default:
-  retry: 2
   before_script:
     - *script-git-submodule
+  retry: 2
 
-build:libvirt-22.04:
+build:ubuntu-22.04-libvirt:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-22.04"
+    key: "$CI_PIPELINE_ID-ubuntu-22.04-libvirt"
     paths:
       - packer/*/output-vagrant
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "22.04"
+    _BOX: "ubuntu-22.04"
+    _PROVIDER: "libvirt"
 
-test:libvirt-22.04:
-  <<: *job-molecule
+test:ubuntu-22.04-libvirt:
+  <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-22.04"
+    key: "$CI_PIPELINE_ID-ubuntu-22.04-libvirt"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "22.04"
+    _BOX: "ubuntu-22.04"
+    _PROVIDER: "libvirt"
   needs:
-    - build:libvirt-22.04
+    - build:ubuntu-22.04-libvirt
 
-deploy:libvirt-22.04:
+deploy:ubuntu-22.04-libvirt:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-22.04"
+    key: "$CI_PIPELINE_ID-ubuntu-22.04-libvirt"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "22.04"
+    _BOX: "ubuntu-22.04"
+    _PROVIDER: "libvirt"
   needs:
-    - test:libvirt-22.04
+    - test:ubuntu-22.04-libvirt
 
-build:libvirt-21.10:
+build:ubuntu-22.04-virtualbox:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-21.10"
+    key: "$CI_PIPELINE_ID-ubuntu-22.04-virtualbox"
     paths:
       - packer/*/output-vagrant
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "21.10"
+    _BOX: "ubuntu-22.04"
+    _PROVIDER: "virtualbox"
 
-test:libvirt-21.10:
-  <<: *job-molecule
+test:ubuntu-22.04-virtualbox:
+  <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-21.10"
+    key: "$CI_PIPELINE_ID-ubuntu-22.04-virtualbox"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "21.10"
+    _BOX: "ubuntu-22.04"
+    _PROVIDER: "virtualbox"
   needs:
-    - build:libvirt-21.10
+    - build:ubuntu-22.04-virtualbox
 
-deploy:libvirt-21.10:
+deploy:ubuntu-22.04-virtualbox:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-21.10"
+    key: "$CI_PIPELINE_ID-ubuntu-22.04-virtualbox"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "21.10"
+    _BOX: "ubuntu-22.04"
+    _PROVIDER: "virtualbox"
   needs:
-    - test:libvirt-21.10
+    - test:ubuntu-22.04-virtualbox
 
-build:libvirt-20.04:
+build:ubuntu-21.10-libvirt:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-20.04"
+    key: "$CI_PIPELINE_ID-ubuntu-21.10-libvirt"
     paths:
       - packer/*/output-vagrant
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "20.04"
+    _BOX: "ubuntu-21.10"
+    _PROVIDER: "libvirt"
 
-test:libvirt-20.04:
-  <<: *job-molecule
+test:ubuntu-21.10-libvirt:
+  <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-20.04"
+    key: "$CI_PIPELINE_ID-ubuntu-21.10-libvirt"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "20.04"
+    _BOX: "ubuntu-21.10"
+    _PROVIDER: "libvirt"
   needs:
-    - build:libvirt-20.04
+    - build:ubuntu-21.10-libvirt
 
-deploy:libvirt-20.04:
+deploy:ubuntu-21.10-libvirt:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-20.04"
+    key: "$CI_PIPELINE_ID-ubuntu-21.10-libvirt"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "20.04"
+    _BOX: "ubuntu-21.10"
+    _PROVIDER: "libvirt"
   needs:
-    - test:libvirt-20.04
+    - test:ubuntu-21.10-libvirt
 
-build:libvirt-18.04:
+build:ubuntu-21.10-virtualbox:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-18.04"
+    key: "$CI_PIPELINE_ID-ubuntu-21.10-virtualbox"
     paths:
       - packer/*/output-vagrant
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "18.04"
+    _BOX: "ubuntu-21.10"
+    _PROVIDER: "virtualbox"
 
-test:libvirt-18.04:
-  <<: *job-molecule
+test:ubuntu-21.10-virtualbox:
+  <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-18.04"
+    key: "$CI_PIPELINE_ID-ubuntu-21.10-virtualbox"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "18.04"
+    _BOX: "ubuntu-21.10"
+    _PROVIDER: "virtualbox"
   needs:
-    - build:libvirt-18.04
+    - build:ubuntu-21.10-virtualbox
 
-deploy:libvirt-18.04:
+deploy:ubuntu-21.10-virtualbox:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-libvirt-18.04"
+    key: "$CI_PIPELINE_ID-ubuntu-21.10-virtualbox"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "libvirt"
-    _PACKER_BUILDER_VERSION: "18.04"
+    _BOX: "ubuntu-21.10"
+    _PROVIDER: "virtualbox"
   needs:
-    - test:libvirt-18.04
+    - test:ubuntu-21.10-virtualbox
 
-build:virtualbox-22.04:
+build:ubuntu-20.04-libvirt:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-22.04"
+    key: "$CI_PIPELINE_ID-ubuntu-20.04-libvirt"
     paths:
       - packer/*/output-vagrant
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "22.04"
+    _BOX: "ubuntu-20.04"
+    _PROVIDER: "libvirt"
 
-test:virtualbox-22.04:
-  <<: *job-molecule
+test:ubuntu-20.04-libvirt:
+  <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-22.04"
+    key: "$CI_PIPELINE_ID-ubuntu-20.04-libvirt"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "22.04"
+    _BOX: "ubuntu-20.04"
+    _PROVIDER: "libvirt"
   needs:
-    - build:virtualbox-22.04
+    - build:ubuntu-20.04-libvirt
 
-deploy:virtualbox-22.04:
+deploy:ubuntu-20.04-libvirt:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-22.04"
+    key: "$CI_PIPELINE_ID-ubuntu-20.04-libvirt"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "22.04"
+    _BOX: "ubuntu-20.04"
+    _PROVIDER: "libvirt"
   needs:
-    - test:virtualbox-22.04
+    - test:ubuntu-20.04-libvirt
 
-build:virtualbox-21.10:
+build:ubuntu-20.04-virtualbox:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-21.10"
+    key: "$CI_PIPELINE_ID-ubuntu-20.04-virtualbox"
     paths:
       - packer/*/output-vagrant
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "21.10"
+    _BOX: "ubuntu-20.04"
+    _PROVIDER: "virtualbox"
 
-test:virtualbox-21.10:
-  <<: *job-molecule
+test:ubuntu-20.04-virtualbox:
+  <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-21.10"
+    key: "$CI_PIPELINE_ID-ubuntu-20.04-virtualbox"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "21.10"
+    _BOX: "ubuntu-20.04"
+    _PROVIDER: "virtualbox"
   needs:
-    - build:virtualbox-21.10
+    - build:ubuntu-20.04-virtualbox
 
-deploy:virtualbox-21.10:
+deploy:ubuntu-20.04-virtualbox:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-21.10"
+    key: "$CI_PIPELINE_ID-ubuntu-20.04-virtualbox"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "21.10"
+    _BOX: "ubuntu-20.04"
+    _PROVIDER: "virtualbox"
   needs:
-    - test:virtualbox-21.10
+    - test:ubuntu-20.04-virtualbox
 
-build:virtualbox-20.04:
+build:ubuntu-18.04-libvirt:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-20.04"
+    key: "$CI_PIPELINE_ID-ubuntu-18.04-libvirt"
     paths:
       - packer/*/output-vagrant
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "20.04"
+    _BOX: "ubuntu-18.04"
+    _PROVIDER: "libvirt"
 
-test:virtualbox-20.04:
-  <<: *job-molecule
+test:ubuntu-18.04-libvirt:
+  <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-20.04"
+    key: "$CI_PIPELINE_ID-ubuntu-18.04-libvirt"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "20.04"
+    _BOX: "ubuntu-18.04"
+    _PROVIDER: "libvirt"
   needs:
-    - build:virtualbox-20.04
+    - build:ubuntu-18.04-libvirt
 
-deploy:virtualbox-20.04:
+deploy:ubuntu-18.04-libvirt:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-20.04"
+    key: "$CI_PIPELINE_ID-ubuntu-18.04-libvirt"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "20.04"
+    _BOX: "ubuntu-18.04"
+    _PROVIDER: "libvirt"
   needs:
-    - test:virtualbox-20.04
+    - test:ubuntu-18.04-libvirt
 
-build:virtualbox-18.04:
+build:ubuntu-18.04-virtualbox:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-18.04"
+    key: "$CI_PIPELINE_ID-ubuntu-18.04-virtualbox"
     paths:
       - packer/*/output-vagrant
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "18.04"
+    _BOX: "ubuntu-18.04"
+    _PROVIDER: "virtualbox"
 
-test:virtualbox-18.04:
-  <<: *job-molecule
+test:ubuntu-18.04-virtualbox:
+  <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-18.04"
+    key: "$CI_PIPELINE_ID-ubuntu-18.04-virtualbox"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "18.04"
+    _BOX: "ubuntu-18.04"
+    _PROVIDER: "virtualbox"
   needs:
-    - build:virtualbox-18.04
+    - build:ubuntu-18.04-virtualbox
 
-deploy:virtualbox-18.04:
+deploy:ubuntu-18.04-virtualbox:
   <<: *job-vagrant-cloud-provider-upload
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-virtualbox-18.04"
+    key: "$CI_PIPELINE_ID-ubuntu-18.04-virtualbox"
     paths:
       - packer/*/output-vagrant
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "virtualbox"
-    _PACKER_BUILDER_VERSION: "18.04"
+    _BOX: "ubuntu-18.04"
+    _PROVIDER: "virtualbox"
   needs:
-    - test:virtualbox-18.04
+    - test:ubuntu-18.04-virtualbox
