@@ -58,7 +58,7 @@ _zypper:
   - { state: "latest", name: "make" }
   - { state: "latest", name: "openssh" }
   - { state: "latest", name: "perl" }
-  - { state: "latest", name: "python38" }
+  - { state: "latest", name: "python3" }
   - { state: "latest", name: "rsync" }
   - { state: "latest", name: "shadow" }
   - { state: "latest", name: "sudo" }
