@@ -248,6 +248,8 @@ build:ubuntu-22.04-virtualbox:
   variables:
     _BOX: "ubuntu-22.04"
     _PROVIDER: "virtualbox"
+  allow_failure: true
+  retry: 0
 
 test:ubuntu-22.04-virtualbox:
   <<: *job-molecule-test
@@ -262,6 +264,8 @@ test:ubuntu-22.04-virtualbox:
     _PROVIDER: "virtualbox"
   needs:
     - build:ubuntu-22.04-virtualbox
+  allow_failure: true
+  retry: 0
 
 deploy:ubuntu-22.04-virtualbox:
   <<: *job-vagrant-cloud-provider-upload
@@ -276,6 +280,8 @@ deploy:ubuntu-22.04-virtualbox:
     _PROVIDER: "virtualbox"
   needs:
     - test:ubuntu-22.04-virtualbox
+  allow_failure: true
+  retry: 0
 
 build:ubuntu-21.10-libvirt:
   <<: *job-packer-build
@@ -326,6 +332,8 @@ build:ubuntu-21.10-virtualbox:
   variables:
     _BOX: "ubuntu-21.10"
     _PROVIDER: "virtualbox"
+  allow_failure: true
+  retry: 0
 
 test:ubuntu-21.10-virtualbox:
   <<: *job-molecule-test
@@ -340,6 +348,8 @@ test:ubuntu-21.10-virtualbox:
     _PROVIDER: "virtualbox"
   needs:
     - build:ubuntu-21.10-virtualbox
+  allow_failure: true
+  retry: 0
 
 deploy:ubuntu-21.10-virtualbox:
   <<: *job-vagrant-cloud-provider-upload
@@ -354,6 +364,8 @@ deploy:ubuntu-21.10-virtualbox:
     _PROVIDER: "virtualbox"
   needs:
     - test:ubuntu-21.10-virtualbox
+  allow_failure: true
+  retry: 0
 
 build:ubuntu-20.04-libvirt:
   <<: *job-packer-build
@@ -404,6 +416,8 @@ build:ubuntu-20.04-virtualbox:
   variables:
     _BOX: "ubuntu-20.04"
     _PROVIDER: "virtualbox"
+  allow_failure: true
+  retry: 0
 
 test:ubuntu-20.04-virtualbox:
   <<: *job-molecule-test
@@ -418,6 +432,8 @@ test:ubuntu-20.04-virtualbox:
     _PROVIDER: "virtualbox"
   needs:
     - build:ubuntu-20.04-virtualbox
+  allow_failure: true
+  retry: 0
 
 deploy:ubuntu-20.04-virtualbox:
   <<: *job-vagrant-cloud-provider-upload
@@ -432,6 +448,8 @@ deploy:ubuntu-20.04-virtualbox:
     _PROVIDER: "virtualbox"
   needs:
     - test:ubuntu-20.04-virtualbox
+  allow_failure: true
+  retry: 0
 
 build:ubuntu-18.04-libvirt:
   <<: *job-packer-build
@@ -482,6 +500,8 @@ build:ubuntu-18.04-virtualbox:
   variables:
     _BOX: "ubuntu-18.04"
     _PROVIDER: "virtualbox"
+  allow_failure: true
+  retry: 0
 
 test:ubuntu-18.04-virtualbox:
   <<: *job-molecule-test
@@ -496,6 +516,8 @@ test:ubuntu-18.04-virtualbox:
     _PROVIDER: "virtualbox"
   needs:
     - build:ubuntu-18.04-virtualbox
+  allow_failure: true
+  retry: 0
 
 deploy:ubuntu-18.04-virtualbox:
   <<: *job-vagrant-cloud-provider-upload
@@ -510,3 +532,5 @@ deploy:ubuntu-18.04-virtualbox:
     _PROVIDER: "virtualbox"
   needs:
     - test:ubuntu-18.04-virtualbox
+  allow_failure: true
+  retry: 0
