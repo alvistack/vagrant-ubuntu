@@ -33,8 +33,10 @@
   vars:
     ansible_python_interpreter: "python3"
   community.general.zypper:
-    name: "*"
-    state: "latest"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop:
+    - { name: "*", state: "latest" }
   register: result
   until: result is succeeded
 
