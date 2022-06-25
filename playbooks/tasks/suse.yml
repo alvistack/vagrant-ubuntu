@@ -17,7 +17,7 @@
 - name: zypper addrepo
   vars:
     ansible_python_interpreter: "python3"
-  zypper_repository:
+  community.general.zypper_repository:
     name: "{{ item.name }}"
     description: "{{ item.description }}"
     enabled: "{{ item.enabled }}"
@@ -32,7 +32,7 @@
 - name: zypper update
   vars:
     ansible_python_interpreter: "python3"
-  ansible.builtin.zypper:
+  community.general.zypper:
     name: "*"
     state: "latest"
   register: result
@@ -41,7 +41,7 @@
 - name: zypper install
   vars:
     ansible_python_interpreter: "python3"
-  ansible.builtin.zypper:
+  community.general.zypper:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop: "{{ _zypper }}"
@@ -73,7 +73,7 @@
   failed_when: false
 
 - name: zypper install qemu-guest-agent
-  ansible.builtin.zypper:
+  community.general.zypper:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop:
