@@ -29,6 +29,15 @@
   register: result
   until: result is succeeded
 
+- name: zypper update
+  vars:
+    ansible_python_interpreter: "python3"
+  ansible.builtin.zypper:
+    name: "*"
+    state: "latest"
+  register: result
+  until: result is succeeded
+
 - name: zypper install
   vars:
     ansible_python_interpreter: "python3"

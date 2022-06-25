@@ -30,6 +30,12 @@
     update_cache: true
   changed_when: false
 
+- name: apt-get dist-upgrade
+  ansible.builtin.apt:
+    upgrade: "dist"
+  register: result
+  until: result is succeeded
+
 - name: apt-get install
   ansible.builtin.apt:
     name: "{{ item.name }}"
