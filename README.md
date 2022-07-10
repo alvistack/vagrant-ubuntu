@@ -1,6 +1,6 @@
 # Vagrant Box Packaging for Ubuntu
 
-<img src="/alvistack.svg" width="75" alt="AlviStack">
+<a href="https://alvistack.com" title="AlviStack" target="_blank"><img src="/alvistack.svg" height="75" alt="AlviStack"></a>
 
 [![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/vagrant-ubuntu/master)](https://gitlab.com/alvistack/vagrant-ubuntu/-/pipelines)
 [![GitHub tag](https://img.shields.io/github/tag/alvistack/vagrant-ubuntu.svg)](https://github.com/alvistack/vagrant-ubuntu/tags)
