@@ -81,11 +81,11 @@
       changed_when: false
       failed_when: false
 
-    - name: suse | zypper update
+    - name: suse | zypper dist-upgrade
       ansible.builtin.raw: |
         set -eu
         zypper -n --gpg-auto-import-keys refresh
-        zypper -n update -y
+        zypper -n dist-upgrade -y --allow-vendor-change
       changed_when: false
       failed_when: false
 
