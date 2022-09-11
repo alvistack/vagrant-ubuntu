@@ -45,9 +45,7 @@ autoinstall:
       - cloud-init
       - curl
       - e2fsprogs
-      - gcc
       - iproute2
-      - make
       - openssh-server
       - perl
       - python3
