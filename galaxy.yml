@@ -15,7 +15,7 @@
 # limitations under the License.
 
 namespace: alvistack
-name: vagrant-ubuntu
+name: ubuntu
 description: Vagrant Box Packaging for Ubuntu
 
 version: 0.0.0
