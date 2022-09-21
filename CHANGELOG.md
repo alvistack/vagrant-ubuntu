@@ -4,6 +4,8 @@
 
 ### Major Changes
 
+  - Support Ubuntu 22.10
+
 ## 20220915.1.1 - 2022-09-15
 
 ### Major Changes
