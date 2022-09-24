@@ -15,23 +15,13 @@
 # limitations under the License.
 
 driver:
-  name: vagrant
-  provider:
-    name: virtualbox
-  provision: true
+  name: delegated
+  options:
+    managed: false
+    ansible_connection_options:
+      ansible_connection: local
 platforms:
-  - name: ${_MOLECULE_INSTANCE_NAME}-1
-    box: alvistack/ubuntu-22.04
-    cpu: 2
-    memory: 8192
-    provider_raw_config_args:
-      - "customize ['modifyvm', :id, '--cpu-profile', 'host']"
-      - "customize ['modifyvm', :id, '--nested-hw-virt', 'on']"
-    instance_raw_config_args:
-      - "vm.box_check_update = false"
-      - "vm.disk :disk, name: 'sdb', size: '10GB'"
-      - "vm.provision :shell, inline: 'systemctl stop guestfs-firstboot.service'"
-      - "vm.provision :shell, inline: 'systemctl disable guestfs-firstboot.service'"
+  - name: localhost
 lint: |
   set -euxo pipefail
   yamllint .

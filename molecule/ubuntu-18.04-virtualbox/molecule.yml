@@ -57,6 +57,8 @@ provisioner:
   inventory:
     links:
       group_vars: group_vars
+  playbooks:
+    side_effect: side_effect.yml
 verifier:
   name: ansible
 prerun: false
