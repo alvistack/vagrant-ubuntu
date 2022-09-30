@@ -33,7 +33,7 @@
         - { dest: "/etc/ansible/roles" }
 
     - name: rsync directories
-      synchronize:
+      ansible.posix.synchronize:
         dest: "{{ item.dest }}"
         src: "{{ item.src }}"
         archive: true
