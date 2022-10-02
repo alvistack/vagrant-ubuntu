@@ -59,12 +59,14 @@
     - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
 
 - name: update-grub
-  ansible.builtin.command: update-grub
+  ansible.builtin.command:
+    cmd: update-grub
   changed_when: false
   failed_when: false
 
 - name: update-initramfs -c -k all
-  ansible.builtin.command: update-initramfs -c -k all
+  ansible.builtin.command:
+    cmd: update-initramfs -c -k all
   changed_when: false
   failed_when: false
 

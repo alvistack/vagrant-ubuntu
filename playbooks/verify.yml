@@ -41,9 +41,10 @@
           skip: true
 
     - name: ssh-keygen
-      ansible.builtin.shell: |
-        set -euxo pipefail
-        ssh-keygen -A
+      ansible.builtin.shell:
+        cmd: |
+          set -euxo pipefail
+          ssh-keygen -A
       args:
         executable: "/bin/bash"
       changed_when: false
