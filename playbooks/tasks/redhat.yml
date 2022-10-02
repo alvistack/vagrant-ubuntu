@@ -24,18 +24,19 @@
   until: result is succeeded
 
 - name: download archive
-  ansible.builtin.shell: |
-    set -euxo pipefail
-    mkdir -p /var/log/ansible
-    exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-get_url.log)
-    TMP_DIR="$(mktemp -d)" \
-      && cd $TMP_DIR \
-      && mkdir -p .{{ item.dest | dirname }} \
-      && curl -skL -m 300 {{ item.url }} > .{{ item.dest }} \
-      && echo -n "{{ item.checksum }} .{{ item.dest }}" | sha256sum -c - \
-      && mkdir -p {{ item.dest | dirname }} \
-      && mv .{{ item.dest }} {{ item.dest }} \
-      && rm -rf $TMP_DIR
+  ansible.builtin.shell:
+    cmd: |
+      set -euxo pipefail
+      mkdir -p /var/log/ansible
+      exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-get_url.log)
+      TMP_DIR="$(mktemp -d)" \
+        && cd $TMP_DIR \
+        && mkdir -p .{{ item.dest | dirname }} \
+        && curl -skL -m 300 {{ item.url }} > .{{ item.dest }} \
+        && echo -n "{{ item.checksum }} .{{ item.dest }}" | sha256sum -c - \
+        && mkdir -p {{ item.dest | dirname }} \
+        && mv .{{ item.dest }} {{ item.dest }} \
+        && rm -rf $TMP_DIR
   args:
     executable: "/bin/bash"
     creates: "/var/log/ansible/{{ item.checksum }}-get_url.log"
@@ -44,11 +45,12 @@
   until: result is succeeded
 
 - name: yum install
-  ansible.builtin.shell: |
-    set -euxo pipefail
-    mkdir -p /var/log/ansible
-    exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-unarchive.log)
-    yum install -y {{ item.dest }}
+  ansible.builtin.shell:
+    cmd: |
+      set -euxo pipefail
+      mkdir -p /var/log/ansible
+      exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-unarchive.log)
+      yum install -y {{ item.dest }}
   args:
     executable: "/bin/bash"
     creates: "/var/log/ansible/{{ item.checksum }}-unarchive.log"
@@ -57,7 +59,8 @@
   failed_when: false
 
 - name: yum-config-manager --enable
-  ansible.builtin.command: yum-config-manager --{{ item.state }} {{ item.name }}
+  ansible.builtin.command:
+    cmd: yum-config-manager --{{ item.state }} {{ item.name }}
   loop: "{{ _yum_config_manager }}"
   changed_when: false
   failed_when: false
@@ -94,12 +97,14 @@
     - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
 
 - name: grub2-mkconfig -o /boot/grub2/grub.cfg
-  ansible.builtin.command: grub2-mkconfig -o /boot/grub2/grub.cfg
+  ansible.builtin.command:
+    cmd: grub2-mkconfig -o /boot/grub2/grub.cfg
   changed_when: false
   failed_when: false
 
 - name: dracut -f
-  ansible.builtin.command: dracut -f
+  ansible.builtin.command:
+    cmd: dracut -f
   changed_when: false
   failed_when: false
 
@@ -115,16 +120,17 @@
   until: result is succeeded
 
 - name: sh VBoxLinuxAdditions.run
-  ansible.builtin.shell: |
-    set -euxo pipefail
-    VERSION=$(curl -skL -m 300 http://download.virtualbox.org/virtualbox/LATEST.TXT)
-    cd /tmp
-    curl -skL -m 300 -O http://download.virtualbox.org/virtualbox/$VERSION/VBoxGuestAdditions_$VERSION.iso
-    TMP_DIR="$(mktemp -d)"
-    mount -o loop /tmp/VBoxGuestAdditions_$VERSION.iso $TMP_DIR
-    (echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run) || echo $?
-    umount $TMP_DIR
-    rm -rf $TMP_DIR /tmp/VBoxGuestAdditions_$VERSION.iso
+  ansible.builtin.shell:
+    cmd: |
+      set -euxo pipefail
+      VERSION=$(curl -skL -m 300 http://download.virtualbox.org/virtualbox/LATEST.TXT)
+      cd /tmp
+      curl -skL -m 300 -O http://download.virtualbox.org/virtualbox/$VERSION/VBoxGuestAdditions_$VERSION.iso
+      TMP_DIR="$(mktemp -d)"
+      mount -o loop /tmp/VBoxGuestAdditions_$VERSION.iso $TMP_DIR
+      (echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run) || echo $?
+      umount $TMP_DIR
+      rm -rf $TMP_DIR /tmp/VBoxGuestAdditions_$VERSION.iso
   args:
     executable: "/bin/bash"
   when:

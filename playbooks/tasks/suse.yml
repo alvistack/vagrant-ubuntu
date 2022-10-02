@@ -65,12 +65,14 @@
     - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
 
 - name: grub2-mkconfig -o /boot/grub2/grub.cfg
-  ansible.builtin.command: grub2-mkconfig -o /boot/grub2/grub.cfg
+  ansible.builtin.command:
+    cmd: grub2-mkconfig -o /boot/grub2/grub.cfg
   changed_when: false
   failed_when: false
 
 - name: dracut -f
-  ansible.builtin.command: dracut -f
+  ansible.builtin.command:
+    cmd: dracut -f
   changed_when: false
   failed_when: false
 
@@ -86,16 +88,17 @@
   until: result is succeeded
 
 - name: sh VBoxLinuxAdditions.run
-  ansible.builtin.shell: |
-    set -euxo pipefail
-    VERSION=$(curl -skL -m 300 http://download.virtualbox.org/virtualbox/LATEST.TXT)
-    cd /tmp
-    curl -skL -m 300 -O http://download.virtualbox.org/virtualbox/$VERSION/VBoxGuestAdditions_$VERSION.iso
-    TMP_DIR="$(mktemp -d)"
-    mount -o loop /tmp/VBoxGuestAdditions_$VERSION.iso $TMP_DIR
-    (echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run) || echo $?
-    umount $TMP_DIR
-    rm -rf $TMP_DIR /tmp/VBoxGuestAdditions_$VERSION.iso
+  ansible.builtin.shell:
+    cmd: |
+      set -euxo pipefail
+      VERSION=$(curl -skL -m 300 http://download.virtualbox.org/virtualbox/LATEST.TXT)
+      cd /tmp
+      curl -skL -m 300 -O http://download.virtualbox.org/virtualbox/$VERSION/VBoxGuestAdditions_$VERSION.iso
+      TMP_DIR="$(mktemp -d)"
+      mount -o loop /tmp/VBoxGuestAdditions_$VERSION.iso $TMP_DIR
+      (echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run) || echo $?
+      umount $TMP_DIR
+      rm -rf $TMP_DIR /tmp/VBoxGuestAdditions_$VERSION.iso
   args:
     executable: "/bin/bash"
   when:

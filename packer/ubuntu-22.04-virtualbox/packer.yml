@@ -14,7 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- import_playbook: ../../playbooks/prepare.yml
-- import_playbook: ../../playbooks/converge.yml
-- import_playbook: ../../playbooks/side_effect.yml
-- import_playbook: ../../playbooks/cleanup.yml
+- name: import playbook ../../playbooks/prepare.yml
+  import_playbook: ../../playbooks/prepare.yml
+
+- name: import playbook ../../playbooks/converge.yml
+  import_playbook: ../../playbooks/converge.yml
+
+- name: import playbook ../../playbooks/side_effect.yml
+  import_playbook: ../../playbooks/side_effect.yml
+
+- name: import playbook ../../playbooks/cleanup.yml
+  import_playbook: ../../playbooks/cleanup.yml

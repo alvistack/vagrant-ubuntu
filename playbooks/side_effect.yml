@@ -66,30 +66,33 @@
         - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
 
     - name: debian | apt-get dist-upgrade
-      ansible.builtin.raw: |
-        set -eu
-        apt-get update
-        DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
+      ansible.builtin.raw:
+        cmd: |
+          set -eu
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
       args:
         executable: "/bin/bash"
       changed_when: false
       failed_when: false
 
     - name: redhat | yum update
-      ansible.builtin.raw: |
-        set -eu
-        yum makecache
-        yum update -y
+      ansible.builtin.raw:
+        cmd: |
+          set -eu
+          yum makecache
+          yum update -y
       args:
         executable: "/bin/bash"
       changed_when: false
       failed_when: false
 
     - name: suse | zypper dist-upgrade
-      ansible.builtin.raw: |
-        set -eu
-        zypper -n --gpg-auto-import-keys refresh
-        zypper -n dist-upgrade -y --allow-vendor-change
+      ansible.builtin.raw:
+        cmd: |
+          set -eu
+          zypper -n --gpg-auto-import-keys refresh
+          zypper -n dist-upgrade -y --allow-vendor-change
       args:
         executable: "/bin/bash"
       changed_when: false
