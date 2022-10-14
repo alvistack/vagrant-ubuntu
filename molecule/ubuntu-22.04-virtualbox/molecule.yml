@@ -34,9 +34,9 @@ platforms:
       - "vm.provision :shell, inline: 'systemctl disable guestfs-firstboot.service'"
 lint: |
   set -euxo pipefail
+  flake8
   yamllint .
   ansible-lint
-  flake8
 dependency:
   name: galaxy
   options:

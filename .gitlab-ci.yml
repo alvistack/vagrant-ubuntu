@@ -97,9 +97,9 @@
 
 .script-linters: &script-linters
   - |
+    flake8
     yamllint .
     ansible-lint
-    flake8
 
 .script-packer-build: &script-packer-build
   - |
