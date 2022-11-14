@@ -52,7 +52,6 @@ autoinstall:
       - perl
       - python3
       - rsync
-      - standard^
       - sudo
   early-commands:
       - systemctl stop ssh.service
