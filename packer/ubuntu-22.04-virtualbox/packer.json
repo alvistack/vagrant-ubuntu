@@ -44,6 +44,12 @@
           "{{.Name}}",
           "--cpu-profile",
           "host"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--nat-localhostreachable1",
+          "on"
         ]
       ],
       "vrdp_bind_address": "0.0.0.0",
