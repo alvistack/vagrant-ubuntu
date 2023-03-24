@@ -4,6 +4,8 @@
 
 ### Major Changes
 
+-   Support Ubuntu 23.04
+
 ## 20230301.1.1 - 2023-03-01
 
 ### Major Changes
