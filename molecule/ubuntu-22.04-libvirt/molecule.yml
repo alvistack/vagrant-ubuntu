@@ -35,11 +35,6 @@ platforms:
       - "vm.box_check_update = false"
       - "vm.provision :shell, inline: 'systemctl stop guestfs-firstboot.service'"
       - "vm.provision :shell, inline: 'systemctl disable guestfs-firstboot.service'"
-lint: |
-  set -euxo pipefail
-  flake8
-  yamllint .
-  ansible-lint
 dependency:
   name: galaxy
   options:

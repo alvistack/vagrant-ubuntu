@@ -5,6 +5,12 @@
     git submodule sync --recursive
     git submodule update --init --recursive
 
+.script-linters: &script-linters
+  - |
+    flake8
+    yamllint .
+    ansible-lint
+
 .script-bootstrap-python: &script-bootstrap-python
   - |
     if ! [[ -x "$(command -v pipx)" ]]; then
@@ -95,12 +101,6 @@
     fi
     sh -x -c "packer --version"
 
-.script-linters: &script-linters
-  - |
-    flake8
-    yamllint .
-    ansible-lint
-
 .script-packer-build: &script-packer-build
   - |
     sudo -E vagrant cloud auth login --token $VAGRANT_CLOUD_TOKEN
@@ -175,7 +175,6 @@
     - *script-bootstrap-virtualbox
     - *script-bootstrap-vagrant
     - *script-bootstrap-packer
-    - *script-linters
     - *script-packer-build
 
 .job-molecule-test: &job-molecule-test
@@ -197,6 +196,7 @@
 default:
   before_script:
     - *script-git-submodule
+    - *script-linters
   retry: 2
 
 build:ubuntu-23.04-libvirt:
