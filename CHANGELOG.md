@@ -4,6 +4,10 @@
 
 ### Major Changes
 
+-   Support Fedora 38
+
+-   Support Fedora 38
+
 ## 20230329.1.1 - 2023-03-29
 
 ### Major Changes
