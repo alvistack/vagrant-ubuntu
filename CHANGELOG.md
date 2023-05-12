@@ -4,6 +4,7 @@
 
 ### Major Changes
 
+-   Remove Fedora 36 support
 -   Support Fedora 38
 
 -   Support Fedora 38
