@@ -248,7 +248,6 @@ build:ubuntu-23.04-virtualbox:
   variables:
     _BOX: "ubuntu-23.04"
     _PROVIDER: "virtualbox"
-  allow_failure: true
   retry: 0
 
 test:ubuntu-23.04-virtualbox:
@@ -328,7 +327,6 @@ build:ubuntu-22.10-virtualbox:
   variables:
     _BOX: "ubuntu-22.10"
     _PROVIDER: "virtualbox"
-  allow_failure: true
   retry: 0
 
 test:ubuntu-22.10-virtualbox:
@@ -408,7 +406,6 @@ build:ubuntu-22.04-virtualbox:
   variables:
     _BOX: "ubuntu-22.04"
     _PROVIDER: "virtualbox"
-  allow_failure: true
   retry: 0
 
 test:ubuntu-22.04-virtualbox:
@@ -488,7 +485,6 @@ build:ubuntu-20.04-virtualbox:
   variables:
     _BOX: "ubuntu-20.04"
     _PROVIDER: "virtualbox"
-  allow_failure: true
   retry: 0
 
 test:ubuntu-20.04-virtualbox:
@@ -568,7 +564,6 @@ build:ubuntu-18.04-virtualbox:
   variables:
     _BOX: "ubuntu-18.04"
     _PROVIDER: "virtualbox"
-  allow_failure: true
   retry: 0
 
 test:ubuntu-18.04-virtualbox:
