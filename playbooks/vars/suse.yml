@@ -54,7 +54,7 @@ _zypper:
   - { state: "latest", name: "growpart" }
   - { state: "latest", name: "iproute2" }
   - { state: "latest", name: "kernel-default" }
-  - { state: "latest", name: "kernel-source" }
+  - { state: "latest", name: "kernel-default-devel" }
   - { state: "latest", name: "libXmu6" }
   - { state: "latest", name: "libXt6" }
   - { state: "latest", name: "make" }
