@@ -55,6 +55,8 @@ _zypper:
   - { state: "latest", name: "iproute2" }
   - { state: "latest", name: "kernel-default" }
   - { state: "latest", name: "kernel-source" }
+  - { state: "latest", name: "libXmu6" }
+  - { state: "latest", name: "libXt6" }
   - { state: "latest", name: "make" }
   - { state: "latest", name: "openssh" }
   - { state: "latest", name: "perl" }

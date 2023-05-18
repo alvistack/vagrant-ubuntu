@@ -38,6 +38,8 @@ _yum:
   - { state: "latest", name: "iproute" }
   - { state: "latest", name: "kernel" }
   - { state: "latest", name: "kernel-devel" }
+  - { state: "latest", name: "libXmu" }
+  - { state: "latest", name: "libXt" }
   - { state: "latest", name: "make" }
   - { state: "latest", name: "openssh-server" }
   - { state: "latest", name: "perl" }

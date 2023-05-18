@@ -87,13 +87,14 @@
     cmd: |
       set -euxo pipefail
       VERSION=$(curl -skL -m 300 http://download.virtualbox.org/virtualbox/LATEST.TXT)
-      cd /tmp
-      curl -skL -m 300 -O http://download.virtualbox.org/virtualbox/$VERSION/VBoxGuestAdditions_$VERSION.iso
       TMP_DIR="$(mktemp -d)"
-      mount -o loop /tmp/VBoxGuestAdditions_$VERSION.iso $TMP_DIR
-      (echo "y" | sh $TMP_DIR/VBoxLinuxAdditions.run) || echo $?
-      umount $TMP_DIR
-      rm -rf $TMP_DIR /tmp/VBoxGuestAdditions_$VERSION.iso
+      MOUNT_DIR="$(mktemp -d)"
+      cd $TMP_DIR
+      curl -skL -m 300 -O http://download.virtualbox.org/virtualbox/$VERSION/VBoxGuestAdditions_$VERSION.iso
+      mount -o loop $TMP_DIR/VBoxGuestAdditions_$VERSION.iso $MOUNT_DIR
+      (echo "y" | sh $MOUNT_DIR/VBoxLinuxAdditions.run) || echo $?
+      umount $MOUNT_DIR
+      rm -rf $TMP_DIR $MOUNT_DIR
   args:
     executable: "/bin/bash"
   when:
