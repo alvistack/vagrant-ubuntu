@@ -248,7 +248,8 @@ build:ubuntu-23.04-virtualbox:
   variables:
     _BOX: "ubuntu-23.04"
     _PROVIDER: "virtualbox"
-  retry: 0
+  needs:
+    - build:ubuntu-23.04-libvirt
 
 test:ubuntu-23.04-virtualbox:
   <<: *job-molecule-test
@@ -327,7 +328,8 @@ build:ubuntu-22.10-virtualbox:
   variables:
     _BOX: "ubuntu-22.10"
     _PROVIDER: "virtualbox"
-  retry: 0
+  needs:
+    - build:ubuntu-22.10-libvirt
 
 test:ubuntu-22.10-virtualbox:
   <<: *job-molecule-test
@@ -406,7 +408,8 @@ build:ubuntu-22.04-virtualbox:
   variables:
     _BOX: "ubuntu-22.04"
     _PROVIDER: "virtualbox"
-  retry: 0
+  needs:
+    - build:ubuntu-22.04-libvirt
 
 test:ubuntu-22.04-virtualbox:
   <<: *job-molecule-test
@@ -485,7 +488,8 @@ build:ubuntu-20.04-virtualbox:
   variables:
     _BOX: "ubuntu-20.04"
     _PROVIDER: "virtualbox"
-  retry: 0
+  needs:
+    - build:ubuntu-20.04-libvirt
 
 test:ubuntu-20.04-virtualbox:
   <<: *job-molecule-test
@@ -564,7 +568,8 @@ build:ubuntu-18.04-virtualbox:
   variables:
     _BOX: "ubuntu-18.04"
     _PROVIDER: "virtualbox"
-  retry: 0
+  needs:
+    - build:ubuntu-18.04-libvirt
 
 test:ubuntu-18.04-virtualbox:
   <<: *job-molecule-test
