@@ -249,7 +249,7 @@ build:ubuntu-23.04-virtualbox:
     _BOX: "ubuntu-23.04"
     _PROVIDER: "virtualbox"
   needs:
-    - build:ubuntu-23.04-libvirt
+    - deploy:ubuntu-23.04-libvirt
 
 test:ubuntu-23.04-virtualbox:
   <<: *job-molecule-test
@@ -329,7 +329,7 @@ build:ubuntu-22.10-virtualbox:
     _BOX: "ubuntu-22.10"
     _PROVIDER: "virtualbox"
   needs:
-    - build:ubuntu-22.10-libvirt
+    - deploy:ubuntu-22.10-libvirt
 
 test:ubuntu-22.10-virtualbox:
   <<: *job-molecule-test
@@ -409,7 +409,7 @@ build:ubuntu-22.04-virtualbox:
     _BOX: "ubuntu-22.04"
     _PROVIDER: "virtualbox"
   needs:
-    - build:ubuntu-22.04-libvirt
+    - deploy:ubuntu-22.04-libvirt
 
 test:ubuntu-22.04-virtualbox:
   <<: *job-molecule-test
@@ -489,7 +489,7 @@ build:ubuntu-20.04-virtualbox:
     _BOX: "ubuntu-20.04"
     _PROVIDER: "virtualbox"
   needs:
-    - build:ubuntu-20.04-libvirt
+    - deploy:ubuntu-20.04-libvirt
 
 test:ubuntu-20.04-virtualbox:
   <<: *job-molecule-test
@@ -569,7 +569,7 @@ build:ubuntu-18.04-virtualbox:
     _BOX: "ubuntu-18.04"
     _PROVIDER: "virtualbox"
   needs:
-    - build:ubuntu-18.04-libvirt
+    - deploy:ubuntu-18.04-libvirt
 
 test:ubuntu-18.04-virtualbox:
   <<: *job-molecule-test
