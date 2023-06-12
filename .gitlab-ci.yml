@@ -94,10 +94,10 @@
   - |
     if ! [[ -x "$(command -v packer)" ]]; then
       export DEBIAN_FRONTEND="noninteractive"
-      echo "deb [arch=amd64] https://apt.releases.hashicorp.com jammy main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-      curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/hashicorp.gpg > /dev/null
+      echo "deb http://downloadcontent.opensuse.org/repositories/home:/alvistack/xUbuntu_22.04/ /" | sudo tee /etc/apt/sources.list.d/home:alvistack.list
+      curl -fsSL https://downloadcontent.opensuse.org/repositories/home:alvistack/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_alvistack.gpg > /dev/null
       sudo -E apt-get update
-      sudo -E apt-get install -y packer
+      sudo -E apt-get install -y packer packer-plugin-libvirt
     fi
     sh -x -c "packer --version"
 
