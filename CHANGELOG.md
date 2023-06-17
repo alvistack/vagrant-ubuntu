@@ -4,14 +4,14 @@
 
 ### Major Changes
 
+-   Remove Ubuntu 18.04 support
+
 ## 20230512.1.1 - 2023-05-12
 
 ### Major Changes
 
 -   Remove Fedora 36 support
-
 -   Support Fedora 38
-
 -   Support Fedora 38
 
 ## 20230329.1.1 - 2023-03-29
