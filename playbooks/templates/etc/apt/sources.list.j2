@@ -50,19 +50,19 @@ deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-securit
 # deb-src http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security universe
 deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse
 # deb-src http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse
-{% elif ansible_distribution | lower == 'debian' and ansible_distribution_release | lower == 'buster' %}
-deb http://deb.debian.org/debian/ {{ ansible_distribution_release }} main contrib non-free
+{% elif ansible_distribution | lower == 'debian' and ansible_distribution_release | lower == 'bullseye' %}
+deb http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free
 # deb-src http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free
 
-deb http://security.debian.org/debian-security {{ ansible_distribution_release }}/updates main contrib non-free
-# deb-src http://security.debian.org/debian-security {{ ansible_distribution_release }}/updates main contrib non-free
+deb http://security.debian.org/debian-security {{ ansible_distribution_release }}-security/updates main contrib non-free
+# deb-src http://security.debian.org/debian-security {{ ansible_distribution_release }}-security/updates main contrib non-free
 
 deb http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main contrib non-free
 # deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main contrib non-free
 
 deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free
 # deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free
-{% elif ansible_distribution | lower == 'debian' and ansible_distribution_release | lower == 'bullseye' %}
+{% elif ansible_distribution | lower == 'debian' and ansible_distribution_release | lower == 'bookworm' %}
 deb http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free
 # deb-src http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free
 

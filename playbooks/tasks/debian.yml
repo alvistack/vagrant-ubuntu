@@ -26,6 +26,16 @@
     - { dest: "/etc/apt/preferences.d/nosnap.pref" }
     - { dest: "/etc/apt/sources.list" }
 
+- name: prepare files
+  ansible.builtin.file:
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+    state: "{{ item.state | default('file') }}"
+  loop:
+    - { dest: "/etc/apt/sources.list.d/debian.sources", state: "absent" }
+
 - name: apt-get update
   ansible.builtin.apt:
     update_cache: true
