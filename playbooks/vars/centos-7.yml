@@ -21,8 +21,8 @@ _rpm_key:
 
 _rpm_download:
   - url: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
-    dest: "/var/cache/ansible/e2d5ffdd4cfe09dde17018a31d100db611abe88cc6761d9bdc0c1f41efaa5aa0/epel-release-latest-7.noarch.rpm"
-    checksum: "e2d5ffdd4cfe09dde17018a31d100db611abe88cc6761d9bdc0c1f41efaa5aa0"
+    dest: "/var/cache/ansible/5b13fb5957b84ef7bb9d0b6cd509c947ff6a37d67efdac2b896ddd3b908aad10/epel-release-latest-7.noarch.rpm"
+    checksum: "5b13fb5957b84ef7bb9d0b6cd509c947ff6a37d67efdac2b896ddd3b908aad10"
 
 _yum_config_manager:
   - { state: "enable", name: "base" }
