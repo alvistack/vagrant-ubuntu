@@ -17,22 +17,19 @@
 driver:
   name: vagrant
   provider:
-    name: libvirt
+    name: virtualbox
   provision: true
 platforms:
   - name: ${_MOLECULE_INSTANCE_NAME}-1
-    box: alvistack/ubuntu-23.10
+    box: alvistack/ubuntu-23.04
     cpu: 2
     memory: 8192
     provider_raw_config_args:
-      - "cpu_mode = 'host-passthrough'"
-      - "disk_bus = 'virtio'"
-      - "nic_model_type = 'virtio'"
-      - "video_type = 'virtio'"
-      - "disk_driver :cache => 'writeback'"
-      - "storage :file, bus: 'virtio', cache: 'writeback'"
+      - "customize ['modifyvm', :id, '--cpu-profile', 'host']"
+      - "customize ['modifyvm', :id, '--nested-hw-virt', 'on']"
     instance_raw_config_args:
       - "vm.box_check_update = false"
+      - "vm.disk :disk, name: 'sdb', size: '10GB'"
       - "vm.provision :shell, inline: 'systemctl stop guestfs-firstboot.service'"
       - "vm.provision :shell, inline: 'systemctl disable guestfs-firstboot.service'"
 dependency:

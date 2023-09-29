@@ -21,7 +21,7 @@ driver:
   provision: true
 platforms:
   - name: ${_MOLECULE_INSTANCE_NAME}-1
-    box: alvistack/ubuntu-23.10
+    box: alvistack/ubuntu-23.04
     cpu: 2
     memory: 8192
     provider_raw_config_args:
