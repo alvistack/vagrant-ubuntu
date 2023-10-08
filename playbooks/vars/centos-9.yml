@@ -15,12 +15,12 @@
 # limitations under the License.
 
 _rpm_key:
-  - key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"
+  - key: "http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"
     fingerprint: "FF8AD1344597106ECE813B918A3872BF3228467C"
     state: "present"
 
 _rpm_download:
-  - url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
+  - url: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
     dest: "/var/cache/ansible/a569c096647c70e3748792823356f2e2e1c6c626e6bda60d94e80ea0da210d1a/epel-release-latest-9.noarch.rpm"
     checksum: "a569c096647c70e3748792823356f2e2e1c6c626e6bda60d94e80ea0da210d1a"
 
