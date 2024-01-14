@@ -22,9 +22,9 @@ Learn more about Ubuntu: <https://ubuntu.com/>
 
 ## Supported Boxes and Respective Packer Template Links
 
--   [`alvistack/ubuntu-23.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-23.04)
-    -   [`packer/ubuntu-23.04-libvirt/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-23.04-libvirt/packer.json)
-    -   [`packer/ubuntu-23.04-virtualbox/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-23.04-virtualbox/packer.json)
+-   [`alvistack/ubuntu-23.10`](https://app.vagrantup.com/alvistack/boxes/ubuntu-23.10)
+    -   [`packer/ubuntu-23.10-libvirt/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-23.10-libvirt/packer.json)
+    -   [`packer/ubuntu-23.10-virtualbox/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-23.10-virtualbox/packer.json)
 -   [`alvistack/ubuntu-22.04`](https://app.vagrantup.com/alvistack/boxes/ubuntu-22.04)
     -   [`packer/ubuntu-22.04-libvirt/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-22.04-libvirt/packer.json)
     -   [`packer/ubuntu-22.04-virtualbox/packer.json`](https://github.com/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-22.04-virtualbox/packer.json)
