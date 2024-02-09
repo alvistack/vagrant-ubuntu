@@ -1,0 +1,51 @@
+---
+
+# Copyright 2024 Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+_rpm_key:
+  - key: "http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8"
+    fingerprint: "94E279EB8D8F25B21810ADF121EA45AB2F86D6A1"
+    state: "present"
+
+_rpm_download:
+  - url: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+    dest: "/var/cache/ansible/864e52669121da85a4893de799de275e37feff97b4930d7867bd5c93263ee79a/epel-release-latest-8.noarch.rpm"
+    checksum: "864e52669121da85a4893de799de275e37feff97b4930d7867bd5c93263ee79a"
+
+_yum_config_manager:
+  - { state: "enable", name: "baseos" }
+  - { state: "enable", name: "extras" }
+  - { state: "enable", name: "appstream" }
+  - { state: "enable", name: "powertools" }
+
+_yum:
+  - { state: "latest", name: "ca-certificates" }
+  - { state: "latest", name: "cloud-init" }
+  - { state: "latest", name: "cloud-utils-growpart" }
+  - { state: "latest", name: "curl" }
+  - { state: "latest", name: "gcc" }
+  - { state: "latest", name: "iproute" }
+  - { state: "latest", name: "kernel" }
+  - { state: "latest", name: "kernel-devel" }
+  - { state: "latest", name: "libXmu" }
+  - { state: "latest", name: "libXt" }
+  - { state: "latest", name: "make" }
+  - { state: "latest", name: "openssh-server" }
+  - { state: "latest", name: "perl" }
+  - { state: "latest", name: "python3" }
+  - { state: "latest", name: "rsync" }
+  - { state: "latest", name: "shadow-utils" }
+  - { state: "latest", name: "sudo" }
+  - { state: "latest", name: "util-linux" }
