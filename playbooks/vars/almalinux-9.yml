@@ -15,37 +15,37 @@
 # limitations under the License.
 
 _rpm_key:
-  - key: "http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"
-    fingerprint: "FF8AD1344597106ECE813B918A3872BF3228467C"
-    state: "present"
+  - key: http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9
+    fingerprint: FF8AD1344597106ECE813B918A3872BF3228467C
+    state: present
 
 _rpm_download:
-  - url: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
-    dest: "/var/cache/ansible/a569c096647c70e3748792823356f2e2e1c6c626e6bda60d94e80ea0da210d1a/epel-release-latest-9.noarch.rpm"
-    checksum: "a569c096647c70e3748792823356f2e2e1c6c626e6bda60d94e80ea0da210d1a"
+  - url: http://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+    dest: /var/cache/ansible/a569c096647c70e3748792823356f2e2e1c6c626e6bda60d94e80ea0da210d1a/epel-release-latest-9.noarch.rpm
+    checksum: a569c096647c70e3748792823356f2e2e1c6c626e6bda60d94e80ea0da210d1a
 
 _yum_config_manager:
-  - { state: "enable", name: "baseos" }
-  - { state: "enable", name: "extras-common" }
-  - { state: "enable", name: "appstream" }
-  - { state: "enable", name: "crb" }
+  - { state: enable, name: baseos }
+  - { state: enable, name: extras-common }
+  - { state: enable, name: appstream }
+  - { state: enable, name: crb }
 
 _yum:
-  - { state: "latest", name: "ca-certificates" }
-  - { state: "latest", name: "cloud-init" }
-  - { state: "latest", name: "cloud-utils-growpart" }
-  - { state: "latest", name: "curl" }
-  - { state: "latest", name: "gcc" }
-  - { state: "latest", name: "iproute" }
-  - { state: "latest", name: "kernel" }
-  - { state: "latest", name: "kernel-devel" }
-  - { state: "latest", name: "libXmu" }
-  - { state: "latest", name: "libXt" }
-  - { state: "latest", name: "make" }
-  - { state: "latest", name: "openssh-server" }
-  - { state: "latest", name: "perl" }
-  - { state: "latest", name: "python3" }
-  - { state: "latest", name: "rsync" }
-  - { state: "latest", name: "shadow-utils" }
-  - { state: "latest", name: "sudo" }
-  - { state: "latest", name: "util-linux" }
+  - { state: latest, name: ca-certificates }
+  - { state: latest, name: cloud-init }
+  - { state: latest, name: cloud-utils-growpart }
+  - { state: latest, name: curl }
+  - { state: latest, name: gcc }
+  - { state: latest, name: iproute }
+  - { state: latest, name: kernel }
+  - { state: latest, name: kernel-devel }
+  - { state: latest, name: libXmu }
+  - { state: latest, name: libXt }
+  - { state: latest, name: make }
+  - { state: latest, name: openssh-server }
+  - { state: latest, name: perl }
+  - { state: latest, name: python3 }
+  - { state: latest, name: rsync }
+  - { state: latest, name: shadow-utils }
+  - { state: latest, name: sudo }
+  - { state: latest, name: util-linux }

@@ -15,53 +15,53 @@
 # limitations under the License.
 
 _zypper_repository:
-  - name: "repo-debug"
-    description: "openSUSE-Tumbleweed-Debug"
+  - name: repo-debug
+    description: openSUSE-Tumbleweed-Debug
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/debug/tumbleweed/repo/oss/"
-    state: "present"
-  - name: "repo-non-oss"
-    description: "openSUSE-Tumbleweed-Non-Oss"
+    repo: http://downloadcontent.opensuse.org/debug/tumbleweed/repo/oss/
+    state: present
+  - name: repo-non-oss
+    description: openSUSE-Tumbleweed-Non-Oss
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/tumbleweed/repo/non-oss/"
-    state: "present"
-  - name: "repo-oss"
-    description: "openSUSE-Tumbleweed-Oss"
+    repo: http://downloadcontent.opensuse.org/tumbleweed/repo/non-oss/
+    state: present
+  - name: repo-oss
+    description: openSUSE-Tumbleweed-Oss
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/tumbleweed/repo/oss/"
-    state: "present"
-  - name: "repo-source"
-    description: "openSUSE-Tumbleweed-Source"
+    repo: http://downloadcontent.opensuse.org/tumbleweed/repo/oss/
+    state: present
+  - name: repo-source
+    description: openSUSE-Tumbleweed-Source
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/source/tumbleweed/repo/oss/"
-    state: "present"
-  - name: "repo-update"
-    description: "openSUSE-Tumbleweed-Update"
+    repo: http://downloadcontent.opensuse.org/source/tumbleweed/repo/oss/
+    state: present
+  - name: repo-update
+    description: openSUSE-Tumbleweed-Update
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/update/tumbleweed/"
-    state: "present"
+    repo: http://downloadcontent.opensuse.org/update/tumbleweed/
+    state: present
 
 _zypper:
-  - { state: "latest", name: "ca-certificates" }
-  - { state: "latest", name: "cloud-init" }
-  - { state: "latest", name: "curl" }
-  - { state: "latest", name: "gcc" }
-  - { state: "latest", name: "growpart" }
-  - { state: "latest", name: "iproute2" }
-  - { state: "latest", name: "kernel-default" }
-  - { state: "latest", name: "kernel-default-devel" }
-  - { state: "latest", name: "libXmu6" }
-  - { state: "latest", name: "libXt6" }
-  - { state: "latest", name: "make" }
-  - { state: "latest", name: "openssh" }
-  - { state: "latest", name: "perl" }
-  - { state: "latest", name: "python3" }
-  - { state: "latest", name: "rsync" }
-  - { state: "latest", name: "shadow" }
-  - { state: "latest", name: "sudo" }
-  - { state: "latest", name: "util-linux" }
+  - { state: latest, name: ca-certificates }
+  - { state: latest, name: cloud-init }
+  - { state: latest, name: curl }
+  - { state: latest, name: gcc }
+  - { state: latest, name: growpart }
+  - { state: latest, name: iproute2 }
+  - { state: latest, name: kernel-default }
+  - { state: latest, name: kernel-default-devel }
+  - { state: latest, name: libXmu6 }
+  - { state: latest, name: libXt6 }
+  - { state: latest, name: make }
+  - { state: latest, name: openssh }
+  - { state: latest, name: perl }
+  - { state: latest, name: python3 }
+  - { state: latest, name: rsync }
+  - { state: latest, name: shadow }
+  - { state: latest, name: sudo }
+  - { state: latest, name: util-linux }

@@ -1,5 +1,4 @@
 ---
-
 # Copyright 2024 Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +21,7 @@
     mode: "{{ item.mode | default('0755') }}"
     state: "{{ item.state | default('directory') }}"
   loop:
-    - { dest: "/usr/local/bin" }
+    - { dest: /usr/local/bin }
 
 - name: copy templates
   ansible.builtin.template:
@@ -32,7 +31,7 @@
     group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
-    - { dest: "/usr/local/bin/virt-sysprep-firstboot.sh", mode: "0755" }
+    - { dest: /usr/local/bin/virt-sysprep-firstboot.sh, mode: "0755" }
 
 - name: prepare files
   ansible.builtin.file:
@@ -42,4 +41,4 @@
     mode: "{{ item.mode | default('0644') }}"
     state: "{{ item.state | default('file') }}"
   loop:
-    - { dest: "/usr/local/bin/virt-sysprep-firstboot.sh", mode: "0755" }
+    - { dest: /usr/local/bin/virt-sysprep-firstboot.sh, mode: "0755" }

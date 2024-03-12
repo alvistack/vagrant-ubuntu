@@ -15,102 +15,102 @@
 # limitations under the License.
 
 _zypper_repository:
-  - name: "repo-backports-debug-update"
-    description: "Update repository with updates for openSUSE Leap debuginfo packages from openSUSE Backports"
+  - name: repo-backports-debug-update
+    description: Update repository with updates for openSUSE Leap debuginfo packages from openSUSE Backports
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/update/leap/$releasever/backports_debug/"
-    state: "present"
-  - name: "repo-backports-update"
-    description: "Update repository of openSUSE Backports"
+    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/backports_debug/
+    state: present
+  - name: repo-backports-update
+    description: Update repository of openSUSE Backports
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/update/leap/$releasever/backports/"
-    state: "present"
-  - name: "repo-debug-non-oss"
-    description: "Debug Repository (Non-OSS)"
+    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/backports/
+    state: present
+  - name: repo-debug-non-oss
+    description: Debug Repository (Non-OSS)
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/debug/distribution/leap/$releasever/repo/non-oss/"
-    state: "present"
-  - name: "repo-debug-update-non-oss"
-    description: "Update Repository (Debug, Non-OSS)"
+    repo: http://downloadcontent.opensuse.org/debug/distribution/leap/$releasever/repo/non-oss/
+    state: present
+  - name: repo-debug-update-non-oss
+    description: Update Repository (Debug, Non-OSS)
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/debug/update/leap/$releasever/non-oss/"
-    state: "present"
-  - name: "repo-debug-update"
-    description: "Update Repository (Debug)"
+    repo: http://downloadcontent.opensuse.org/debug/update/leap/$releasever/non-oss/
+    state: present
+  - name: repo-debug-update
+    description: Update Repository (Debug)
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/debug/update/leap/$releasever/oss/"
-    state: "present"
-  - name: "repo-debug"
-    description: "Debug Repository"
+    repo: http://downloadcontent.opensuse.org/debug/update/leap/$releasever/oss/
+    state: present
+  - name: repo-debug
+    description: Debug Repository
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/debug/distribution/leap/$releasever/repo/oss/"
-    state: "present"
-  - name: "repo-non-oss"
-    description: "Non-OSS Repository"
+    repo: http://downloadcontent.opensuse.org/debug/distribution/leap/$releasever/repo/oss/
+    state: present
+  - name: repo-non-oss
+    description: Non-OSS Repository
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/distribution/leap/$releasever/repo/non-oss/"
-    state: "present"
-  - name: "repo-oss"
-    description: "Main Repository"
+    repo: http://downloadcontent.opensuse.org/distribution/leap/$releasever/repo/non-oss/
+    state: present
+  - name: repo-oss
+    description: Main Repository
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/distribution/leap/$releasever/repo/oss/"
-    state: "present"
-  - name: "repo-sle-debug-update"
-    description: "Update repository with debuginfo for updates from SUSE Linux Enterprise 15"
+    repo: http://downloadcontent.opensuse.org/distribution/leap/$releasever/repo/oss/
+    state: present
+  - name: repo-sle-debug-update
+    description: Update repository with debuginfo for updates from SUSE Linux Enterprise 15
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/debug/update/leap/$releasever/sle/"
-    state: "present"
-  - name: "repo-sle-update"
-    description: "Update repository with updates from SUSE Linux Enterprise 15"
+    repo: http://downloadcontent.opensuse.org/debug/update/leap/$releasever/sle/
+    state: present
+  - name: repo-sle-update
+    description: Update repository with updates from SUSE Linux Enterprise 15
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/update/leap/$releasever/sle/"
-    state: "present"
-  - name: "repo-source"
-    description: "Source Repository"
+    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/sle/
+    state: present
+  - name: repo-source
+    description: Source Repository
     enabled: false
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/source/distribution/leap/$releasever/repo/oss/"
-    state: "present"
-  - name: "repo-update-non-oss"
-    description: "Update Repository (Non-Oss)"
+    repo: http://downloadcontent.opensuse.org/source/distribution/leap/$releasever/repo/oss/
+    state: present
+  - name: repo-update-non-oss
+    description: Update Repository (Non-Oss)
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/update/leap/$releasever/non-oss/"
-    state: "present"
-  - name: "repo-update"
-    description: "Main Update Repository"
+    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/non-oss/
+    state: present
+  - name: repo-update
+    description: Main Update Repository
     enabled: true
     autorefresh: true
-    repo: "http://downloadcontent.opensuse.org/update/leap/$releasever/oss/"
-    state: "present"
+    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/oss/
+    state: present
 
 _zypper:
-  - { state: "latest", name: "ca-certificates" }
-  - { state: "latest", name: "cloud-init" }
-  - { state: "latest", name: "curl" }
-  - { state: "latest", name: "gcc" }
-  - { state: "latest", name: "growpart" }
-  - { state: "latest", name: "insserv-compat" }
-  - { state: "latest", name: "iproute2" }
-  - { state: "latest", name: "kernel-default" }
-  - { state: "latest", name: "kernel-default-devel" }
-  - { state: "latest", name: "libXmu6" }
-  - { state: "latest", name: "libXt6" }
-  - { state: "latest", name: "make" }
-  - { state: "latest", name: "openssh" }
-  - { state: "latest", name: "perl" }
-  - { state: "latest", name: "python3" }
-  - { state: "latest", name: "rsync" }
-  - { state: "latest", name: "shadow" }
-  - { state: "latest", name: "sudo" }
-  - { state: "latest", name: "util-linux" }
+  - { state: latest, name: ca-certificates }
+  - { state: latest, name: cloud-init }
+  - { state: latest, name: curl }
+  - { state: latest, name: gcc }
+  - { state: latest, name: growpart }
+  - { state: latest, name: insserv-compat }
+  - { state: latest, name: iproute2 }
+  - { state: latest, name: kernel-default }
+  - { state: latest, name: kernel-default-devel }
+  - { state: latest, name: libXmu6 }
+  - { state: latest, name: libXt6 }
+  - { state: latest, name: make }
+  - { state: latest, name: openssh }
+  - { state: latest, name: perl }
+  - { state: latest, name: python3 }
+  - { state: latest, name: rsync }
+  - { state: latest, name: shadow }
+  - { state: latest, name: sudo }
+  - { state: latest, name: util-linux }
