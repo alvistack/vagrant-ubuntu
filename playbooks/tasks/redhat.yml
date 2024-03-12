@@ -1,5 +1,4 @@
 ---
-
 # Copyright 2024 Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,8 +37,8 @@
         && mv .{{ item.dest }} {{ item.dest }} \
         && rm -rf $TMP_DIR
   args:
-    executable: "/bin/bash"
-    creates: "/var/log/ansible/{{ item.checksum }}-get_url.log"
+    executable: /bin/bash
+    creates: /var/log/ansible/{{ item.checksum }}-get_url.log
   loop: "{{ _rpm_download }}"
   register: result
   until: result is succeeded
@@ -52,8 +51,8 @@
       exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-unarchive.log)
       yum install -y {{ item.dest }}
   args:
-    executable: "/bin/bash"
-    creates: "/var/log/ansible/{{ item.checksum }}-unarchive.log"
+    executable: /bin/bash
+    creates: /var/log/ansible/{{ item.checksum }}-unarchive.log
   loop: "{{ _rpm_download }}"
   changed_when: false
   failed_when: false
@@ -70,7 +69,7 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop:
-    - { name: "*", state: "latest" }
+    - { name: "*", state: latest }
   register: result
   until: result is succeeded
 
@@ -84,17 +83,17 @@
 
 - name: update /etc/default/grub
   community.general.ini_file:
-    path: "/etc/default/grub"
+    path: /etc/default/grub
     section: ""
     option: "{{ item.option }}"
-    value: "\"{{ item.value }}\""
+    value: '"{{ item.value }}"'
     mode: "0644"
     no_extra_spaces: true
-    state: "present"
+    state: present
   loop:
-    - { option: "GRUB_DEFAULT", value: "0" }
-    - { option: "GRUB_CMDLINE_LINUX", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
-    - { option: "GRUB_CMDLINE_LINUX_DEFAULT", value: "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0" }
+    - { option: GRUB_DEFAULT, value: "0" }
+    - { option: GRUB_CMDLINE_LINUX, value: net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0 }
+    - { option: GRUB_CMDLINE_LINUX_DEFAULT, value: net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0 }
 
 - name: grub2-mkconfig -o /boot/grub2/grub.cfg
   ansible.builtin.command:

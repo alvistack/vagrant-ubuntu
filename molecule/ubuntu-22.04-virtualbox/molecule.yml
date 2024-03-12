@@ -25,10 +25,10 @@ platforms:
     cpu: 2
     memory: 8192
     provider_raw_config_args:
-      - "customize ['modifyvm', :id, '--cpu-profile', 'host']"
-      - "customize ['modifyvm', :id, '--nested-hw-virt', 'on']"
+      - customize ['modifyvm', :id, '--cpu-profile', 'host']
+      - customize ['modifyvm', :id, '--nested-hw-virt', 'on']
     instance_raw_config_args:
-      - "vm.box_check_update = false"
+      - vm.box_check_update = false
       - "vm.disk :disk, name: 'sdb', size: '10GB'"
       - "vm.provision :shell, inline: 'systemctl stop guestfs-firstboot.service'"
       - "vm.provision :shell, inline: 'systemctl disable guestfs-firstboot.service'"
