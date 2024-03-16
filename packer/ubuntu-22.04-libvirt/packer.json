@@ -16,7 +16,7 @@
         "c<wait5>",
         "set gfxpayload=keep<enter><wait5>",
         "linux /casper/vmlinuz <wait5>",
-        "autoinstall quiet fsck.mode=skip <wait5>",
+        "autoinstall quiet fsck.mode=skip noprompt <wait5>",
         "net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0 <wait5>",
         "ds=\"nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/\" <wait5>",
         "---<enter><wait5>",
@@ -81,6 +81,16 @@
     }
   ],
   "provisioners": [
+    {
+      "inline": [
+        "set -eu",
+        "sudo apt update",
+        "sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
+        "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc hostname iproute2 language-pack-en locales python3 sudo",
+        "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y qemu-guest-agent"
+      ],
+      "type": "shell"
+    },
     {
       "galaxy_file": "./ansible-galaxy-requirements.yml",
       "inventory_directory": "./",
