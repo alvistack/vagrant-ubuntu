@@ -25,7 +25,7 @@
       "boot_wait": "1s",
       "cpus": 2,
       "disk_size": 131072,
-      "guest_additions_mode": "attach",
+      "guest_additions_mode": "upload",
       "guest_os_type": "Ubuntu_64",
       "headless": true,
       "http_directory": "./",
@@ -90,7 +90,7 @@
         "sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
         "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc hostname iproute2 language-pack-en locales python3 sudo",
         "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential dkms",
-        "sudo mount /dev/sr1 /mnt",
+        "sudo mount -o loop VBoxGuestAdditions.iso /mnt",
         "(echo 'y' | sudo sh /mnt/VBoxLinuxAdditions.run) || echo $?",
         "sudo umount /mnt"
       ],
