@@ -34,6 +34,7 @@
     state: "{{ item.state | default('file') }}"
   loop:
     - { dest: /etc/apt/sources.list.d/debian.sources, state: absent }
+    - { dest: /etc/apt/sources.list.d/ubuntu.sources, state: absent }
 
 - name: apt-get update
   ansible.builtin.apt:
