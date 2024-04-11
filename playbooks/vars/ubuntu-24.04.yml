@@ -23,8 +23,7 @@ _apt:
   - { state: latest, name: iproute2 }
   - { state: latest, name: libxmu6 }
   - { state: latest, name: libxt6 }
-  - { state: latest, name: linux-headers-amd64 }
-  - { state: latest, name: linux-image-amd64 }
+  - { state: latest, name: linux-generic }
   - { state: latest, name: make }
   - { state: latest, name: openssh-server }
   - { state: latest, name: passwd }
