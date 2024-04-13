@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
-  config.vm.hostname = "ubuntu-22.04"
-  config.vm.box = "alvistack/ubuntu-22.04"
+  config.vm.hostname = "ubuntu-24.04"
+  config.vm.box = "alvistack/ubuntu-24.04"
   config.vm.box_check_update = true
 
   config.vm.provider :virtualbox do |virtualbox, override|
