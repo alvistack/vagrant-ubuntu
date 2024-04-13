@@ -66,19 +66,15 @@
   - |
     if ! [[ -x "$(command -v VBoxManage)" ]]; then
       export DEBIAN_FRONTEND="noninteractive"
-      echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian jammy contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
-      curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/virtualbox.gpg > /dev/null
-      curl -skL -O http://archive.ubuntu.com/ubuntu/pool/main/libv/libvpx/libvpx7_1.12.0-1ubuntu2_amd64.deb
-      sudo -E dpkg -i libvpx7_1.12.0-1ubuntu2_amd64.deb
       sudo -E apt-get update
-      sudo -E apt-get install -y virtualbox-7.0
+      sudo -E apt-get install -y virtualbox
       export VERSION="$(VBoxManage --version | sed 's/^\([0-9]*\.[0-9]*\.[0-9]*\).*/\1/g')"
       curl -skL -O https://download.virtualbox.org/virtualbox/$VERSION/Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack
       echo "y" | sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack --replace
       rm -rf Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack
     fi
-    sudo systemctl start vboxdrv.service
-    sh -x -c "sudo systemctl status --no-pager vboxdrv.service"
+    sudo systemctl start virtualbox.service
+    sh -x -c "sudo systemctl status --no-pager virtualbox.service"
     sh -x -c "VBoxManage --version"
 
 .script-bootstrap-vagrant: &script-bootstrap-vagrant
