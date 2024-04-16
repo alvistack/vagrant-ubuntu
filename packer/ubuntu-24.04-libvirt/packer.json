@@ -88,8 +88,6 @@
         "sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
         "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc hostname iproute2 language-pack-en locales python3 sudo",
         "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y qemu-guest-agent",
-        "curl -sLO http://ftp.debian.org/debian/pool/main/p/python3-stdlib-extensions/python3-lib2to3_3.12.3-1_all.deb",
-        "curl -sLO http://ftp.debian.org/debian/pool/main/p/python3-stdlib-extensions/python3-distutils_3.12.3-1_all.deb",
         "curl -sLO http://archive.ubuntu.com/ubuntu/pool/main/r/rsync/rsync_3.2.7-1ubuntu1_amd64.deb",
         "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libpopt0 && sudo dpkg -i ./*.deb"        
       ],
