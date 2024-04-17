@@ -92,9 +92,7 @@
         "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential dkms",
         "sudo mount -o loop VBoxGuestAdditions.iso /mnt",
         "(echo 'y' | sudo sh /mnt/VBoxLinuxAdditions.run) || echo $?",
-        "sudo umount /mnt",
-        "curl -sLO http://archive.ubuntu.com/ubuntu/pool/main/r/rsync/rsync_3.2.7-1ubuntu1_amd64.deb",
-        "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libpopt0 && sudo dpkg -i ./*.deb"
+        "sudo umount /mnt"
       ],
       "type": "shell"
     },
