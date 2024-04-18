@@ -29,6 +29,6 @@ _apt:
   - { state: latest, name: passwd }
   - { state: latest, name: perl }
   - { state: latest, name: python3 }
-  - { state: present, deb: http://archive.ubuntu.com/ubuntu/pool/main/r/rsync/rsync_3.2.7-1ubuntu1_amd64.deb }
+  - { state: latest, name: rsync }
   - { state: latest, name: sudo }
   - { state: latest, name: util-linux }
