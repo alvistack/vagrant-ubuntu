@@ -55,29 +55,3 @@
   loop: "{{ _apt }}"
   register: result
   until: result is succeeded
-
-- name: update /etc/default/grub
-  community.general.ini_file:
-    path: /etc/default/grub
-    section: ""
-    option: "{{ item.option }}"
-    value: '"{{ item.value }}"'
-    mode: "0644"
-    no_extra_spaces: true
-    state: present
-  loop:
-    - { option: GRUB_DEFAULT, value: "0" }
-    - { option: GRUB_CMDLINE_LINUX, value: net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0 }
-    - { option: GRUB_CMDLINE_LINUX_DEFAULT, value: net.ifnames=0 biosdevname=0 systemd.unified_cgroup_hierarchy=0 }
-
-- name: update-grub
-  ansible.builtin.command:
-    cmd: update-grub
-  changed_when: false
-  failed_when: false
-
-- name: update-initramfs -c -k all
-  ansible.builtin.command:
-    cmd: update-initramfs -c -k all
-  changed_when: false
-  failed_when: false
