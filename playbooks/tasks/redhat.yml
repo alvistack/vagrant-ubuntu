@@ -65,7 +65,7 @@
   failed_when: false
 
 - name: yum update
-  ansible.legacy.dnf:
+  ansible.builtin.yum:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop:
@@ -74,7 +74,7 @@
   until: result is succeeded
 
 - name: yum install
-  ansible.legacy.dnf:
+  ansible.builtin.yum:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop: "{{ _yum }}"
