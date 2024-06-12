@@ -22,40 +22,19 @@
   register: result
   until: result is succeeded
 
-- name: download archive
-  ansible.builtin.shell:
-    cmd: |
-      set -euxo pipefail
-      mkdir -p /var/log/ansible
-      exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-get_url.log)
-      TMP_DIR="$(mktemp -d)" \
-        && cd $TMP_DIR \
-        && mkdir -p .{{ item.dest | dirname }} \
-        && curl -skL -m 300 {{ item.url }} > .{{ item.dest }} \
-        && echo -n "{{ item.checksum }} .{{ item.dest }}" | sha256sum -c - \
-        && mkdir -p {{ item.dest | dirname }} \
-        && mv .{{ item.dest }} {{ item.dest }} \
-        && rm -rf $TMP_DIR
-  args:
-    executable: /bin/bash
-    creates: /var/log/ansible/{{ item.checksum }}-get_url.log
-  loop: "{{ _rpm_download }}"
-  register: result
-  until: result is succeeded
-
-- name: yum install
-  ansible.builtin.shell:
-    cmd: |
-      set -euxo pipefail
-      mkdir -p /var/log/ansible
-      exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-unarchive.log)
-      yum install -y {{ item.dest }}
-  args:
-    executable: /bin/bash
-    creates: /var/log/ansible/{{ item.checksum }}-unarchive.log
-  loop: "{{ _rpm_download }}"
-  changed_when: false
-  failed_when: false
+- name: yum-config-manager --add-repo
+  ansible.builtin.yum_repository:
+    file: "{{ item.file }}"
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.baseurl }}"
+    enabled: "{{ item.enabled }}"
+    priority: "{{ item.priority }}"
+    module_hotfixes: "{{ item.module_hotfixes }}"
+    gpgcheck: "{{ item.gpgcheck }}"
+    gpgkey: "{{ item.gpgkey }}"
+    state: "{{ item.state }}"
+  loop: "{{ _yum_repository }}"
 
 - name: yum-config-manager --enable
   ansible.builtin.command:
