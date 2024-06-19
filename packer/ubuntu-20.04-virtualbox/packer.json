@@ -57,6 +57,12 @@
         [
           "modifyvm",
           "{{.Name}}",
+          "--nested-hw-virt",
+          "on"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
           "--nat-localhostreachable1",
           "on"
         ]
