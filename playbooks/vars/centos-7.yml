@@ -15,7 +15,7 @@
 # limitations under the License.
 
 _rpm_key:
-  - key: http://archives.fedoraproject.org/pub/archive/epel/RPM-GPG-KEY-EPEL
+  - key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
     fingerprint: 91E97D7C4A5E96F17F3E888F6A2FAEA2352C64E5
     state: present
 
@@ -28,7 +28,7 @@ _yum_repository:
     priority: "2"
     module_hotfixes: true
     gpgcheck: true
-    gpgkey: http://archives.fedoraproject.org/pub/archive/epel/RPM-GPG-KEY-EPEL
+    gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
     state: present
 
 _yum_config_manager:
