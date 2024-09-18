@@ -25,6 +25,8 @@
       "boot_wait": "1s",
       "cpus": 2,
       "disk_size": 131072,
+      "gfx_accelerate_3d": false,
+      "gfx_controller": "vboxsvga",
       "guest_additions_mode": "upload",
       "guest_os_type": "Ubuntu_64",
       "headless": true,

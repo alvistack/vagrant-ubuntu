@@ -28,6 +28,8 @@ platforms:
       - customize ['modifyvm', :id, '--cpu-profile', 'host']
       - customize ['modifyvm', :id, '--nested-hw-virt', 'on']
       - customize ['modifyvm', :id, '--nat-localhostreachable1', 'on']
+      - customize ['modifyvm', :id, '--graphicscontroller', 'vboxsvga']
+      - customize ['modifyvm', :id, '--accelerate3d', 'off']
     instance_raw_config_args:
       - vm.box_check_update = false
       - "vm.disk :disk, name: 'sdb', size: '10GB'"
