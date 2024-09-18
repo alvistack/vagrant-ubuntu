@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
     virtualbox.customize ["modifyvm", :id, "--cpu-profile", "host"]
     virtualbox.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
     virtualbox.customize ["modifyvm", :id, "--nat-localhostreachable1", "on"]
+    virtualbox.customize ["modifyvm", :id, "--graphicscontroller", "vboxsvga"]
+    virtualbox.customize ["modifyvm", :id, "--accelerate3d", "off"]
 
     override.vm.disk :disk, name: "sdb", size: "10GB"
     override.vm.synced_folder "./", "/vagrant"
