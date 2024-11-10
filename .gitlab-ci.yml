@@ -83,14 +83,15 @@
 
 .script-bootstrap-vagrant: &script-bootstrap-vagrant
   - |
-    if ! [[ -x "$(command -v vagrant)" ]]; then
+    if ! [[ -x "$(command -v hcp)" && -x "$(command -v vagrant)" ]]; then
       export DEBIAN_FRONTEND="noninteractive"
       echo "deb http://downloadcontent.opensuse.org/repositories/home:/alvistack/xUbuntu_24.04/ /" | sudo tee /etc/apt/sources.list.d/home:alvistack.list
       curl -fsSL https://downloadcontent.opensuse.org/repositories/home:alvistack/xUbuntu_24.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_alvistack.gpg > /dev/null
       sudo -E apt-get update
-      sudo -E apt-get install -y vagrant
+      sudo -E apt-get install -y hcp vagrant
       vagrant plugin install vagrant-libvirt
     fi
+    sh -x -c "hcp version"
     sh -x -c "vagrant --version"
     sh -x -c "vagrant plugin list"
 
@@ -133,31 +134,33 @@
     else
       exit 0
     fi
+    sudo -E hcp auth login --client-id=$HCP_CLIENT_ID --client-secret=$HCP_CLIENT_SECRET
+    export _VAGRANT_CLOUD_TOKEN=";$(sudo -E hcp auth print-access-token)"
     cd $CI_PROJECT_DIR/packer/$_BOX-$_PROVIDER
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _CHECKSUM="$(sha256sum output-vagrant/package.box | awk '{ print $1 }')"
     curl -skL \
       --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN;$HCP_TOKEN" \
+      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       --data "{ \"box\": { \"username\": \"$_ORG\", \"name\": \"$_BOX\", \"is_private\": false } }" \
       https://app.vagrantup.com/api/v2/boxes | jq .
     curl -skL \
       --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN;$HCP_TOKEN" \
+      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       --data "{ \"version\": { \"version\": \"$_VERSION\" } }" \
       https://app.vagrantup.com/api/v2/box/$_ORG/$_BOX/versions | jq .
     curl -skL \
       --request DELETE \
       --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN;$HCP_TOKEN" \
+      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       https://app.vagrantup.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER/$_ARCHITECTURE | jq .
     curl -skL \
       --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN;$HCP_TOKEN" \
+      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       --data "{ \"provider\": { \"name\": \"$_PROVIDER\", \"checksum_type\": \"sha256\", \"checksum\": \"$_CHECKSUM\", \"architecture\": \"$_ARCHITECTURE\", \"default_architecture\": true } }" \
       https://app.vagrantup.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/providers | jq .
     _UPLOAD_PATH=$(curl -skL \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN;$HCP_TOKEN" \
+      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       https://app.vagrantup.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER/$_ARCHITECTURE/upload | jq -r .upload_path)
     curl -skL \
       --request PUT \
@@ -166,7 +169,7 @@
       $_UPLOAD_PATH | jq .
     curl -skL \
       --request PUT \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN;$HCP_TOKEN" \
+      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       https://app.vagrantup.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/release | jq .
 
 .job-packer-build: &job-packer-build
@@ -200,6 +203,92 @@ default:
     - *script-git-submodule
     - *script-linters
   retry: 2
+
+build:ubuntu-24.10-libvirt:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: $CI_PIPELINE_ID-ubuntu-24.10-libvirt
+    paths:
+      - packer/*/output-vagrant
+  variables:
+    _BOX: ubuntu-24.10
+    _PROVIDER: libvirt
+    _ARCHITECTURE: amd64
+
+test:ubuntu-24.10-libvirt:
+  <<: *job-molecule-test
+  stage: test
+  cache:
+    key: $CI_PIPELINE_ID-ubuntu-24.10-libvirt
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _BOX: ubuntu-24.10
+    _PROVIDER: libvirt
+    _ARCHITECTURE: amd64
+  needs:
+    - build:ubuntu-24.10-libvirt
+
+deploy:ubuntu-24.10-libvirt:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: $CI_PIPELINE_ID-ubuntu-24.10-libvirt
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _BOX: ubuntu-24.10
+    _PROVIDER: libvirt
+    _ARCHITECTURE: amd64
+  needs:
+    - test:ubuntu-24.10-libvirt
+
+build:ubuntu-24.10-virtualbox:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: $CI_PIPELINE_ID-ubuntu-24.10-virtualbox
+    paths:
+      - packer/*/output-vagrant
+  variables:
+    _BOX: ubuntu-24.10
+    _PROVIDER: virtualbox
+    _ARCHITECTURE: amd64
+  needs:
+    - build:ubuntu-24.10-libvirt
+
+test:ubuntu-24.10-virtualbox:
+  <<: *job-molecule-test
+  stage: test
+  cache:
+    key: $CI_PIPELINE_ID-ubuntu-24.10-virtualbox
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _BOX: ubuntu-24.10
+    _PROVIDER: virtualbox
+    _ARCHITECTURE: amd64
+  needs:
+    - build:ubuntu-24.10-virtualbox
+
+deploy:ubuntu-24.10-virtualbox:
+  <<: *job-vagrant-cloud-provider-upload
+  stage: deploy
+  cache:
+    key: $CI_PIPELINE_ID-ubuntu-24.10-virtualbox
+    paths:
+      - packer/*/output-vagrant
+    policy: pull
+  variables:
+    _BOX: ubuntu-24.10
+    _PROVIDER: virtualbox
+    _ARCHITECTURE: amd64
+  needs:
+    - test:ubuntu-24.10-virtualbox
 
 build:ubuntu-24.04-libvirt:
   <<: *job-packer-build
@@ -383,6 +472,7 @@ build:ubuntu-20.04-libvirt:
   variables:
     _BOX: ubuntu-20.04
     _PROVIDER: libvirt
+    _ARCHITECTURE: amd64
 
 test:ubuntu-20.04-libvirt:
   <<: *job-molecule-test
@@ -395,6 +485,7 @@ test:ubuntu-20.04-libvirt:
   variables:
     _BOX: ubuntu-20.04
     _PROVIDER: libvirt
+    _ARCHITECTURE: amd64
   needs:
     - build:ubuntu-20.04-libvirt
 
@@ -409,6 +500,7 @@ deploy:ubuntu-20.04-libvirt:
   variables:
     _BOX: ubuntu-20.04
     _PROVIDER: libvirt
+    _ARCHITECTURE: amd64
   needs:
     - test:ubuntu-20.04-libvirt
 
@@ -422,6 +514,7 @@ build:ubuntu-20.04-virtualbox:
   variables:
     _BOX: ubuntu-20.04
     _PROVIDER: virtualbox
+    _ARCHITECTURE: amd64
   needs:
     - build:ubuntu-20.04-libvirt
 
@@ -436,6 +529,7 @@ test:ubuntu-20.04-virtualbox:
   variables:
     _BOX: ubuntu-20.04
     _PROVIDER: virtualbox
+    _ARCHITECTURE: amd64
   needs:
     - build:ubuntu-20.04-virtualbox
 
@@ -450,5 +544,6 @@ deploy:ubuntu-20.04-virtualbox:
   variables:
     _BOX: ubuntu-20.04
     _PROVIDER: virtualbox
+    _ARCHITECTURE: amd64
   needs:
     - test:ubuntu-20.04-virtualbox
