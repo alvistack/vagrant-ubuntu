@@ -140,11 +140,13 @@
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _CHECKSUM="$(sha256sum output-vagrant/package.box | awk '{ print $1 }')"
     curl -skL \
+      --request POST \
       --header "Content-Type: application/json" \
       --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       --data "{ \"box\": { \"username\": \"$_ORG\", \"name\": \"$_BOX\", \"is_private\": false } }" \
       https://app.vagrantup.com/api/v2/boxes | jq .
     curl -skL \
+      --request POST \
       --header "Content-Type: application/json" \
       --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       --data "{ \"version\": { \"version\": \"$_VERSION\" } }" \
@@ -155,11 +157,13 @@
       --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       https://app.vagrantup.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER/$_ARCHITECTURE | jq .
     curl -skL \
+      --request POST \
       --header "Content-Type: application/json" \
       --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       --data "{ \"provider\": { \"name\": \"$_PROVIDER\", \"checksum_type\": \"sha256\", \"checksum\": \"$_CHECKSUM\", \"architecture\": \"$_ARCHITECTURE\", \"default_architecture\": true } }" \
       https://app.vagrantup.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/providers | jq .
     _UPLOAD_PATH=$(curl -skL \
+      --request GET \
       --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
       https://app.vagrantup.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER/$_ARCHITECTURE/upload | jq -r .upload_path)
     curl -skL \
