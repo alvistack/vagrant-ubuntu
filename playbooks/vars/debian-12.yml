@@ -14,6 +14,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+_deb822_repository:
+  - name: debian
+    types: deb
+    uris: http://deb.debian.org/debian
+    suites: bookworm bookworm-updates
+    components: main contrib non-free non-free-firmware
+    signed_by: /usr/share/keyrings/debian-archive-keyring.gpg
+    enabled: true
+    state: present
+  - name: debian-security
+    types: deb
+    uris: http://deb.debian.org/debian-security
+    suites: bookworm-security
+    components: main contrib non-free non-free-firmware
+    signed_by: /usr/share/keyrings/debian-archive-keyring.gpg
+    enabled: true
+    state: present
+
 _apt:
   - { state: latest, name: ca-certificates }
   - { state: latest, name: cloud-guest-utils }

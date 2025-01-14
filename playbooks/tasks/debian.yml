@@ -23,18 +23,21 @@
   loop:
     - { dest: /etc/apt/preferences.d/99-backports.pref }
     - { dest: /etc/apt/preferences.d/nosnap.pref }
-    - { dest: /etc/apt/sources.list }
 
-- name: prepare files
-  ansible.builtin.file:
-    dest: "{{ item.dest }}"
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
-    mode: "{{ item.mode | default('0644') }}"
-    state: "{{ item.state | default('file') }}"
-  loop:
-    - { dest: /etc/apt/sources.list.d/debian.sources, state: absent }
-    - { dest: /etc/apt/sources.list.d/ubuntu.sources, state: absent }
+- name: apt-add-repository
+  ansible.builtin.deb822_repository:
+    name: "{{ item.name }}"
+    types: "{{ item.types }}"
+    uris: "{{ item.uris }}"
+    suites: "{{ item.suites }}"
+    components: "{{ item.components }}"
+    signed_by: "{{ item.signed_by }}"
+    enabled: "{{ item.enabled }}"
+    state: "{{ item.state }}"
+    architectures: "{{ item.architectures | default(None) or omit }}"
+  loop: "{{ _deb822_repository }}"
+  register: result
+  until: result is succeeded
 
 - name: apt-get update
   ansible.builtin.apt:
