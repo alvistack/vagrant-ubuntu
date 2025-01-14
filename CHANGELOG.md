@@ -2,6 +2,8 @@
 
 ## YYYYMMDD.Y.Z - TBC
 
+- Replace with `ansible.builtin.deb822_repository`
+- Support Ansible community package 11.1.0
 - Support Ansible community package 11.0.0
 - Support Ubuntu 24.10
 - Support Ansible community package 10.5.0
