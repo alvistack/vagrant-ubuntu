@@ -113,10 +113,10 @@
 
 .script-vagrant-box-add: &script-vagrant-box-add
   - |
-    export _ORG="$CI_PROJECT_NAMESPACE"
+    export _REGISTRY="$CI_PROJECT_NAMESPACE"
     sudo -E umount /home/vagrant/.vagrant.d/boxes
     sudo -E vagrant box add \
-      --name $_ORG/$_BOX \
+      --name $_REGISTRY/$_BOX \
       --provider $_PROVIDER \
       $CI_PROJECT_DIR/packer/$_BOX-$_PROVIDER/output-vagrant/package.box
 
@@ -135,37 +135,43 @@
       exit 0
     fi
     sudo -E hcp auth login --client-id=$HCP_CLIENT_ID --client-secret=$HCP_CLIENT_SECRET
-    export _VAGRANT_CLOUD_TOKEN=";$(sudo -E hcp auth print-access-token)"
+    export _HCP_ACCESS_TOKEN="$(sudo -E hcp auth print-access-token)"
     cd $CI_PROJECT_DIR/packer/$_BOX-$_PROVIDER
-    export _ORG="$CI_PROJECT_NAMESPACE"
+    export _REGISTRY="$CI_PROJECT_NAMESPACE"
     export _CHECKSUM="$(sha256sum output-vagrant/package.box | awk '{ print $1 }')"
     curl -skL \
       --request POST \
       --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
-      --data "{ \"box\": { \"username\": \"$_ORG\", \"name\": \"$_BOX\", \"is_private\": false } }" \
-      https://vagrantcloud.com/api/v2/boxes | jq .
+      --header "Authorization: Bearer $_HCP_ACCESS_TOKEN" \
+      --data "{ \"name\": \"$_BOX\", \"is_private\": false }" \
+      https://api.cloud.hashicorp.com/vagrant/2022-09-30/registry/$_REGISTRY/boxes | jq .
     curl -skL \
       --request POST \
       --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
-      --data "{ \"version\": { \"version\": \"$_VERSION\" } }" \
-      https://vagrantcloud.com/api/v2/box/$_ORG/$_BOX/versions | jq .
+      --header "Authorization: Bearer $_HCP_ACCESS_TOKEN" \
+      --data "{ \"name\": \"$_VERSION\" }" \
+      https://api.cloud.hashicorp.com/vagrant/2022-09-30/registry/$_REGISTRY/box/$_BOX/versions | jq .
+    curl -skL \
+      --request POST \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Bearer $_HCP_ACCESS_TOKEN" \
+      --data "{ \"name\": \"$_PROVIDER\" }" \
+      https://api.cloud.hashicorp.com/vagrant/2022-09-30/registry/$_REGISTRY/box/$_BOX/version/$_VERSION/providers | jq .
     curl -skL \
       --request DELETE \
       --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
-      https://vagrantcloud.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER/$_ARCHITECTURE | jq .
+      --header "Authorization: Bearer $_HCP_ACCESS_TOKEN" \
+      https://api.cloud.hashicorp.com/vagrant/2022-09-30/registry/$_REGISTRY/box/$_BOX/version/$_VERSION/provider/$_PROVIDER/architecture/$_ARCHITECTURE | jq .
     curl -skL \
       --request POST \
       --header "Content-Type: application/json" \
-      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
-      --data "{ \"provider\": { \"name\": \"$_PROVIDER\", \"checksum_type\": \"sha256\", \"checksum\": \"$_CHECKSUM\", \"architecture\": \"$_ARCHITECTURE\", \"default_architecture\": true } }" \
-      https://vagrantcloud.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/providers | jq .
+      --header "Authorization: Bearer $_HCP_ACCESS_TOKEN" \
+      --data "{ \"architecture_type\": \"$_ARCHITECTURE\" }" \
+      https://api.cloud.hashicorp.com/vagrant/2022-09-30/registry/$_REGISTRY/box/$_BOX/version/$_VERSION/provider/$_PROVIDER/architectures | jq .
     _UPLOAD_PATH=$(curl -skL \
       --request GET \
-      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
-      https://vagrantcloud.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/provider/$_PROVIDER/$_ARCHITECTURE/upload | jq -r .upload_path)
+      --header "Authorization: Bearer $_HCP_ACCESS_TOKEN" \
+      https://api.cloud.hashicorp.com/vagrant/2022-09-30/registry/$_REGISTRY/box/$_BOX/version/$_VERSION/provider/$_PROVIDER/architecture/$_ARCHITECTURE/upload | jq -r .url)
     curl -skL \
       --request PUT \
       --header "Connection: keep-alive" \
@@ -173,8 +179,8 @@
       $_UPLOAD_PATH | jq .
     curl -skL \
       --request PUT \
-      --header "Authorization: Bearer $_VAGRANT_CLOUD_TOKEN" \
-      https://vagrantcloud.com/api/v2/box/$_ORG/$_BOX/version/$_VERSION/release | jq .
+      --header "Authorization: Bearer $_HCP_ACCESS_TOKEN" \
+      https://api.cloud.hashicorp.com/vagrant/2022-09-30/registry/$_REGISTRY/box/$_BOX/version/$_VERSION/release | jq .
 
 .job-packer-build: &job-packer-build
   script:

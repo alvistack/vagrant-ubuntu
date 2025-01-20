@@ -31,6 +31,19 @@
         - { dest: /etc/ansible/playbooks }
         - { dest: /etc/ansible/roles }
 
+    - name: prepare files
+      ansible.builtin.file:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0644') }}"
+        state: "{{ item.state | default('file') }}"
+      loop:
+        - { dest: /etc/group }
+        - { dest: /etc/gshadow, mode: '0600' }
+        - { dest: /etc/passwd }
+        - { dest: /etc/shadow, mode: '0600' }
+
     - name: rsync directories
       ansible.posix.synchronize:
         dest: "{{ item.dest }}"
