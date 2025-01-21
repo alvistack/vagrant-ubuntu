@@ -40,7 +40,6 @@
         state: "{{ item.state | default('file') }}"
       loop:
         - { dest: /etc/group }
-        - { dest: /etc/gshadow, mode: '0600' }
         - { dest: /etc/passwd }
         - { dest: /etc/shadow, mode: '0600' }
 
