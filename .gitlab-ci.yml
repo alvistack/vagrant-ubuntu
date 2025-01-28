@@ -268,7 +268,7 @@ build:ubuntu-24.10-virtualbox:
     _PROVIDER: virtualbox
     _ARCHITECTURE: amd64
   needs:
-    - build:ubuntu-24.10-libvirt
+    - deploy:ubuntu-24.10-libvirt
 
 test:ubuntu-24.10-virtualbox:
   <<: *job-molecule-test
@@ -354,7 +354,7 @@ build:ubuntu-24.04-virtualbox:
     _PROVIDER: virtualbox
     _ARCHITECTURE: amd64
   needs:
-    - build:ubuntu-24.04-libvirt
+    - deploy:ubuntu-24.04-libvirt
 
 test:ubuntu-24.04-virtualbox:
   <<: *job-molecule-test
@@ -440,7 +440,7 @@ build:ubuntu-22.04-virtualbox:
     _PROVIDER: virtualbox
     _ARCHITECTURE: amd64
   needs:
-    - build:ubuntu-22.04-libvirt
+    - deploy:ubuntu-22.04-libvirt
 
 test:ubuntu-22.04-virtualbox:
   <<: *job-molecule-test
@@ -526,7 +526,7 @@ build:ubuntu-20.04-virtualbox:
     _PROVIDER: virtualbox
     _ARCHITECTURE: amd64
   needs:
-    - build:ubuntu-20.04-libvirt
+    - deploy:ubuntu-20.04-libvirt
 
 test:ubuntu-20.04-virtualbox:
   <<: *job-molecule-test
