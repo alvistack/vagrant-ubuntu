@@ -77,6 +77,7 @@
       echo "y" | sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack --replace
       rm -rf Oracle_VM_VirtualBox_Extension_Pack-$VERSION.vbox-extpack
     fi
+    echo 3 | sudo tee /proc/sys/vm/drop_caches
     sudo systemctl start vboxdrv.service
     sh -x -c "sudo systemctl status --no-pager vboxdrv.service"
     sh -x -c "VBoxManage --version"
