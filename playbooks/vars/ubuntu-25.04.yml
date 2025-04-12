@@ -1,0 +1,52 @@
+---
+
+# Copyright 2025 Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+_deb822_repository:
+  - name: ubuntu
+    types: deb
+    uris: http://archive.ubuntu.com/ubuntu
+    suites: plucky plucky-updates plucky-backports
+    components: main universe restricted multiverse
+    signed_by: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+    enabled: true
+    state: present
+  - name: ubuntu-security
+    types: deb
+    uris: http://security.ubuntu.com/ubuntu
+    suites: plucky-security
+    components: main universe restricted multiverse
+    signed_by: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+    enabled: true
+    state: present
+
+_apt:
+  - { state: latest, name: ca-certificates }
+  - { state: latest, name: cloud-guest-utils }
+  - { state: latest, name: cloud-init }
+  - { state: latest, name: curl }
+  - { state: latest, name: gcc }
+  - { state: latest, name: iproute2 }
+  - { state: latest, name: libxmu6 }
+  - { state: latest, name: libxt6 }
+  - { state: latest, name: linux-generic }
+  - { state: latest, name: make }
+  - { state: latest, name: openssh-server }
+  - { state: latest, name: passwd }
+  - { state: latest, name: perl }
+  - { state: latest, name: python3 }
+  - { state: latest, name: rsync }
+  - { state: latest, name: sudo }
+  - { state: latest, name: util-linux }
