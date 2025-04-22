@@ -34,7 +34,7 @@
       "headless": true,
       "http_directory": "./",
       "iso_checksum": "8b44046211118639c673335a80359f4b3f0d9e52c33fe61c59072b1b61bdecc5",
-      "iso_url": "http://releases.ubuntu.com/25.04/ubuntu-25.04-desktop-amd64.iso",
+      "iso_url": "http://releases.ubuntu.com/25.04/ubuntu-25.04-live-server-amd64.iso",
       "memory": 16384,
       "net_device": "virtio-net",
       "qemu_binary": "kvm",
