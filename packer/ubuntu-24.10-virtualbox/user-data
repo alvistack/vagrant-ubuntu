@@ -3,7 +3,7 @@ autoinstall:
   version: 1
   locale: en_US.UTF-8
   refresh-installer:
-      update: no
+      update: yes
   keyboard:
       layout: us
   network:
