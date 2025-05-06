@@ -17,7 +17,7 @@
 _deb822_repository:
   - name: debian
     types: deb
-    uris: http://deb.debian.org/debian
+    uris: https://deb.debian.org/debian
     suites: testing testing-updates
     components: main contrib non-free non-free-firmware
     signed_by: /usr/share/keyrings/debian-archive-keyring.gpg
@@ -25,7 +25,7 @@ _deb822_repository:
     state: present
   - name: debian-security
     types: deb
-    uris: http://deb.debian.org/debian-security
+    uris: https://deb.debian.org/debian-security
     suites: testing-security
     components: main contrib non-free non-free-firmware
     signed_by: /usr/share/keyrings/debian-archive-keyring.gpg
