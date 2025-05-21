@@ -2,6 +2,9 @@
 
 ## YYYYMMDD.Y.Z - TBC
 
+## 20250521.1.1 - 2025-05-21
+
+- Support Ansible community package 11.6.0
 - Support Fedora 42
 
 ## 20250423.1.2 - 2025-04-23
