@@ -94,16 +94,6 @@
     {
       "inline": [
         "set -eu",
-        "sudo rm -rf /etc/apt/sources.list*",
-        "sudo mkdir -p /etc/apt/sources.list.d",
-        "printf \"Components: main universe restricted multiverse\nEnabled: yes\nX-Repolib-Name: ubuntu\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\nSuites: noble noble-updates noble-backports\nTypes: deb\nURIs: http://archive.ubuntu.com/ubuntu\n\" | sudo tee /etc/apt/sources.list.d/ubuntu.sources > /dev/null",
-        "printf \"Components: main universe restricted multiverse\nEnabled: yes\nX-Repolib-Name: ubuntu-security\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\nSuites: noble-security\nTypes: deb\nURIs: http://security.ubuntu.com/ubuntu\n\" | sudo tee /etc/apt/sources.list.d/ubuntu-security.sources > /dev/null"
-      ],
-      "type": "shell"
-    },
-    {
-      "inline": [
-        "set -eu",
         "sudo apt update",
         "sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
         "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc hostname iproute2 language-pack-en locales python3 sudo",
@@ -111,6 +101,16 @@
         "sudo mount -o loop VBoxGuestAdditions.iso /mnt",
         "(echo 'y' | sudo sh /mnt/VBoxLinuxAdditions.run) || echo $?",
         "sudo umount /mnt"
+      ],
+      "type": "shell"
+    },
+    {
+      "inline": [
+        "set -eu",
+        "sudo rm -rf /etc/apt/sources.list*",
+        "sudo mkdir -p /etc/apt/sources.list.d",
+        "printf \"Components: main universe restricted multiverse\nEnabled: yes\nX-Repolib-Name: ubuntu\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\nSuites: noble noble-updates noble-backports\nTypes: deb\nURIs: http://archive.ubuntu.com/ubuntu\n\" | sudo tee /etc/apt/sources.list.d/ubuntu.sources > /dev/null",
+        "printf \"Components: main universe restricted multiverse\nEnabled: yes\nX-Repolib-Name: ubuntu-security\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\nSuites: noble-security\nTypes: deb\nURIs: http://security.ubuntu.com/ubuntu\n\" | sudo tee /etc/apt/sources.list.d/ubuntu-security.sources > /dev/null"
       ],
       "type": "shell"
     },
