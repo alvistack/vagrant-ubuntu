@@ -11,6 +11,21 @@
     yamllint .
     ansible-lint
 
+.script-modprobe: &script-modprobe
+  - |
+    if [[ "$_PROVIDER" ~= libvirt ]]; then
+      sudo modprobe -r --remove-holders vboxdrv || true
+      sudo modprobe kvm || true
+      sudo modprobe kvm_intel || true
+      sudo modprobe kvm_amd || true
+    fi
+    if [[ "$_PROVIDER" ~= virtualbox ]]; then
+      sudo modprobe -r --remove-holders kvm || true
+      sudo modprobe vboxdrv || true
+      sudo modprobe vboxnetadp || true
+      sudo modprobe vboxnetflt || true
+    fi
+
 .script-bootstrap-python: &script-bootstrap-python
   - |
     if ! [[ -x "$(command -v pipx)" && -x "$(command -v flake8)" && -x "$(command -v yamllint)" ]]; then
@@ -213,6 +228,7 @@ default:
   before_script:
     - *script-git-submodule
     - *script-linters
+    - *script-modprobe
   retry: 2
 
 build:ubuntu-25.04-libvirt:
