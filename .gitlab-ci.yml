@@ -13,13 +13,13 @@
 
 .script-modprobe: &script-modprobe
   - |
-    if [[ "$_PROVIDER" ~= libvirt ]]; then
+    if [[ "$_PROVIDER" =~ libvirt ]]; then
       sudo modprobe -r --remove-holders vboxdrv || true
       sudo modprobe kvm || true
       sudo modprobe kvm_intel || true
       sudo modprobe kvm_amd || true
     fi
-    if [[ "$_PROVIDER" ~= virtualbox ]]; then
+    if [[ "$_PROVIDER" =~ virtualbox ]]; then
       sudo modprobe -r --remove-holders kvm || true
       sudo modprobe vboxdrv || true
       sudo modprobe vboxnetadp || true
