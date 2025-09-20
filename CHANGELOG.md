@@ -2,6 +2,8 @@
 
 ## YYYYMMDD.Y.Z - TBC
 
+- Remove Ubuntu 24.10 support
+
 ## 20250817.1.1 - 2025-08-17
 
 - Support Ansible community package 11.9.0
