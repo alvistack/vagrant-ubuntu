@@ -96,8 +96,8 @@
         "set -eu",
         "sudo rm -rf /etc/apt/sources.list*",
         "sudo mkdir -p /etc/apt/sources.list.d",
-        "printf \"Components: main universe restricted multiverse\nEnabled: yes\nX-Repolib-Name: ubuntu\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\nSuites: plucky plucky-updates plucky-backports\nTypes: deb\nURIs: http://archive.ubuntu.com/ubuntu\n\" | sudo tee /etc/apt/sources.list.d/ubuntu.sources > /dev/null",
-        "printf \"Components: main universe restricted multiverse\nEnabled: yes\nX-Repolib-Name: ubuntu-security\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\nSuites: plucky-security\nTypes: deb\nURIs: http://security.ubuntu.com/ubuntu\n\" | sudo tee /etc/apt/sources.list.d/ubuntu-security.sources > /dev/null"
+        "printf \"Components: main universe restricted multiverse\nEnabled: yes\nX-Repolib-Name: ubuntu\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\nSuites: questing questing-updates questing-backports\nTypes: deb\nURIs: http://archive.ubuntu.com/ubuntu\n\" | sudo tee /etc/apt/sources.list.d/ubuntu.sources > /dev/null",
+        "printf \"Components: main universe restricted multiverse\nEnabled: yes\nX-Repolib-Name: ubuntu-security\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\nSuites: questing-security\nTypes: deb\nURIs: http://security.ubuntu.com/ubuntu\n\" | sudo tee /etc/apt/sources.list.d/ubuntu-security.sources > /dev/null"
       ],
       "type": "shell"
     },
