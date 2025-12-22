@@ -24,7 +24,6 @@ Vagrant.configure("2") do |config|
     libvirt.driver = "kvm"
     libvirt.memory = 8192
     libvirt.memorybacking :access, :mode => "shared"
-    libvirt.memorybacking :source, :type => "memfd"
     libvirt.nested = true
     libvirt.nic_model_type = "virtio"
     libvirt.video_type = "virtio"
