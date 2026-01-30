@@ -14,84 +14,151 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-_zypper_repository:
-  - name: repo-backports-debug-update
+_rpm_key:
+  - key: https://download.opensuse.org/tumbleweed/repo/oss/gpg-pubkey-29b700a4-62b07e22.asc
+    fingerprint: AD485664E901B867051AB15F35A2F86E29B700A4
+    state: present
+
+_yum_repository:
+  - file: repo-backports-debug-update
+    name: repo-backports-debug-update
     description: Update repository with updates for openSUSE Leap debuginfo packages from openSUSE Backports
+    baseurl: http://download.opensuse.org/update/leap/15.6/backports_debug
     enabled: false
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/backports_debug/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/update/leap/15.6/backports_debug/repodata/repomd.xml.key
     state: present
-  - name: repo-backports-update
+  - file: repo-backports-update
+    name: repo-backports-update
     description: Update repository of openSUSE Backports
+    baseurl: http://download.opensuse.org/update/leap/15.6/backports
     enabled: true
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/backports/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/update/leap/15.6/backports/repodata/repomd.xml.key
     state: present
-  - name: repo-debug-non-oss
+  - file: repo-debug-non-oss
+    name: repo-debug-non-oss
     description: Debug Repository (Non-OSS)
+    baseurl: http://download.opensuse.org/debug/distribution/leap/15.6/repo/non-oss
     enabled: false
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/debug/distribution/leap/$releasever/repo/non-oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/debug/distribution/leap/15.6/repo/non-oss/repodata/repomd.xml.key
     state: present
-  - name: repo-debug-update-non-oss
+  - file: repo-debug-update-non-oss
+    name: repo-debug-update-non-oss
     description: Update Repository (Debug, Non-OSS)
+    baseurl: http://download.opensuse.org/debug/update/leap/15.6/non-oss
     enabled: false
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/debug/update/leap/$releasever/non-oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/debug/update/leap/15.6/non-oss/repodata/repomd.xml.key
     state: present
-  - name: repo-debug-update
+  - file: repo-debug-update
+    name: repo-debug-update
     description: Update Repository (Debug)
+    baseurl: http://download.opensuse.org/debug/update/leap/15.6/oss
     enabled: false
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/debug/update/leap/$releasever/oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/debug/update/leap/15.6/oss/repodata/repomd.xml.key
     state: present
-  - name: repo-debug
+  - file: repo-debug
+    name: repo-debug
     description: Debug Repository
+    baseurl: http://download.opensuse.org/debug/distribution/leap/15.6/repo/oss
     enabled: false
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/debug/distribution/leap/$releasever/repo/oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/debug/distribution/leap/15.6/repo/oss/repodata/repomd.xml.key
     state: present
-  - name: repo-non-oss
+  - file: repo-non-oss
+    name: repo-non-oss
     description: Non-OSS Repository
+    baseurl: http://download.opensuse.org/distribution/leap/15.6/repo/non-oss
     enabled: true
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/distribution/leap/$releasever/repo/non-oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/distribution/leap/15.6/repo/non-oss/repodata/repomd.xml.key
     state: present
-  - name: repo-oss
+  - file: repo-openh264
+    name: repo-openh264
+    description: Open H.264 Codec (openSUSE Leap)
+    baseurl: http://codecs.opensuse.org/openh264/openSUSE_Leap
+    enabled: true
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://codecs.opensuse.org/openh264/openSUSE_Leap/repodata/repomd.xml.key
+    state: present
+  - file: repo-oss
+    name: repo-oss
     description: Main Repository
+    baseurl: http://download.opensuse.org/distribution/leap/15.6/repo/oss
     enabled: true
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/distribution/leap/$releasever/repo/oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/distribution/leap/15.6/repo/oss/repodata/repomd.xml.key
     state: present
-  - name: repo-sle-debug-update
+  - file: repo-sle-debug-update
+    name: repo-sle-debug-update
     description: Update repository with debuginfo for updates from SUSE Linux Enterprise 15
+    baseurl: http://download.opensuse.org/debug/update/leap/15.6/sle
     enabled: false
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/debug/update/leap/$releasever/sle/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/debug/update/leap/15.6/sle/repodata/repomd.xml.key
     state: present
-  - name: repo-sle-update
+  - file: repo-sle-update
+    name: repo-sle-update
     description: Update repository with updates from SUSE Linux Enterprise 15
+    baseurl: http://download.opensuse.org/update/leap/15.6/sle
     enabled: true
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/sle/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/update/leap/15.6/sle/repodata/repomd.xml.key
     state: present
-  - name: repo-source
+  - file: repo-source
+    name: repo-source
     description: Source Repository
+    baseurl: http://download.opensuse.org/source/distribution/leap/15.6/repo/oss
     enabled: false
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/source/distribution/leap/$releasever/repo/oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/source/distribution/leap/15.6/repo/oss/repodata/repomd.xml.key
     state: present
-  - name: repo-update-non-oss
+  - file: repo-update-non-oss
+    name: repo-update-non-oss
     description: Update Repository (Non-Oss)
+    baseurl: http://download.opensuse.org/update/leap/15.6/non-oss
     enabled: true
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/non-oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/update/leap/15.6/non-oss/repodata/repomd.xml.key
     state: present
-  - name: repo-update
+  - file: repo-update
+    name: repo-update
     description: Main Update Repository
+    baseurl: http://download.opensuse.org/update/leap/15.6/oss
     enabled: true
-    autorefresh: true
-    repo: http://downloadcontent.opensuse.org/update/leap/$releasever/oss/
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://download.opensuse.org/update/leap/15.6/oss/repodata/repomd.xml.key
     state: present
 
 _zypper:

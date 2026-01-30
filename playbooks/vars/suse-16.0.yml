@@ -20,65 +20,65 @@ _rpm_key:
     state: present
 
 _yum_repository:
-  - file: repo-debug
-    name: repo-debug
-    description: openSUSE-Tumbleweed-Debug
-    baseurl: http://download.opensuse.org/debug/tumbleweed/repo/oss
+  - file: openSUSE:repo-non-oss-debug
+    name: openSUSE:repo-non-oss-debug
+    description: repo-non-oss-debug (16.0)
+    baseurl: http://cdn.opensuse.org/debug/distribution/leap/16.0/repo/non-oss
     enabled: false
     priority: "2"
     module_hotfixes: true
     gpgcheck: true
-    gpgkey: http://download.opensuse.org/debug/tumbleweed/repo/oss/repodata/repomd.xml.key
+    gpgkey: http://cdn.opensuse.org/debug/distribution/leap/16.0/repo/non-oss/repodata/repomd.xml.key
     state: present
-  - file: repo-non-oss
-    name: repo-non-oss
-    description: openSUSE-Tumbleweed-Non-Oss
-    baseurl: http://download.opensuse.org/tumbleweed/repo/non-oss
+  - file: openSUSE:repo-non-oss
+    name: openSUSE:repo-non-oss
+    description: repo-non-oss (16.0)
+    baseurl: http://cdn.opensuse.org/distribution/leap/16.0/repo/non-oss
     enabled: true
     priority: "2"
     module_hotfixes: true
     gpgcheck: true
-    gpgkey: http://download.opensuse.org/tumbleweed/repo/non-oss/repodata/repomd.xml.key
+    gpgkey: http://cdn.opensuse.org/distribution/leap/16.0/repo/non-oss/repodata/repomd.xml.key
     state: present
-  - file: repo-openh264
-    name: repo-openh264
-    description: Open H.264 Codec (openSUSE Tumbleweed)
-    baseurl: http://codecs.opensuse.org/openh264/openSUSE_Tumbleweed
+  - file: openSUSE:repo-openh264
+    name: openSUSE:repo-openh264
+    description: repo-openh264 (16.0)
+    baseurl: http://codecs.opensuse.org/openh264/openSUSE_Leap_16
     enabled: true
     priority: "2"
     module_hotfixes: true
     gpgcheck: true
-    gpgkey: http://codecs.opensuse.org/openh264/openSUSE_Tumbleweed/repodata/repomd.xml.key
+    gpgkey: https://codecs.opensuse.org/openh264/openSUSE_Leap_16/repodata/repomd.xml.key
     state: present
-  - file: repo-oss
-    name: repo-oss
-    description: openSUSE-Tumbleweed-Oss
-    baseurl: http://download.opensuse.org/tumbleweed/repo/oss
-    enabled: true
-    priority: "2"
-    module_hotfixes: true
-    gpgcheck: true
-    gpgkey: http://download.opensuse.org/tumbleweed/repo/oss/repodata/repomd.xml.key
-    state: present
-  - file: repo-source
-    name: repo-source
-    description: openSUSE-Tumbleweed-Source
-    baseurl: http://download.opensuse.org/source/tumbleweed/repo/oss
+  - file: openSUSE:repo-oss-debug
+    name: openSUSE:repo-oss-debug
+    description: repo-oss-debug (16.0)
+    baseurl: http://cdn.opensuse.org/debug/distribution/leap/16.0/repo/oss
     enabled: false
     priority: "2"
     module_hotfixes: true
     gpgcheck: true
-    gpgkey: http://download.opensuse.org/source/tumbleweed/repo/oss/repodata/repomd.xml.key
+    gpgkey: http://cdn.opensuse.org/debug/distribution/leap/16.0/repo/oss/repodata/repomd.xml.key
     state: present
-  - file: repo-update
-    name: repo-update
-    description: openSUSE-Tumbleweed-Update
-    baseurl: http://download.opensuse.org/update/tumbleweed
+  - file: openSUSE:repo-oss-source
+    name: openSUSE:repo-oss-source
+    description: repo-oss-source (16.0)
+    baseurl: http://cdn.opensuse.org/source/distribution/leap/16.0/repo/oss
+    enabled: false
+    priority: "2"
+    module_hotfixes: true
+    gpgcheck: true
+    gpgkey: http://cdn.opensuse.org/source/distribution/leap/16.0/repo/oss/repodata/repomd.xml.key
+    state: present
+  - file: openSUSE:repo-oss
+    name: openSUSE:repo-oss
+    description: repo-oss (16.0)
+    baseurl: http://cdn.opensuse.org/distribution/leap/16.0/repo/oss
     enabled: true
     priority: "2"
     module_hotfixes: true
     gpgcheck: true
-    gpgkey: http://download.opensuse.org/update/tumbleweed/repodata/repomd.xml.key
+    gpgkey: http://cdn.opensuse.org/distribution/leap/16.0/repo/oss/repodata/repomd.xml.key
     state: present
 
 _zypper:
