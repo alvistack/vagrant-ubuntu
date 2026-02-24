@@ -32,7 +32,7 @@ autoinstall:
           - { type: mount, id: mount-1, device: format-1, path: none }
           - { type: mount, id: mount-2, device: format-2, path: / }
   identity:
-      username: root
+      username: vagrant
       hostname: ubuntu.localdomain
       password: "$6$pniguAcReslhK$wwOrj4o.CXt6HL7NiOZ2J7/UOC4ivAIVs8BU/h6qpRIBdWX824Qg.VQadCVQCAJNr4/Fv3J55Zf936Jm5dlKT/"
   ssh:
