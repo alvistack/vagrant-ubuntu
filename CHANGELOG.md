@@ -2,6 +2,7 @@
 
 ## YYYYMMDD.Y.Z - TBC
 
+- Support Ubuntu 26.04
 - Remove Ubuntu 25.04 support
 
 ## 20251008.1.1 - 2025-10-08
