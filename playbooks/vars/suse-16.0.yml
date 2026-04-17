@@ -15,7 +15,7 @@
 # limitations under the License.
 
 _rpm_key:
-  - key: https://download.opensuse.org/tumbleweed/repo/oss/gpg-pubkey-29b700a4-62b07e22.asc
+  - key: https://downloadcontent.opensuse.org/tumbleweed/repo/oss/gpg-pubkey-29b700a4-62b07e22.asc
     fingerprint: AD485664E901B867051AB15F35A2F86E29B700A4
     state: present
 
