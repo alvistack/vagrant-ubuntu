@@ -36,15 +36,15 @@
     state: "{{ item.state }}"
   loop: "{{ _yum_repository }}"
 
-- name: dnf-config-manager --set-enable
+- name: yum-config-manager --enable
   ansible.builtin.command:
-    cmd: dnf-config-manager --set-{{ item.state }} {{ item.name }}
-  loop: "{{ _dnf_config_manager }}"
+    cmd: yum-config-manager --{{ item.state }} {{ item.name }}
+  loop: "{{ _yum_config_manager }}"
   changed_when: false
   failed_when: false
 
-- name: dnf update
-  ansible.builtin.dnf:
+- name: yum update
+  ansible.builtin.yum:  # noqa fqcn[action-core]
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop:
@@ -52,10 +52,10 @@
   register: result
   until: result is succeeded
 
-- name: dnf install
-  ansible.builtin.dnf:
+- name: yum install
+  ansible.builtin.yum:  # noqa fqcn[action-core]
     name: "{{ item.name }}"
     state: "{{ item.state }}"
-  loop: "{{ _dnf }}"
+  loop: "{{ _yum }}"
   register: result
   until: result is succeeded

@@ -31,13 +31,13 @@ _yum_repository:
     gpgkey: http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9
     state: present
 
-_yum_config_manager:
+_dnf_config_manager:
   - { state: enable, name: baseos }
   - { state: enable, name: extras-common }
   - { state: enable, name: appstream }
   - { state: enable, name: crb }
 
-_yum:
+_dnf:
   - { state: latest, name: ca-certificates }
   - { state: latest, name: cloud-init }
   - { state: latest, name: cloud-utils-growpart }
