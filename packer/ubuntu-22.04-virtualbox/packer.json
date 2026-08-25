@@ -59,6 +59,30 @@
           "{{.Name}}",
           "--nat-localhostreachable1",
           "on"
+        ],
+        [
+          "createmedium",
+          "disk",
+          "--filename",
+          "sdb.vmdk",
+          "--size",
+          "10240",
+          "--format",
+          "VMDK"
+        ],
+        [
+          "storageattach",
+          "{{.Name}}",
+          "--storagectl",
+          "SATA",
+          "--port",
+          "1",
+          "--device",
+          "0",
+          "--type",
+          "hdd",
+          "--medium",
+          "sdb.vmdk"
         ]
       ],
       "vrdp_bind_address": "0.0.0.0",

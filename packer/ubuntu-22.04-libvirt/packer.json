@@ -25,6 +25,9 @@
       ],
       "boot_wait": "1s",
       "cpus": 2,
+      "disk_additional_size": [
+        "10G"
+      ],
       "disk_cache": "writeback",
       "disk_compression": true,
       "disk_image": false,
